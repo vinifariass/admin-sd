@@ -139,6 +139,13 @@ export async function getParkingSummary() {
     }
 }
 
+export async function getMoradoresSummary() {
+    const moradoresCount = await prisma.morador.count();
+    return {
+        moradoresCount
+    }
+}
+
 // Get all products
 export async function getAllParkings({
     query,

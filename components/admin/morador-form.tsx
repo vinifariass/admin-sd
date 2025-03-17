@@ -44,6 +44,8 @@ const MoradorForm = ({ type, morador, moradorId }: { type: 'Create' | 'Update'; 
 
     console.log(form.formState.errors);
 
+    //Possivel erro é porque esqueci o apartamento e implementar bloco tbm
+
     const onSubmit: SubmitHandler<z.infer<typeof insertMoradorSchema>> = async (values) => {
         console.log(values)
         try {
@@ -77,6 +79,7 @@ const MoradorForm = ({ type, morador, moradorId }: { type: 'Create' | 'Update'; 
         <Form {...form}>
             {/* O onSubmit deve ficar dentro do <form> HTML */}
             <form method="POST" onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+
                 <div className="flex flex-col col-span-6 md:flex-row gap-5">
                     <FormField
                         control={form.control}
@@ -136,6 +139,20 @@ const MoradorForm = ({ type, morador, moradorId }: { type: 'Create' | 'Update'; 
                         )}
                     />
 
+                    <FormField
+                        control={form.control}
+                        name="apartamento"
+                        render={({ field }) => (
+                            <FormItem >
+                                <FormLabel>Apartamento</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="401" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+
 
                     <FormField
                         control={form.control}
@@ -182,7 +199,7 @@ const MoradorForm = ({ type, morador, moradorId }: { type: 'Create' | 'Update'; 
                 <div className="flex flex-col md:flex-row gap-5">
 
 
-                <FormField
+                    <FormField
                         control={form.control}
                         name="dataSaida"
                         render={({ field }) => (

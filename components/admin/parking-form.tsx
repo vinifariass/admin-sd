@@ -19,11 +19,14 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { parkingDefaultValues } from "@/lib/constants";
 import { useRouter } from "next/navigation";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+import { useState } from "react";
 
-const ParkingForm = ({ type, parking,parkingId }: { type: 'Create' | 'Update'; parking?: Parking , parkingId?: string}) => {
+const ParkingForm = ({ type, parking, parkingId }: { type: 'Create' | 'Update'; parking?: Parking, parkingId?: string }) => {
 
 
     const router = useRouter();
+    const [tipoMorador, setTipoMorador] = useState<string>(parking?.tipoMorador || "Proprietario");
 
 
     const form = useForm<z.infer<typeof insertParkingSchema>>({
@@ -67,7 +70,56 @@ const ParkingForm = ({ type, parking,parkingId }: { type: 'Create' | 'Update'; p
         <Form {...form}>
             {/* O onSubmit deve ficar dentro do <form> HTML */}
             <form method="POST" onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-                <div className="flex flex-col col-span-6 md:flex-row gap-5">
+                <div className="flex flex-col col-span-6  md:flex-row gap-5">
+
+                    <FormField
+                        control={form.control}
+                        name="tipoMorador"
+                        render={({ field }) => (
+                            <FormItem
+
+                            >
+                                <FormLabel>Tipo de Morador</FormLabel>
+                                <Select
+                                    onValueChange={(value) => {
+                                        field.onChange(value);
+                                        setTipoMorador(value);
+                                    }}
+                                    defaultValue={field.value}
+                                >
+                                    <FormControl >
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="Selecione um tipo" />
+                                        </SelectTrigger>
+                                    </FormControl>
+                                    <SelectContent>
+                                        <SelectItem value="Proprietario">Proprietário</SelectItem>
+                                        <SelectItem value="Inquilino">Inquilino</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+
+                    {/* Campo Dinâmico (Nome ou Administrador) */}
+                    <FormField
+                        control={form.control}
+                        name="nome"
+                        render={({ field }) => (
+                            <FormItem
+                                className="w-1/4"
+
+                            >
+                                <FormLabel>{tipoMorador === "Proprietario" ? "Nome do Proprietário" : "Administrador"}</FormLabel>
+                                <FormControl>
+                                    <Input placeholder={tipoMorador === "Proprietario" ? "Ex: João Silva" : "Ex: Síndico"} {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+
                     <FormField
                         control={form.control}
                         name="apartamento"
@@ -129,13 +181,14 @@ const ParkingForm = ({ type, parking,parkingId }: { type: 'Create' | 'Update'; p
 
 
                 {/* Botão de envio agora está dentro do <form> */}
-                <div className="w-1/4">
-                    <Button type="submit" size='lg' disabled={form.formState.isSubmitting}
-                        className="button col-span-2 w-full"
-                    >
-                        {form.formState.isSubmitting ? "Submitting..." : `${type} Parking`}
-                    </Button>
-                </div>
+                <Button 
+  type="submit" 
+  size="lg" 
+  disabled={form.formState.isSubmitting}
+  className="w-full sm:w-3/4 md:w-1/2 lg:w-1/4"
+>
+  {form.formState.isSubmitting ? "Enviando..." : `${type} Parking`}
+</Button>
 
             </form>
         </Form>

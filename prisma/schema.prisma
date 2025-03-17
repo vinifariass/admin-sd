@@ -13,13 +13,21 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum TipoMorador {
+  Proprietario
+  Inquilino
+}
+
 model Parking {
-  id          String   @id @default(uuid())
+  id          String      @id @default(uuid())
   apartamento String
   placa       String
   carro       String
   cor         String
-  createdAt   DateTime @default(now())
+  createdAt   DateTime    @default(now())
+  cpf         String
+  tipoMorador TipoMorador
+  nome        String
 }
 
 model Morador {

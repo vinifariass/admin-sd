@@ -13,6 +13,7 @@ export const moradorDefaultValues = {
     dataSaida: "",
     email: "",
     telefone: "",
+    tipoMorador: "Proprietário",
 };
 
 export const PAGE_SIZE = Number(process.env.PAGE_SIZE) || 12;

@@ -3,7 +3,7 @@ import { z } from "zod";
 const isValidCPF = (cpf: string) => {
     cpf = cpf.replace(/\D/g, ""); // Remove caracteres não numéricos
 
-    if (cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) return false; 
+    if (cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) return false;
     let sum = 0, remainder;
 
     for (let i = 0; i < 9; i++) sum += parseInt(cpf[i]) * (10 - i);
@@ -24,6 +24,12 @@ export const insertParkingSchema = z.object({
     placa: z.string().min(1, { message: "Placa é obrigatória" }),
     carro: z.string().min(1, { message: "Carro é obrigatório" }),
     cor: z.string().min(1, { message: "Cor é obrigatória" }),
+    tipoMorador: z.enum(["Proprietario", "Inquilino"], { message: "Escolha uma opção válida" }),
+    nome: z.string().min(1, { message: "Nome é obrigatório" }),
+    cpf: z.string()
+        .min(11, { message: "CPF deve ter 11 dígitos" })
+        .max(14, { message: "CPF deve ter no máximo 14 caracteres" })
+        .refine(isValidCPF, { message: "CPF inválido" }),
 });
 
 export const updateParkingSchema = insertParkingSchema.extend({
@@ -47,3 +53,4 @@ export const insertMoradorSchema = z.object({
 export const updateMoradorSchema = insertMoradorSchema.extend({
     id: z.string().uuid({ message: "Estacionamento inválido" }),
 });
+

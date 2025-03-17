@@ -4,9 +4,9 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 export const metadata: Metadata = {
-    title: 'Update Product',
+    title: 'Update Vaga',
 };
-const AdminProductUpdatePage = async (props: {
+const AdminVagaUpdatePage = async (props: {
     params: Promise<{ id: string; }>,
 }) => {
     const { id } = await props.params;
@@ -15,7 +15,7 @@ const AdminProductUpdatePage = async (props: {
     return (<>
         <div className="space-y-8 max-w-5xl mx-auto">
             <h1 className="h2-bold">
-                Update Product
+                Update Vaga
             </h1>
 
             <ParkingForm type="Update" parking={parking} parkingId={parking.id} />
@@ -23,4 +23,4 @@ const AdminProductUpdatePage = async (props: {
     </>);
 }
 
-export default AdminProductUpdatePage;
+export default AdminVagaUpdatePage;

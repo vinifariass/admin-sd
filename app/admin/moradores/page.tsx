@@ -5,7 +5,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import Pagination from "@/components/shared/pagination";
 import DeleteDialog from "@/components/shared/delete-dialog";
 import { formatDateTime } from "@/lib/utils";
-const AdminProductsPage = async (props: {
+const AdminMoradoresPage = async (props: {
     searchParams: Promise<{
         page: string;
         query: string;
@@ -89,4 +89,4 @@ const AdminProductsPage = async (props: {
         </div></>);
 }
 
-export default AdminProductsPage;
+export default AdminMoradoresPage;
