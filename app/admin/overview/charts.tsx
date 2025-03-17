@@ -1,17 +1,17 @@
 'use client'
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer } from 'recharts'
 
-const Charts = ({ data: { salesData } }: {
+const Charts = ({ data: { vagasData } }: {
     data: {
-        salesData: {
+        vagasData: {
             month: string;
-            totalSales: number;
+            totalVagas: number;
         }[]
     }
 }) => {
     return (<>
         <ResponsiveContainer width='100%' height={350}>
-            <BarChart data={salesData}>
+            <BarChart data={vagasData}>
                 <XAxis
                     dataKey='month'
                     stroke='#888888'
@@ -24,10 +24,10 @@ const Charts = ({ data: { salesData } }: {
                     fontSize={12}
                     tickLine={false}
                     axisLine={false}
-                    tickFormatter={(value) => `$${value}`}
+                    tickFormatter={(value) => `${value}`}
                 />
                 <Bar
-                    dataKey='totalSales'
+                    dataKey='totalVagas'
                     fill='currentColor'
                     radius={[4, 4, 0, 0]}
                     className='fill-primary'

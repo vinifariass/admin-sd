@@ -11,16 +11,16 @@ const links = [
         href: '/admin/overview'
     },
     {
-        title: 'Products',
-        href: '/admin/products',
+        title: 'Vagas',
+        href: '/admin/parkings',
     },
     {
-        title: 'Orders',
-        href: '/admin/orders',
+        title: 'Moradores',
+        href: '/admin/moradores',
     },
     {
-        title: 'Users',
-        href: '/admin/users',
+        title: 'Funcionários',
+        href: '/admin/funcionarios',
     },
 ]
 

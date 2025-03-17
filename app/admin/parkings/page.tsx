@@ -30,7 +30,7 @@ const AdminProductsPage = async (props: {
             <div className="flex-between">
                 <div className="flex items-center gap-3">
                     <h1 className="h2-bold">
-                        Parkings
+                        Vagas
                     </h1>
                     {searchText && (
                         <div>
@@ -44,30 +44,26 @@ const AdminProductsPage = async (props: {
                     )}
                 </div>
                 <Button asChild variant='default'>
-                    <Link href='/admin/parkings/create'>Create Parking</Link>
+                    <Link href='/admin/parkings/create'>Criar Vagas</Link>
                 </Button>
             </div>
 
             <Table>
                 <TableHeader>
                     <TableRow>
-                        <TableHead>ID</TableHead>
-                        <TableHead>NAME</TableHead>
-                        <TableHead className="text-right">PRICE</TableHead>
-                        <TableHead>CATEGORY</TableHead>
-                        <TableHead>STOCK</TableHead>
-                        <TableHead>RATING</TableHead>
+                        <TableHead>APARTAMENTO</TableHead>
+                        <TableHead>CARRO</TableHead>
+                        <TableHead>COR</TableHead>
+                        <TableHead>PLACA</TableHead>
                         <TableHead className="w-[100px]">ACTIONS</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
                     {parkings.data.map((parking) => (
                         <TableRow key={parking.id}>
-                            <TableCell>{(parking.id)}</TableCell>
                             <TableCell>{parking.apartamento}</TableCell>
-                            <TableCell className="text-right"></TableCell>
-                            <TableCell>{parking.cor}</TableCell>
                             <TableCell>{parking.carro}</TableCell>
+                            <TableCell>{parking.cor}</TableCell>
                             <TableCell>{parking.placa}</TableCell>
                             <TableCell className="flex gap-1">
                                 <Button asChild variant='outline' size='sm'>

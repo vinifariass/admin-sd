@@ -14,10 +14,30 @@ datasource db {
 }
 
 model Parking {
-  id          String @id @default(uuid())
+  id          String   @id @default(uuid())
   apartamento String
   placa       String
   carro       String
   cor         String
   createdAt   DateTime @default(now())
 }
+
+model Morador {
+  id          String    @id @default(uuid())
+  nome        String
+  cpf         String
+  apartamento String
+  email       String?
+  telefone    String?
+  dataLocacao DateTime
+  dataSaida   DateTime?
+  createdAt   DateTime  @default(now())
+}
+
+// model Funcionario {
+//   id        String   @id @default(uuid())
+//   nome      String
+//   cpf       String
+//   cargo      String
+//   createdAt DateTime @default(now())
+// }

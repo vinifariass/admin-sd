@@ -1,6 +1,6 @@
 'use server'
 import { z } from "zod";
-import { insertParkingSchema, updateParkingSchema } from "../validator";
+import { insertMoradorSchema, updateMoradorSchema } from "../validator";
 import { prisma } from '@/db/prisma';
 import { revalidatePath } from "next/cache";
 import { formatErrors, convertToPlainObject } from "../utils";
@@ -20,19 +20,19 @@ export async function getParkingById(parkingId: string) {
 
 
 //Create a parking
-export async function createParking(data: z.infer<typeof insertParkingSchema>) {
+export async function createMorador(data: z.infer<typeof insertMoradorSchema>) {
     try {
-        const parking = insertParkingSchema.parse(data);
+        const parking = insertMoradorSchema.parse(data);
 
-        await prisma.parking.create({
+        await prisma.morador.create({
             data: parking
         });
 
-        revalidatePath('/parkings');
+        revalidatePath('/moradores');
 
         return {
             success: true,
-            message: "Estacionamento criado com sucesso"
+            message: "Morador criado com sucesso"
         }
     } catch (error) {
 
@@ -40,21 +40,21 @@ export async function createParking(data: z.infer<typeof insertParkingSchema>) {
     }
 }
 
-//Update a parking
-export async function updateParking(data: z.infer<typeof updateParkingSchema> & { id: string }) {
+//Update a morador
+export async function updateMorador(data: z.infer<typeof updateMoradorSchema> & { id: string }) {
     try {
-        const parking = updateParkingSchema.parse(data);
+        const morador = updateMoradorSchema.parse(data);
 
-        await prisma.parking.update({
+        await prisma.morador.update({
             where: {
-                id: parking.id
+                id: morador.id
             },
-            data: parking
+            data: morador
         });
 
         return {
             success: true,
-            message: "Estacionamento atualizado com sucesso"
+            message: "Morador atualizado com sucesso"
         }
     } catch (error) {
 
