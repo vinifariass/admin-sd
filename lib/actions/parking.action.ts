@@ -144,18 +144,12 @@ export async function getAllParkings({
     query,
     limit = PAGE_SIZE,
     page,
-    category,
-    price,
-    rating,
-    sort
+    vaga,
 }: {
     query: string,
     limit?: number,
     page: number,
-    category?: string,
-    price?: string,
-    rating?: string,
-    sort?: string
+    vaga?: string,
 }
 ) {
 
@@ -198,6 +192,68 @@ export async function deleteParking(id: string) {
         return {
             success: true,
             message: 'Parking deleted successfully'
+        }
+    } catch (error) {
+        return {
+            success: false,
+            message: formatErrors(error)
+        }
+    }
+}
+
+
+export async function getAllMoradores({
+    query,
+    limit = PAGE_SIZE,
+    page,
+    morador,
+}: {
+    query: string,
+    limit?: number,
+    page: number,
+    morador?: string,
+}
+) {
+
+
+    const data = await prisma.morador.findMany({
+
+        orderBy: {
+            createdAt: 'desc'
+        },
+        skip: (page - 1) * limit,
+        take: limit,
+    });
+
+    const dataCount = await prisma.morador.count();
+
+    return {
+        data,
+        totalPages: Math.ceil(dataCount / limit)
+    };
+}
+
+export async function deleteMorador(id: string) {
+    try {
+        const moradorExists = await prisma.morador.findFirst({
+            where: {
+                id
+            }
+        });
+
+        if (!moradorExists) throw new Error('Morador not found');
+
+        await prisma.morador.delete({
+            where: {
+                id
+            }
+        });
+
+        revalidatePath('/admin/moradores');
+
+        return {
+            success: true,
+            message: 'Morador deletado com sucesso'
         }
     } catch (error) {
         return {

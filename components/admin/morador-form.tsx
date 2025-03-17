@@ -1,6 +1,7 @@
 'use client'
 
 import { insertMoradorSchema, updateMoradorSchema } from "@/lib/validator";
+import { ptBR } from "date-fns/locale"; // Importa a localidade brasileira
 import { Morador } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -19,8 +20,17 @@ import { Button } from "../ui/button";
 import { moradorDefaultValues } from "@/lib/constants";
 import { useRouter } from "next/navigation";
 import { createMorador, updateMorador } from "@/lib/actions/morador.action";
+import { Calendar } from "@/components/ui/calendar"
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "@/components/ui/popover"
+import { CalendarIcon } from "lucide-react";
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
 
-const MoradorForm = ({ type, morador,moradorId }: { type: 'Create' | 'Update'; morador?: Morador , moradorId?: string}) => {
+const MoradorForm = ({ type, morador, moradorId }: { type: 'Create' | 'Update'; morador?: Morador, moradorId?: string }) => {
 
 
     const router = useRouter();
@@ -70,33 +80,17 @@ const MoradorForm = ({ type, morador,moradorId }: { type: 'Create' | 'Update'; m
                 <div className="flex flex-col col-span-6 md:flex-row gap-5">
                     <FormField
                         control={form.control}
-                        name="apartamento"
-                        render={({ field }) => (
-                            <FormItem >
-                                <FormLabel>Apartamento</FormLabel>
-                                <FormControl>
-                                    <Input placeholder="Ex: 101" {...field} />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-
-                    <FormField
-                        control={form.control}
                         name="nome"
                         render={({ field }) => (
-                            <FormItem>
+                            <FormItem className="w-full md:w-1/2">
                                 <FormLabel>Nome</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="Ex: ABC-1234" {...field} />
+                                    <Input placeholder="Ex: Paulo" {...field} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
                         )}
                     />
-                </div>
-                <div className="flex flex-col md:flex-row gap-5">
                     <FormField
                         control={form.control}
                         name="cpf"
@@ -110,6 +104,9 @@ const MoradorForm = ({ type, morador,moradorId }: { type: 'Create' | 'Update'; m
                             </FormItem>
                         )}
                     />
+                </div>
+                <div className="flex flex-col col-span-6 md:flex-row gap-5">
+
 
                     <FormField
                         control={form.control}
@@ -125,6 +122,104 @@ const MoradorForm = ({ type, morador,moradorId }: { type: 'Create' | 'Update'; m
                         )}
                     />
 
+                    <FormField
+                        control={form.control}
+                        name="telefone"
+                        render={({ field }) => (
+                            <FormItem >
+                                <FormLabel>Telefone</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="Ex: (99) 99999-9999" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+
+
+                    <FormField
+                        control={form.control}
+                        name="dataLocacao"
+                        render={({ field }) => (
+                            <FormItem className="flex flex-col">
+                                <FormLabel>Data de Locação</FormLabel>
+                                <Popover>
+                                    <PopoverTrigger asChild>
+                                        <FormControl>
+                                            <Button
+                                                variant="outline"
+                                                className={cn(
+                                                    "w-[280px] justify-start text-left font-normal",
+                                                    !field.value && "text-muted-foreground"
+                                                )}
+                                            >
+                                                <CalendarIcon className="mr-2 h-4 w-4" />
+                                                {field.value
+                                                    ? format(new Date(field.value), "dd/MM/yyyy", { locale: ptBR }) // ✅ Agora em formato brasileiro
+                                                    : <span>Selecione uma data</span>
+                                                }
+                                            </Button>
+                                        </FormControl>
+                                    </PopoverTrigger>
+                                    <PopoverContent className="w-auto p-0">
+                                        <Calendar
+                                            mode="single"
+                                            selected={field.value ? new Date(field.value) : undefined}
+                                            onSelect={(date) => field.onChange(date ? date.toISOString() : "")} // ✅ Salva no formato ISO
+                                            initialFocus
+                                        />
+                                    </PopoverContent>
+                                </Popover>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+
+
+
+
+                </div>
+                <div className="flex flex-col md:flex-row gap-5">
+
+
+                <FormField
+                        control={form.control}
+                        name="dataSaida"
+                        render={({ field }) => (
+                            <FormItem className="flex flex-col">
+                                <FormLabel>Data de Saída</FormLabel>
+                                <Popover>
+                                    <PopoverTrigger asChild>
+                                        <FormControl>
+                                            <Button
+                                                variant="outline"
+                                                className={cn(
+                                                    "w-[280px] justify-start text-left font-normal",
+                                                    !field.value && "text-muted-foreground"
+                                                )}
+                                            >
+                                                <CalendarIcon className="mr-2 h-4 w-4" />
+                                                {field.value
+                                                    ? format(new Date(field.value), "dd/MM/yyyy", { locale: ptBR }) // ✅ Agora em formato brasileiro
+                                                    : <span>Selecione uma data</span>
+                                                }
+                                            </Button>
+                                        </FormControl>
+                                    </PopoverTrigger>
+                                    <PopoverContent className="w-auto p-0">
+                                        <Calendar
+                                            mode="single"
+                                            selected={field.value ? new Date(field.value) : undefined}
+                                            onSelect={(date) => field.onChange(date ? date.toISOString() : "")} // ✅ Salva no formato ISO
+                                            initialFocus
+                                        />
+                                    </PopoverContent>
+                                </Popover>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+
                 </div>
 
 
@@ -133,7 +228,7 @@ const MoradorForm = ({ type, morador,moradorId }: { type: 'Create' | 'Update'; m
                     <Button type="submit" size='lg' disabled={form.formState.isSubmitting}
                         className="button col-span-2 w-full"
                     >
-                        {form.formState.isSubmitting ? "Submitting..." : `${type} Parking`}
+                        {form.formState.isSubmitting ? "Submitting..." : `${type} Morador`}
                     </Button>
                 </div>
 

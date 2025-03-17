@@ -1,9 +1,10 @@
 import Link from "next/link";
-import { getAllParkings, deleteParking } from "@/lib/actions/parking.action";
+import { getAllMoradores, deleteMorador } from "@/lib/actions/parking.action";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import Pagination from "@/components/shared/pagination";
 import DeleteDialog from "@/components/shared/delete-dialog";
+import { formatDateTime } from "@/lib/utils";
 const AdminProductsPage = async (props: {
     searchParams: Promise<{
         page: string;
@@ -15,21 +16,21 @@ const AdminProductsPage = async (props: {
 
     const page = Number(searchParams.page) || 1;
     const searchText = searchParams.query || '';
-    const category = searchParams.category || '';
+    // const morador = searchParams.morador || '';
 
-    const parkings = await getAllParkings({
+    const moradores = await getAllMoradores({
         query: searchText,
         page,
+        // morador: morador
     });
 
-    console.log(parkings);
 
     return (<>
         <div className="space-y-2">
             <div className="flex-between">
                 <div className="flex items-center gap-3">
                     <h1 className="h2-bold">
-                        Vagas
+                        Moradores
                     </h1>
                     {searchText && (
                         <div>
@@ -43,41 +44,47 @@ const AdminProductsPage = async (props: {
                     )}
                 </div>
                 <Button asChild variant='default'>
-                    <Link href='/admin/parkings/create'>Criar Vagas</Link>
+                    <Link href='/admin/moradores/create'>Criar Moradores</Link>
                 </Button>
             </div>
 
             <Table>
                 <TableHeader>
                     <TableRow>
-                        <TableHead>APARTAMENTO</TableHead>
-                        <TableHead>CARRO</TableHead>
-                        <TableHead>COR</TableHead>
-                        <TableHead>PLACA</TableHead>
+                        <TableHead>NOME</TableHead>
+                        <TableHead>CPF</TableHead>
+                        <TableHead>EMAIL</TableHead>
+                        <TableHead>TELEFONE</TableHead>
+                        <TableHead>DATA DE LOCAÇÃO</TableHead>
+                        <TableHead>DATA DE SAÍDA</TableHead>
                         <TableHead className="w-[100px]">ACTIONS</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {parkings.data.map((parking) => (
-                        <TableRow key={parking.id}>
-                            <TableCell>{parking.apartamento}</TableCell>
-                            <TableCell>{parking.carro}</TableCell>
-                            <TableCell>{parking.cor}</TableCell>
-                            <TableCell>{parking.placa}</TableCell>
+                    {moradores.data.map((morador) => (
+                        <TableRow key={morador.id}>
+                            <TableCell>{morador.nome}</TableCell>
+                            <TableCell>{morador.cpf}</TableCell>
+                            <TableCell>{morador.email}</TableCell>
+                            <TableCell>{morador.telefone}</TableCell>
+                            <TableCell>{formatDateTime(morador.dataLocacao).dateOnly}</TableCell>
+                            <TableCell>{
+                                morador.dataSaida ? formatDateTime(morador.dataSaida).dateOnly : ''
+                                }</TableCell>
                             <TableCell className="flex gap-1">
                                 <Button asChild variant='outline' size='sm'>
-                                    <Link href={`/admin/parkings/${parking.id}`}>Edit</Link>
+                                    <Link href={`/admin/morados/${morador.id}`}>Edit</Link>
                                 </Button>
                                 {/* DELETE BUTTON */}
-                                <DeleteDialog id={parking.id} action={deleteParking} />
+                                <DeleteDialog id={morador.id} action={deleteMorador} />
                             </TableCell>
 
                         </TableRow>
                     ))}
                 </TableBody>
             </Table>
-            {parkings?.totalPages > 1 && (
-                <Pagination page={page} totalPages={parkings.totalPages} />
+            {moradores?.totalPages > 1 && (
+                <Pagination page={page} totalPages={moradores.totalPages} />
             )}
         </div></>);
 }

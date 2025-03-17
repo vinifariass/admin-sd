@@ -49,3 +49,36 @@ export function formUrlQuery({
 export function convertToPlainObject<T>(object: T): T {
   return JSON.parse(JSON.stringify(object))
 }
+
+export const formatDateTime = (dateInput: string | Date) => {
+  // Se for uma string, converte para Date
+  const date = dateInput instanceof Date ? dateInput : new Date(dateInput);
+
+  const dateTimeOptions: Intl.DateTimeFormatOptions = {
+    month: "short",
+    year: "numeric",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    hour12: false, // Alterado para 24h (se precisar, mude para true)
+  };
+
+  const dateOptions: Intl.DateTimeFormatOptions = {
+    weekday: "short",
+    month: "short",
+    year: "numeric",
+    day: "numeric",
+  };
+
+  const timeOptions: Intl.DateTimeFormatOptions = {
+    hour: "numeric",
+    minute: "numeric",
+    hour12: false, // Alterado para 24h (se precisar, mude para true)
+  };
+
+  return {
+    dateTime: date.toLocaleString("pt-BR", dateTimeOptions), // 🇧🇷 Agora em português
+    dateOnly: date.toLocaleString("pt-BR", dateOptions),
+    timeOnly: date.toLocaleString("pt-BR", timeOptions),
+  };
+};

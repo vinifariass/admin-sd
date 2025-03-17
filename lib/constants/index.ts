@@ -10,6 +10,9 @@ export const moradorDefaultValues = {
     cpf: "",
     apartamento: "",
     dataLocacao: "",
+    dataSaida: "",
+    email: "",
+    telefone: "",
 };
 
 export const PAGE_SIZE = Number(process.env.PAGE_SIZE) || 12;
