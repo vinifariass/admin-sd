@@ -200,7 +200,7 @@ const ParkingForm = ({ type, parking, parkingId }: { type: 'Criar' | 'Update'; p
                         disabled={form.formState.isSubmitting}
                         className="w-full sm:w-3/4 md:w-1/2 lg:w-1/4"
                     >
-                        {form.formState.isSubmitting ? "Enviando..." : `${type} Vaga`}
+                        {form.formState.isSubmitting ? "Enviando..;." : `${type} Vaga`}
                     </Button>
 
                 </div>
