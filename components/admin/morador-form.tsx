@@ -241,7 +241,7 @@ const MoradorForm = ({ type, morador, moradorId }: { type: 'Create' | 'Update'; 
 
 
                 {/* Botão de envio agora está dentro do <form> */}
-                <div className="w-1/4">
+                <div>
                     <Button
                         type="submit"
                         size="lg"
