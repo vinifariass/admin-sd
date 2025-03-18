@@ -242,8 +242,11 @@ const MoradorForm = ({ type, morador, moradorId }: { type: 'Create' | 'Update'; 
 
                 {/* Botão de envio agora está dentro do <form> */}
                 <div className="w-1/4">
-                    <Button type="submit" size='lg' disabled={form.formState.isSubmitting}
-                        className="button col-span-2 w-full"
+                    <Button
+                        type="submit"
+                        size="lg"
+                        disabled={form.formState.isSubmitting}
+                        className="w-full sm:w-3/4 md:w-1/2 lg:w-1/4"
                     >
                         {form.formState.isSubmitting ? "Submitting..." : `${type} Morador`}
                     </Button>

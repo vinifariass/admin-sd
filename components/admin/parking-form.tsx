@@ -22,7 +22,7 @@ import { useRouter } from "next/navigation";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { useState } from "react";
 
-const ParkingForm = ({ type, parking, parkingId }: { type: 'Create' | 'Update'; parking?: Parking, parkingId?: string }) => {
+const ParkingForm = ({ type, parking, parkingId }: { type: 'Criar' | 'Update'; parking?: Parking, parkingId?: string }) => {
 
 
     const router = useRouter();
@@ -30,7 +30,7 @@ const ParkingForm = ({ type, parking, parkingId }: { type: 'Create' | 'Update'; 
 
 
     const form = useForm<z.infer<typeof insertParkingSchema>>({
-        resolver: zodResolver(type === 'Create' ? insertParkingSchema : updateParkingSchema),
+        resolver: zodResolver(type === 'Criar' ? insertParkingSchema : updateParkingSchema),
         defaultValues: parking && type === 'Update' ? parking : parkingDefaultValues,
 
     });
@@ -40,12 +40,14 @@ const ParkingForm = ({ type, parking, parkingId }: { type: 'Create' | 'Update'; 
     const onSubmit: SubmitHandler<z.infer<typeof insertParkingSchema>> = async (values) => {
         console.log(values)
         try {
-            if (type === 'Create') {
+            if (type === 'Criar') {
                 const res = await createParking(values);
                 if (!res.success) {
                     toast.error(res.message);
                 } else {
                     toast.success(res.message);
+                    router.push('/admin/parkings');
+
                 }
             }
 
@@ -109,11 +111,24 @@ const ParkingForm = ({ type, parking, parkingId }: { type: 'Create' | 'Update'; 
                         render={({ field }) => (
                             <FormItem
                                 className="w-1/4"
-
                             >
                                 <FormLabel>{tipoMorador === "Proprietario" ? "Nome do Proprietário" : "Administrador"}</FormLabel>
                                 <FormControl>
                                     <Input placeholder={tipoMorador === "Proprietario" ? "Ex: João Silva" : "Ex: Síndico"} {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+
+                    <FormField
+                        control={form.control}
+                        name="cpf"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>CPF</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="Ex: 000.000.000-00" {...field} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -147,8 +162,7 @@ const ParkingForm = ({ type, parking, parkingId }: { type: 'Create' | 'Update'; 
                             </FormItem>
                         )}
                     />
-                </div>
-                <div className="flex flex-col md:flex-row gap-5">
+
                     <FormField
                         control={form.control}
                         name="carro"
@@ -176,20 +190,20 @@ const ParkingForm = ({ type, parking, parkingId }: { type: 'Create' | 'Update'; 
                             </FormItem>
                         )}
                     />
-
                 </div>
 
+                <div>
+                    {/* Botão de envio agora está dentro do <form> */}
+                    <Button
+                        type="submit"
+                        size="lg"
+                        disabled={form.formState.isSubmitting}
+                        className="w-full sm:w-3/4 md:w-1/2 lg:w-1/4"
+                    >
+                        {form.formState.isSubmitting ? "Enviando..." : `${type} Vaga`}
+                    </Button>
 
-                {/* Botão de envio agora está dentro do <form> */}
-                <Button 
-  type="submit" 
-  size="lg" 
-  disabled={form.formState.isSubmitting}
-  className="w-full sm:w-3/4 md:w-1/2 lg:w-1/4"
->
-  {form.formState.isSubmitting ? "Enviando..." : `${type} Parking`}
-</Button>
-
+                </div>
             </form>
         </Form>
     </>);

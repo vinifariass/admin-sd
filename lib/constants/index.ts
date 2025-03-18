@@ -3,6 +3,8 @@ export const parkingDefaultValues = {
     placa: "",
     carro: "",
     cor: "",
+    nome : "",
+    cpf : "",
 };
 
 export const moradorDefaultValues = {

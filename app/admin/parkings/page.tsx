@@ -50,6 +50,9 @@ const AdminProductsPage = async (props: {
             <Table>
                 <TableHeader>
                     <TableRow>
+                        <TableHead>NOME</TableHead>
+                        <TableHead>CPF</TableHead>
+                        <TableHead>TIPO DE MORADOR</TableHead>
                         <TableHead>APARTAMENTO</TableHead>
                         <TableHead>CARRO</TableHead>
                         <TableHead>COR</TableHead>
@@ -60,6 +63,9 @@ const AdminProductsPage = async (props: {
                 <TableBody>
                     {parkings.data.map((parking) => (
                         <TableRow key={parking.id}>
+                            <TableCell>{parking.nome}</TableCell>
+                            <TableCell>{parking.cpf}</TableCell>
+                            <TableCell>{parking.tipoMorador}</TableCell>
                             <TableCell>{parking.apartamento}</TableCell>
                             <TableCell>{parking.carro}</TableCell>
                             <TableCell>{parking.cor}</TableCell>
