@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import Pagination from "@/components/shared/pagination";
 import DeleteDialog from "@/components/shared/delete-dialog";
+import { auth } from "@/auth";
 const AdminProductsPage = async (props: {
     searchParams: Promise<{
         page: string;
@@ -12,6 +13,10 @@ const AdminProductsPage = async (props: {
     }>;
 }) => {
     const searchParams = await props.searchParams;
+    /* const session = await auth();
+
+    if (!session) {
+        return null */
 
     const page = Number(searchParams.page) || 1;
     const searchText = searchParams.query || '';

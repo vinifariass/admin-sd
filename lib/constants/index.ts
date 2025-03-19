@@ -1,3 +1,10 @@
+export const APP_NAME = process.env.NEXT_PUBLIC_APP_NAME || "Condominio Santos Dumont";
+
+export const signInDefaultValues = {
+    email: '',
+    password: ''
+}
+
 export const parkingDefaultValues = {
     apartamento: "",
     placa: "",

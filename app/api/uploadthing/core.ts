@@ -1,0 +1,35 @@
+import { createUploadthing, type FileRouter } from "uploadthing/next";
+import { UploadThingError } from "uploadthing/server";
+import { auth } from "@/auth";
+
+const f = createUploadthing();
+
+export const ourFileRouter = {
+    // ✅ Endpoint para imagens (sem alteração)
+    imageUploader: f({
+        image: { maxFileSize: "4MB" },
+    })
+     .middleware(async () => {
+        const session = await auth();
+        if (!session) throw new UploadThingError("Unauthorized");
+        return { userId: session?.user?.id };
+    }) 
+    .onUploadComplete(async ({ metadata }) => {
+        return { uploadedBy: metadata.userId };
+    }),
+
+    // ✅ Novo endpoint para CSV
+    csvUploader: f({
+        "text/csv": { maxFileSize: "4MB" }, // Agora aceita CSV
+    })
+    .middleware(async () => {
+        const session = await auth();
+        if (!session) throw new UploadThingError("Unauthorized");
+        return { userId: session?.user?.id };
+    }) 
+    .onUploadComplete(async ({ metadata }) => {
+        return { uploadedBy: metadata.userId };
+    }),
+} satisfies FileRouter;
+
+export type OurFileRouter = typeof ourFileRouter;

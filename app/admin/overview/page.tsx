@@ -91,7 +91,7 @@ const AdminOverviewPage = async () => {
                 {/* Vendas Recentes */}
                 <Card className="col-span-3">
                     <CardHeader>
-                        <CardTitle>Recent Sales</CardTitle>
+                        <CardTitle>Vagas Recentes</CardTitle>
                     </CardHeader>
                     <CardContent>
                         <Table>

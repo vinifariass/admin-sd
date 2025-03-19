@@ -19,6 +19,11 @@ const isValidCPF = (cpf: string) => {
     return remainder === parseInt(cpf[10]);
 };
 
+export const signInFormSchema = z.object({
+    email: z.string().email('Invalid email address'),
+    password: z.string().min(6, 'Password must be at least 6 characters')
+});
+
 export const insertParkingSchema = z.object({
     apartamento: z.string().min(1, { message: "Apartamento é obrigatório" }),
     placa: z.string().min(1, { message: "Placa é obrigatória" }),
