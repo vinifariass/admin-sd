@@ -201,7 +201,7 @@ const MoradorForm = ({ type, funcionario, funcionarioId }: { type: 'Create' | 'A
                         name="dataDemissao"
                         render={({ field }) => (
                             <FormItem className="flex flex-col">
-                                <FormLabel>Data de Admissão</FormLabel>
+                                <FormLabel>Data de Demissão</FormLabel>
                                 <Popover>
                                     <PopoverTrigger asChild>
                                         <FormControl>

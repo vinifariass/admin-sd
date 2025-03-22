@@ -105,5 +105,39 @@ export async function getFuncionarioById(funcionarioId: string) {
     return convertToPlainObject(data);
 }
 
+export async function getAllFuncionarios({
+    query,
+    limit = PAGE_SIZE,
+    page,
+    category,
+    price,
+    rating,
+    sort
+}: {
+    query: string,
+    limit?: number,
+    page: number,
+    category?: string,
+    price?: string,
+    rating?: string,
+    sort?: string
+}
+) {
 
 
+    const data = await prisma.funcionario.findMany({
+
+        orderBy: {
+            createdAt: 'desc'
+        },
+        skip: (page - 1) * limit,
+        take: limit,
+    });
+
+    const dataCount = await prisma.funcionario.count();
+
+    return {
+        data,
+        totalPages: Math.ceil(dataCount / limit)
+    };
+}
