@@ -13,7 +13,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model User {
   id            String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name          String    @default("NO_NAME")
@@ -27,7 +26,6 @@ model User {
 
   @@map("users")
 }
-
 
 enum TipoMorador {
   Proprietario
@@ -58,10 +56,38 @@ model Morador {
   createdAt   DateTime  @default(now())
 }
 
-// model Funcionario {
-//   id        String   @id @default(uuid())
-//   nome      String
-//   cpf       String
-//   cargo      String
-//   createdAt DateTime @default(now())
-// }
+model Funcionario {
+  id            String             @id @default(uuid())
+  nome          String
+  cpf           String             @unique(map: "funcionario_cpf_idx")
+  cargo         String
+  salario       Float
+  email         String?
+  telefone      String?
+  dataAdmissao  DateTime?
+  dataDemissao  DateTime?
+  endereco      String?
+  departamento  String?
+  status        StatusFuncionario? @default(ATIVO)
+  foto          String?
+  pis           String?
+  rg            String?
+  dataNascimento DateTime?
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
+
+  @@map("funcionarios") // Nome da tabela no banco de dados
+}
+
+enum StatusFuncionario {
+  ATIVO
+  INATIVO
+  AFASTADO
+}
+
+model Recibo {
+  id             String   @id @default(uuid())
+  nomeServico    String
+  dataVencimento DateTime
+  createdAt      DateTime @default(now())
+}

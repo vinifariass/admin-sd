@@ -72,20 +72,20 @@ type vagasDataType = {
 export async function getParkingSummary() {
 
     //Get monthly sales
-     const vagasDataRaw = await prisma.$queryRaw<
-         Array<{ month: string; totalVagas: Prisma.Decimal }>
-     >`SELECT to_char("createdAt", 'MM/YY') as "month", count("id") as "totalVagas"
+    const vagasDataRaw = await prisma.$queryRaw<
+        Array<{ month: string; totalVagas: Prisma.Decimal }>
+    >`SELECT to_char("createdAt", 'MM/YY') as "month", count("id") as "totalVagas"
     FROM "Parking" GROUP BY to_char("createdAt", 'MM/YY')`;
- 
-     const vagasData: vagasDataType = vagasDataRaw.map((entry) => ({
-         month: entry.month,
-         totalVagas: Number(entry.totalVagas),
-     }))
-     // Get latest sales
-     const latestVagas = await prisma.parking.findMany({
-         orderBy: { createdAt: 'desc' },
-         take: 6,
-     })
+
+    const vagasData: vagasDataType = vagasDataRaw.map((entry) => ({
+        month: entry.month,
+        totalVagas: Number(entry.totalVagas),
+    }))
+    // Get latest sales
+    const latestVagas = await prisma.parking.findMany({
+        orderBy: { createdAt: 'desc' },
+        take: 6,
+    })
 
     /*  const ordersCount = await prisma.order.count();
      const productsCount = await prisma.product.count();
@@ -135,7 +135,7 @@ export async function getParkingSummary() {
     return {
         parkingsCount,
         latestVagas,
-        vagasData  
+        vagasData
     }
 }
 
@@ -177,27 +177,27 @@ export async function getAllParkings({
     };
 }
 
-export async function deleteParking(id: string) {
+export async function deleteMorador(id: string) {
     try {
-        const parkingExists = await prisma.parking.findFirst({
+        const moradorExists = await prisma.morador.findFirst({
             where: {
                 id
             }
         });
 
-        if (!parkingExists) throw new Error('Parking not found');
+        if (!moradorExists) throw new Error('Morador não encontrado');
 
-        await prisma.parking.delete({
+        await prisma.morador.delete({
             where: {
                 id
             }
         });
 
-        revalidatePath('/admin/parkings');
+        revalidatePath('/admin/moradores');
 
         return {
             success: true,
-            message: 'Parking deleted successfully'
+            message: 'Morador deletado com sucesso'
         }
     } catch (error) {
         return {
@@ -206,4 +206,25 @@ export async function deleteParking(id: string) {
         }
     }
 }
+
+export async function getMoradoresSummary() {
+    const moradoresCount = await prisma.morador.count();
+    return {
+        moradoresCount
+    }
+}
+
+export async function getMoradorById(moradorId: string) {
+
+    const data = await prisma.morador.findFirst({
+        where: {
+            id: moradorId
+        }
+    });
+
+
+    return convertToPlainObject(data);
+}
+
+
 

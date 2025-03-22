@@ -49,13 +49,33 @@ export const insertMoradorSchema = z.object({
         .max(14, { message: "CPF deve ter no máximo 14 caracteres" })
         .refine(isValidCPF, { message: "CPF inválido" }),
     apartamento: z.string().min(1, { message: "Apartamento é obrigatório" }),
-    dataLocacao: z.string().min(1, { message: "Data de locação é obrigatória" }),
-    email: z.string().email().optional(),
+    dataLocacao: z.date().or(z.string().datetime()),
+    email: z.string().optional(),
     telefone: z.string().optional(),
     dataSaida: z.string().optional(),
 });
 
 export const updateMoradorSchema = insertMoradorSchema.extend({
-    id: z.string().uuid({ message: "Estacionamento inválido" }),
+    id: z.string().uuid({ message: "Morador inválido" }),
+});
+
+export const insertFuncionarioSchema = z.object({
+    nome: z.string().min(1, "Nome é obrigatório"),
+    cpf: z.string().min(11, "CPF deve ter 11 dígitos").max(14, "CPF inválido"),
+    cargo: z.string().min(1, "Cargo é obrigatório"),
+    salario: z.number().positive("O salário deve ser um número positivo"),
+    email: z.string().email("E-mail inválido").nullable().optional(),
+    telefone: z.string().nullable().optional(),
+    dataAdmissao: z.date().or(z.string().datetime()).nullable().optional(),
+    dataDemissao: z.date().or(z.string().datetime()).nullable().optional(),
+    endereco: z.string().nullable().optional(),
+    departamento: z.string().nullable().optional(),
+    status: z.enum(["ATIVO", "INATIVO", "AFASTADO"]).default("ATIVO").optional(),
+    pis: z.string().nullable().optional(),
+    dataNascimento: z.date().or(z.string().datetime()).nullable().optional(),
+    rg: z.string().nullable().optional(),
+});
+export const updateFuncionarioSchema = insertFuncionarioSchema.extend({
+    id: z.string().uuid({ message: "Funcionário inválido" }),
 });
 

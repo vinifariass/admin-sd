@@ -1,11 +1,12 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Car, Users, Barcode, CreditCard } from "lucide-react"; // Alterado: Car para vagas e Users para moradores
+import { Car, Users, Barcode, DoorClosed } from "lucide-react"; // Alterado: Car para vagas e Users para moradores
 import { Metadata } from "next";
 import Link from "next/link";
 import Charts from "./charts";
-import { getMoradoresSummary, getParkingSummary } from "@/lib/actions/parking.action";
-import { formatNumber } from "@/lib/utils";
+import { getParkingSummary } from "@/lib/actions/parking.action";
+import {  formatNumber } from "@/lib/utils";
+import { getMoradoresSummary } from "@/lib/actions/morador.action";
 
 export const metadata: Metadata = {
     title: 'Admin Overview',
@@ -14,6 +15,7 @@ export const metadata: Metadata = {
 const AdminOverviewPage = async () => {
     const summary = await getParkingSummary();
     const summaryMoradores = await getMoradoresSummary();
+
 
     console.log(summary);
 
@@ -49,11 +51,11 @@ const AdminOverviewPage = async () => {
                     </CardContent>
                 </Card>
 
-                {/* Customers */}
+                {/* Funcionários */}
                 <Card>
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium">Customers</CardTitle>
-                        <CreditCard />
+                        <CardTitle className="text-sm font-medium">Funcionários</CardTitle>
+                        <DoorClosed />
                     </CardHeader>
                     <CardContent>
                         <div className="text-2xl font-bold">
@@ -97,32 +99,32 @@ const AdminOverviewPage = async () => {
                         <Table>
                             <TableHeader>
                                 <TableRow>
-                                    <TableHead>BUYER</TableHead>
-                                    <TableHead>DATE</TableHead>
-                                    <TableHead>TOTAL</TableHead>
+                                    <TableHead>NOME</TableHead>
+                                    <TableHead>CPF</TableHead>
+                                    <TableHead>APARTAMENTO</TableHead>
                                     <TableHead>ACTIONS</TableHead>
                                 </TableRow>
                             </TableHeader>
-                            {/* <TableBody>
-                                {summary.latestSales.map((order) => (
-                                    <TableRow key={order.id}>
-                                        <TableCell>
-                                            {order?.user?.name || 'Deleted User'}
+                             <TableBody>
+                                {summary.latestVagas.map((vaga) => (
+                                    <TableRow key={vaga.id}>
+                                       <TableCell>
+                                            {vaga?.nome || 'Deleted User'}
                                         </TableCell>
                                         <TableCell>
-                                            {formatDateTime(order.createdAt).dateOnly}
+                                            {vaga.cpf}
                                         </TableCell>
                                         <TableCell>
-                                            {formatCurrency(order.totalPrice)}
+                                            {(vaga.apartamento)}
                                         </TableCell>
                                         <TableCell>
-                                            <Link href={`/order/${order.id}`}>
+                                            <Link href={`/admin/parkings/${vaga.id}`}>
                                                 <span className="px-2">Details</span>
                                             </Link>
                                         </TableCell>
                                     </TableRow>
                                 ))}
-                            </TableBody> */}
+                            </TableBody> 
                         </Table>
                     </CardContent>
                 </Card>

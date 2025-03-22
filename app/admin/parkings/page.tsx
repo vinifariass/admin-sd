@@ -20,14 +20,12 @@ const AdminProductsPage = async (props: {
 
     const page = Number(searchParams.page) || 1;
     const searchText = searchParams.query || '';
-    const category = searchParams.category || '';
 
     const parkings = await getAllParkings({
         query: searchText,
         page,
     });
 
-    console.log(parkings);
 
     return (<>
         <div className="space-y-2">

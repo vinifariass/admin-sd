@@ -72,20 +72,20 @@ type vagasDataType = {
 export async function getParkingSummary() {
 
     //Get monthly sales
-     const vagasDataRaw = await prisma.$queryRaw<
-         Array<{ month: string; totalVagas: Prisma.Decimal }>
-     >`SELECT to_char("createdAt", 'MM/YY') as "month", count("id") as "totalVagas"
+    const vagasDataRaw = await prisma.$queryRaw<
+        Array<{ month: string; totalVagas: Prisma.Decimal }>
+    >`SELECT to_char("createdAt", 'MM/YY') as "month", count("id") as "totalVagas"
     FROM "Parking" GROUP BY to_char("createdAt", 'MM/YY')`;
- 
-     const vagasData: vagasDataType = vagasDataRaw.map((entry) => ({
-         month: entry.month,
-         totalVagas: Number(entry.totalVagas),
-     }))
-     // Get latest sales
-     const latestVagas = await prisma.parking.findMany({
-         orderBy: { createdAt: 'desc' },
-         take: 6,
-     })
+
+    const vagasData: vagasDataType = vagasDataRaw.map((entry) => ({
+        month: entry.month,
+        totalVagas: Number(entry.totalVagas),
+    }))
+    // Get latest sales
+    const latestVagas = await prisma.parking.findMany({
+        orderBy: { createdAt: 'desc' },
+        take: 6,
+    })
 
     /*  const ordersCount = await prisma.order.count();
      const productsCount = await prisma.product.count();
@@ -135,16 +135,10 @@ export async function getParkingSummary() {
     return {
         parkingsCount,
         latestVagas,
-        vagasData  
+        vagasData
     }
 }
 
-export async function getMoradoresSummary() {
-    const moradoresCount = await prisma.morador.count();
-    return {
-        moradoresCount
-    }
-}
 
 // Get all products
 export async function getAllParkings({
@@ -269,4 +263,3 @@ export async function deleteMorador(id: string) {
         }
     }
 }
-

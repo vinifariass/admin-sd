@@ -20,9 +20,18 @@ export const moradorDefaultValues = {
     apartamento: "",
     dataLocacao: "",
     dataSaida: "",
-    email: "",
+    email: "" ,
     telefone: "",
     tipoMorador: "Proprietário",
+};
+
+
+export const funcionarioDefaultValues = {
+    nome: "",
+    cpf: "",
+    email: "",
+    telefone: "",
+    
 };
 
 export const PAGE_SIZE = Number(process.env.PAGE_SIZE) || 12;

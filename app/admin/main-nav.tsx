@@ -22,6 +22,10 @@ const links = [
         title: 'Funcionários',
         href: '/admin/funcionarios',
     },
+    {
+        title: 'Serviços',
+        href: '/admin/servicos',
+    },
 ]
 
 const MainNav = ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => {

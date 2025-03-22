@@ -46,6 +46,7 @@
     "tailwindcss-animate": "^1.0.7",
     "uploadthing": "^7.5.2",
     "ws": "^8.18.1",
+    "xlsx": "^0.18.5",
     "zod": "^3.24.2"
   },
   "devDependencies": {
@@ -60,6 +61,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/ws": "^8.5.14",
+    "@types/xlsx": "^0.0.35",
     "bufferutil": "^4.0.9",
     "dotenv": "^16.4.7",
     "eslint": "^9",

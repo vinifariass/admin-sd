@@ -88,3 +88,9 @@ const NUMBER_FORMATTER = new Intl.NumberFormat('en-US')
 export function formatNumber(number: number) {
   return NUMBER_FORMATTER.format(number)
 }
+
+export function parseSalary(value: string): number | null {
+  // Remove pontos e substitui vírgula por ponto para converter para número
+  const numericValue = value.replace(/\./g, "").replace(",", ".");
+  return numericValue ? parseFloat(numericValue) : null;
+}

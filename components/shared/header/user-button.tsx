@@ -20,9 +20,8 @@ const UserButton = async () => {
         );
 
     }
-
     const firstInitial = session.user?.name?.charAt(0).toUpperCase() ?? 'U';
-
+    console.log(session.user?.name)
     return <div className="flex gap-2 items-center">
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
