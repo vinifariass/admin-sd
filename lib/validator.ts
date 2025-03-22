@@ -70,7 +70,7 @@ export const insertFuncionarioSchema = z.object({
     dataDemissao: z.date().or(z.string().datetime()).nullable().optional(),
     endereco: z.string().nullable().optional(),
     departamento: z.string().nullable().optional(),
-    status: z.enum(["ATIVO", "INATIVO", "AFASTADO"]).default("ATIVO").optional(),
+    status: z.enum(["ATIVO", "INATIVO", "AFASTADO"]).default("ATIVO").nullable().optional(),
     pis: z.string().nullable().optional(),
     dataNascimento: z.date().or(z.string().datetime()).nullable().optional(),
     rg: z.string().nullable().optional(),

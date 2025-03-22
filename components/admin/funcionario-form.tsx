@@ -275,7 +275,7 @@ const MoradorForm = ({ type, funcionario, funcionarioId }: { type: 'Create' | 'A
                                         field.onChange(value);
                                         setStatus(value);
                                     }}
-                                    defaultValue={field.value}
+                                    defaultValue={field.value ?? ""}
 
                                 >
                                     <FormControl >
@@ -293,9 +293,6 @@ const MoradorForm = ({ type, funcionario, funcionarioId }: { type: 'Create' | 'A
                             </FormItem>
                         )}
                     />
-
-
-
 
                 </div>
                 <div className="flex flex-col md:flex-row gap-5">
