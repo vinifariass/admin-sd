@@ -118,7 +118,7 @@ const MoradorForm = ({ type, morador, moradorId }: { type: 'Create' | 'Atualizar
                             <FormItem>
                                 <FormLabel>Email</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="Ex: example@gmail.com" {...field} />
+                                    <Input placeholder="Ex: example@gmail.com" {...field} value={field.value ?? ""}/>
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -132,7 +132,7 @@ const MoradorForm = ({ type, morador, moradorId }: { type: 'Create' | 'Atualizar
                             <FormItem >
                                 <FormLabel>Telefone</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="Ex: (99) 99999-9999" {...field} />
+                                    <Input placeholder="Ex: (99) 99999-9999" {...field} value={field.value ?? ""}/>
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>

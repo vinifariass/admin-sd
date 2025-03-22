@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const isValidCPF = (cpf: string) => {
+const isValidCPF: (cpf: string) => boolean = (cpf: string): boolean => {
     cpf = cpf.replace(/\D/g, ""); // Remove caracteres não numéricos
 
     if (cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) return false;
@@ -50,9 +50,9 @@ export const insertMoradorSchema = z.object({
         .refine(isValidCPF, { message: "CPF inválido" }),
     apartamento: z.string().min(1, { message: "Apartamento é obrigatório" }),
     dataLocacao: z.date().or(z.string().datetime()),
-    email: z.string().optional(),
-    telefone: z.string().optional(),
-    dataSaida: z.string().optional(),
+    email: z.string().email("E-mail inválido").nullable().optional(),
+    telefone: z.string().nullable().optional(),
+    dataSaida: z.date().or(z.string().datetime()).nullable().optional(),
 });
 
 export const updateMoradorSchema = insertMoradorSchema.extend({
