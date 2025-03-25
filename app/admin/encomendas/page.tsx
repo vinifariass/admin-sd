@@ -7,18 +7,20 @@ import { formatDateTime } from "@/lib/utils";
 import { getAllEncomendas,deleteEncomenda } from "@/lib/actions/encomenda.action";
 import { useEffect } from "react";
 import EncomendaList from "./encomenda-list";
-const AdminEncomendaPage = async (props: {
-    searchParams: Promise<{
-        page: string;
+const AdminEncomendaPage = async ({
+    searchParams,
+    params,
+}: {
+    searchParams: {
+        page?: string;
         query: string;
-        category: string;
-    }>, moradorId: string;
+        category?: string;
+    };
+    params: { moradorId: string };
 }) => {
-    const searchParams = await props.searchParams;
-
-    const page = Number(searchParams.page) || 1;
-    const searchText = searchParams.query || '';
-    // const morador = searchParams.morador || '';
+    const page = Number(searchParams.page); 
+    const searchText = searchParams.query ; 
+    // const category = searchParams.category; 
 
     const encomendas = await getAllEncomendas({
         query: searchText,
