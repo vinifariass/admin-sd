@@ -4,21 +4,23 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import Pagination from "@/components/shared/pagination";
 import DeleteDialog from "@/components/shared/delete-dialog";
 import { formatDateTime } from "@/lib/utils";
-import { getAllEncomendas,deleteEncomenda } from "@/lib/actions/encomenda.action";
-import { useEffect } from "react";
+import { getAllEncomendas, deleteEncomenda } from "@/lib/actions/encomenda.action";
 import EncomendaList from "./encomenda-list";
-const AdminEncomendaPage = async ({
-    searchParams,
-}: {
-    searchParams: {
-        page?: string;
-        query: string;
-        category?: string;
-    };
-}) => {
-    const page = Number(searchParams.page); 
-    const searchText = searchParams.query ; 
-    // const category = searchParams.category; 
+
+interface SearchParams {
+    page?: string;
+    query?: string;
+    category?: string;
+}
+
+interface Props {
+    searchParams: SearchParams;
+}
+
+const AdminEncomendaPage = async ({ searchParams }: Props) => {
+    const page = Number(searchParams.page) || 1; // Converte page para número
+    const searchText = searchParams.query || ""; // Define query ou string vazia
+
 
     const encomendas = await getAllEncomendas({
         query: searchText,
@@ -64,10 +66,10 @@ const AdminEncomendaPage = async ({
                         <TableRow key={encomenda.id}>
                             <TableCell>{encomenda.numeroPedido}</TableCell>
                             <TableCell><EncomendaList moradorId={encomenda.moradorId} /></TableCell>
-                            
+
                             <TableCell>{encomenda.dataEntrega ? formatDateTime(encomenda.dataEntrega).dateOnly : ''}</TableCell>
                             <TableCell>{encomenda.dataAssinatura ? formatDateTime(encomenda.dataAssinatura).dateOnly : ''}</TableCell>
-                          
+
                             <TableCell className="flex gap-1">
                                 <Button asChild variant='outline' size='sm'>
                                     <Link href={`/admin/encomendas/${encomenda.id}`}>Edit</Link>
