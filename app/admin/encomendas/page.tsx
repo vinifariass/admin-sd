@@ -6,20 +6,25 @@ import DeleteDialog from "@/components/shared/delete-dialog";
 import { formatDateTime } from "@/lib/utils";
 import { getAllEncomendas, deleteEncomenda } from "@/lib/actions/encomenda.action";
 import EncomendaList from "./encomenda-list";
-
+import PageProps from "next";
 interface SearchParams {
     page?: string;
     query?: string;
     category?: string;
 }
 
-interface Props {
-    searchParams: SearchParams;
+// Define a tipagem para as props do componente
+interface PageProps {
+    searchParams: Promise<SearchParams>;
 }
 
-const AdminEncomendaPage = async ({ searchParams }: Props) => {
-    const page = Number(searchParams.page) || 1; // Converte page para número
-    const searchText = searchParams.query || ""; // Define query ou string vazia
+const AdminEncomendaPage = async ({ searchParams }: PageProps) => {
+
+    const resolvedSearchParams = await searchParams;
+
+    const page = Number(resolvedSearchParams.page) || 1; // Converte page para número
+    const searchText = resolvedSearchParams.query || ""; // Define query ou string vazia
+    const category = resolvedSearchParams.category || ""; // Define category ou string vazia
 
 
     const encomendas = await getAllEncomendas({
