@@ -11,8 +11,8 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <div className="flex h-screen flex-col">
-            <main >
+        <div >
+            <main className="flex h-screen flex-col" >
                 <div className="border-b container mx-auto">
                     <div className="flex items-center h-16 px-4">
                         <Link href='/' className='w-22'>

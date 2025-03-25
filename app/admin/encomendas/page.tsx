@@ -63,6 +63,7 @@ const AdminEncomendaPage = async ({ searchParams }: PageProps) => {
                         <TableHead>MORADOR</TableHead>
                         <TableHead>DATA DE ENTREGA</TableHead>
                         <TableHead>DATA DE ASSINATURA</TableHead>
+                        <TableHead>ASSINADO POR</TableHead>
                         <TableHead className="w-[100px]">ACTIONS</TableHead>
                     </TableRow>
                 </TableHeader>
@@ -74,6 +75,7 @@ const AdminEncomendaPage = async ({ searchParams }: PageProps) => {
 
                             <TableCell>{encomenda.dataEntrega ? formatDateTime(encomenda.dataEntrega).dateOnly : ''}</TableCell>
                             <TableCell>{encomenda.dataAssinatura ? formatDateTime(encomenda.dataAssinatura).dateOnly : ''}</TableCell>
+                            <TableCell>{encomenda.assinadoPor}</TableCell>
 
                             <TableCell className="flex gap-1">
                                 <Button asChild variant='outline' size='sm'>

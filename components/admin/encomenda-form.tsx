@@ -47,19 +47,23 @@ const EncomendaForm = ({ type, encomenda, encomendaId }: { type: 'Create' | 'Atu
     }, []);
 
 
+
     const form = useForm<z.infer<typeof insertEncomendaSchema>>({
         resolver: zodResolver(type === 'Create' ? insertEncomendaSchema : updateEncomendaSchema),
         defaultValues: encomenda && type === 'Atualizar' ? encomenda : encomendaDefaultValues,
 
     });
 
+
     const [status, setStatus] = useState<string>(encomenda?.status || "ENTREGUE");
+    const [assinado, setAssinado] = useState<string>(encomenda?.assinado?.toString() || "true");
 
     //Possivel erro é porque esqueci o apartamento e implementar bloco tbm
 
     const onSubmit: SubmitHandler<z.infer<typeof insertEncomendaSchema>> = async (values) => {
-        console.log(values)
+        console.log("Dados enviados:", values);
         try {
+
             if (type === 'Create') {
                 const res = await createEncomenda(values);
                 if (!res.success) {
@@ -182,19 +186,15 @@ const EncomendaForm = ({ type, encomenda, encomendaId }: { type: 'Create' | 'Atu
                         control={form.control}
                         name="assinado"
                         render={({ field }) => (
-                            <FormItem
-
-                            >
-                                <FormLabel>Status</FormLabel>
+                            <FormItem>
+                                <FormLabel>Assinado</FormLabel>
                                 <Select
                                     onValueChange={(value) => {
-                                        field.onChange(value);
-                                        setStatus(value);
+                                        const booleanValue = value === "true";
+                                        field.onChange(booleanValue);
                                     }}
-                                    defaultValue={field.value?.toString() ?? "true"}
-
-                                >
-                                    <FormControl >
+                                    defaultValue={field.value ? "true" : "false"}  >
+                                    <FormControl>
                                         <SelectTrigger>
                                             <SelectValue placeholder="Selecione um status" />
                                         </SelectTrigger>
@@ -204,6 +204,20 @@ const EncomendaForm = ({ type, encomenda, encomendaId }: { type: 'Create' | 'Atu
                                         <SelectItem value="false">Não</SelectItem>
                                     </SelectContent>
                                 </Select>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+
+                    <FormField
+                        control={form.control}
+                        name="assinadoPor"
+                        render={({ field }) => (
+                            <FormItem className="w-1/2 md:w-1/4">
+                                <FormLabel>Assinado Por:</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="Ex: Antônia" {...field} value={field.value ?? ""} />
+                                </FormControl>
                                 <FormMessage />
                             </FormItem>
                         )}

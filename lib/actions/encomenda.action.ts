@@ -40,7 +40,6 @@ export async function createEncomenda(data: z.infer<typeof insertEncomendaSchema
     }
 }
 
-//Update a morador
 export async function updateEncomenda(data: z.infer<typeof updateEncomendaSchema> & { id: string }) {
     try {
         const encomenda = updateEncomendaSchema.parse(data);
@@ -54,7 +53,7 @@ export async function updateEncomenda(data: z.infer<typeof updateEncomendaSchema
 
         return {
             success: true,
-            message: "Morador atualizado com sucesso"
+            message: "Encomenda atualizado com sucesso"
         }
     } catch (error) {
 

@@ -94,7 +94,7 @@ export const insertEncomendaSchema = z.object({
     numeroPedido: z.string().min(1, { message: "Número do pedido é obrigatório" }),
     moradorId: z.string().min(1, { message: "Selecione um morador" }),
     status: z.enum(["DEVOLVIDO","ENTREGUE"]).optional(),
-    assinadoPor: z.string().optional(),
+    assinadoPor: z.string().nullable().optional(),
     assinado: z.boolean().optional(),
 });
 

@@ -87,6 +87,8 @@ export async function getParkingSummary() {
         take: 6,
     })
 
+    //TODO: Create total Sales de gastos e colocar aqui
+
     /*  const ordersCount = await prisma.order.count();
      const productsCount = await prisma.product.count();
      const usersCount = await prisma.user.count();
