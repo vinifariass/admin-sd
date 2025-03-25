@@ -16,9 +16,6 @@ const AdminOverviewPage = async () => {
     const summary = await getParkingSummary();
     const summaryMoradores = await getMoradoresSummary();
 
-
-    console.log(summary);
-
     return (
         <div className="space-y-2">
             <h1 className="h2-bold">Dashboard</h1>

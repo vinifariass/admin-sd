@@ -1,27 +1,38 @@
 'use server'
 import { z } from "zod";
-import { insertMoradorSchema, updateMoradorSchema } from "../validator";
+import { insertEncomendaSchema, updateEncomendaSchema } from "../validator";
 import { prisma } from '@/db/prisma';
 import { revalidatePath } from "next/cache";
 import { formatErrors, convertToPlainObject } from "../utils";
 import { Prisma } from "@prisma/client";
 import { PAGE_SIZE } from "../constants";
 
+export async function getEncomendaById(encomendaId: string) {
+
+    const data = await prisma.encomenda.findFirst({
+        where: {
+            id: encomendaId
+        }
+    });
+
+    return convertToPlainObject(data);
+}
+
 
 //Create a parking
-export async function createMorador(data: z.infer<typeof insertMoradorSchema>) {
+export async function createEncomenda(data: z.infer<typeof insertEncomendaSchema>) {
     try {
-        const morador = insertMoradorSchema.parse(data);
+        const encomenda = insertEncomendaSchema.parse(data);
 
-        await prisma.morador.create({
-            data: morador
+        await prisma.encomenda.create({
+            data: encomenda
         });
 
-        revalidatePath('/moradores');
+        revalidatePath('/encomendas');
 
         return {
             success: true,
-            message: "Morador criado com sucesso"
+            message: "Encomenda criado com sucesso"
         }
     } catch (error) {
 
@@ -30,15 +41,15 @@ export async function createMorador(data: z.infer<typeof insertMoradorSchema>) {
 }
 
 //Update a morador
-export async function updateMorador(data: z.infer<typeof updateMoradorSchema> & { id: string }) {
+export async function updateEncomenda(data: z.infer<typeof updateEncomendaSchema> & { id: string }) {
     try {
-        const morador = updateMoradorSchema.parse(data);
+        const encomenda = updateEncomendaSchema.parse(data);
 
-        await prisma.morador.update({
+        await prisma.encomenda.update({
             where: {
-                id: morador.id
+                id: encomenda.id
             },
-            data: morador
+            data: encomenda
         });
 
         return {
@@ -129,41 +140,64 @@ export async function getParkingSummary() {
 }
 
 // Get all products
-export async function getAllMoradores() {
+export async function getAllEncomendas({
+    query,
+    limit = PAGE_SIZE,
+    page,
+    category,
+    price,
+    rating,
+    sort
+}: {
+    query: string,
+    limit?: number,
+    page: number,
+    category?: string,
+    price?: string,
+    rating?: string,
+    sort?: string
+}
+) {
 
 
-    try {
-        const moradores = await prisma.morador.findMany({
+    const data = await prisma.encomenda.findMany({
 
-            select: { id: true, nome: true },
-        });
-        return moradores;
-    } catch (error) {
-        return (formatErrors(error));
-    }
+        orderBy: {
+            createdAt: 'desc'
+        },
+        skip: (page - 1) * limit,
+        take: limit,
+    });
+
+    const dataCount = await prisma.encomenda.count();
+
+    return {
+        data,
+        totalPages: Math.ceil(dataCount / limit)
+    };
 }
 
-export async function deleteMorador(id: string) {
+export async function deleteEncomenda(id: string) {
     try {
-        const moradorExists = await prisma.morador.findFirst({
+        const encomendaExists = await prisma.encomenda.findFirst({
             where: {
                 id
             }
         });
 
-        if (!moradorExists) throw new Error('Morador não encontrado');
+        if (!encomendaExists) throw new Error('Encomenda não encontrado');
 
-        await prisma.morador.delete({
+        await prisma.encomenda.delete({
             where: {
                 id
             }
         });
 
-        revalidatePath('/admin/moradores');
+        revalidatePath('/admin/encomendas');
 
         return {
             success: true,
-            message: 'Morador deletado com sucesso'
+            message: 'Encomenda deletado com sucesso'
         }
     } catch (error) {
         return {
@@ -192,21 +226,5 @@ export async function getMoradorById(moradorId: string) {
     return convertToPlainObject(data);
 }
 
-export async function getMoradorNameById(moradorId: string): Promise<string | null> {
-    try {
-        const morador = await prisma.morador.findFirst({
-            where: {
-                id: moradorId
-            },
-            select: {
-                nome: true
-            }
-        });
-        return morador?.nome || null;
-    } catch (error) {
-        throw formatErrors(error);
-
-    }
-}
 
 

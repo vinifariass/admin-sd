@@ -41,4 +41,10 @@ export const funcionarioDefaultValues = {
     
 };
 
+export const encomendaDefaultValues = {
+    numeroPedido: "",
+    moradorId: "",
+}
+     
+
 export const PAGE_SIZE = Number(process.env.PAGE_SIZE) || 12;

@@ -89,3 +89,15 @@ export const singUpFormSchema = z.object({
     message: "Passwords don't match",
     path: ['confirmPassword']
 });
+
+export const insertEncomendaSchema = z.object({
+    numeroPedido: z.string().min(1, { message: "Número do pedido é obrigatório" }),
+    moradorId: z.string().min(1, { message: "Selecione um morador" }),
+    status: z.enum(["DEVOLVIDO","ENTREGUE"]).optional(),
+    assinadoPor: z.string().optional(),
+    assinado: z.boolean().optional(),
+});
+
+export const updateEncomendaSchema = insertEncomendaSchema.extend({
+    id: z.string().uuid({ message: "Encomenda inválida" }),
+});

@@ -54,27 +54,49 @@ model Morador {
   dataLocacao DateTime
   dataSaida   DateTime?
   createdAt   DateTime  @default(now())
+
+  Encomenda Encomenda[]
+}
+
+model Encomenda {
+  id             String       @id @default(uuid())
+  numeroPedido   String       @unique
+  moradorId      String
+  morador        Morador      @relation(fields: [moradorId], references: [id])
+  createdAt      DateTime     @default(now())
+  dataEntrega    DateTime?
+  status         StatusPedido @default(ENTREGUE)
+  assinado       Boolean      @default(false)
+  assinadoPor    String?
+  dataAssinatura DateTime?
+
+  @@map("encomendas")
+}
+
+enum StatusPedido {
+  ENTREGUE
+  DEVOLVIDO
 }
 
 model Funcionario {
-  id            String             @id @default(uuid())
-  nome          String
-  cpf           String             @unique(map: "funcionario_cpf_idx")
-  cargo         String
-  salario       Float
-  email         String?
-  telefone      String?
-  dataAdmissao  DateTime?
-  dataDemissao  DateTime?
-  endereco      String?
-  departamento  String?
-  status        StatusFuncionario? @default(ATIVO)
-  foto          String?
-  pis           String?
-  rg            String?
+  id             String             @id @default(uuid())
+  nome           String
+  cpf            String             @unique(map: "funcionario_cpf_idx")
+  cargo          String
+  salario        Float
+  email          String?
+  telefone       String?
+  dataAdmissao   DateTime?
+  dataDemissao   DateTime?
+  endereco       String?
+  departamento   String?
+  status         StatusFuncionario? @default(ATIVO)
+  foto           String?
+  pis            String?
+  rg             String?
   dataNascimento DateTime?
-  createdAt     DateTime           @default(now())
-  updatedAt     DateTime           @updatedAt
+  createdAt      DateTime           @default(now())
+  updatedAt      DateTime           @updatedAt
 
   @@map("funcionarios") // Nome da tabela no banco de dados
 }
