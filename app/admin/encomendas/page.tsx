@@ -9,14 +9,12 @@ import { useEffect } from "react";
 import EncomendaList from "./encomenda-list";
 const AdminEncomendaPage = async ({
     searchParams,
-    params,
 }: {
     searchParams: {
         page?: string;
         query: string;
         category?: string;
     };
-    params: { moradorId: string };
 }) => {
     const page = Number(searchParams.page); 
     const searchText = searchParams.query ; 
