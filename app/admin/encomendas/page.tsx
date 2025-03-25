@@ -13,7 +13,7 @@ interface SearchParams {
     category?: string;
 }
 
-// Define a tipagem para as props do componente
+// Define a tipagem pra as props do componente
 interface PageProps {
     searchParams: Promise<SearchParams>;
 }
@@ -38,7 +38,7 @@ const AdminEncomendaPage = async ({ searchParams }: PageProps) => {
             <div className="flex-between">
                 <div className="flex items-center gap-3">
                     <h1 className="h2-bold">
-                        Funcionários
+                        Encomendas
                     </h1>
                     {searchText && (
                         <div>
@@ -52,7 +52,7 @@ const AdminEncomendaPage = async ({ searchParams }: PageProps) => {
                     )}
                 </div>
                 <Button asChild variant='default'>
-                    <Link href='/admin/funcionarios/create'>Criar Funcionários</Link>
+                    <Link href='/admin/encomendas/create'>Criar Encomendas</Link>
                 </Button>
             </div>
 
