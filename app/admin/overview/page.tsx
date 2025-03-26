@@ -5,8 +5,11 @@ import { Metadata } from "next";
 import Link from "next/link";
 import Charts from "./charts";
 import { getParkingSummary } from "@/lib/actions/parking.action";
-import {  formatNumber } from "@/lib/utils";
+import { formatNumber } from "@/lib/utils";
 import { getMoradoresSummary } from "@/lib/actions/morador.action";
+import ListaAgendamentos from "./agendamentos";
+import EnviarNotificacao from "./notificacoes";
+import { getAgendamentos } from "@/lib/actions/agendamento-action";
 
 export const metadata: Metadata = {
     title: 'Admin Overview',
@@ -15,11 +18,12 @@ export const metadata: Metadata = {
 const AdminOverviewPage = async () => {
     const summary = await getParkingSummary();
     const summaryMoradores = await getMoradoresSummary();
-
+    const agendamentos = await getAgendamentos();
+    
     return (
         <div className="space-y-2">
             <h1 className="h2-bold">Dashboard</h1>
-            
+
             {/* Estatísticas */}
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
                 {/* Total de Vagas */}
@@ -64,12 +68,12 @@ const AdminOverviewPage = async () => {
                 {/* Produtos */}
                 <Card>
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium">Products</CardTitle>
+                        <CardTitle className="text-sm font-medium">Encomendas</CardTitle>
                         <Barcode />
                     </CardHeader>
                     <CardContent>
                         <div className="text-2xl font-bold">
-                            {/* {formatNumber(summary.productsCount)} */}
+                            {formatNumber(summary.encomendasCount)}
                         </div>
                     </CardContent>
                 </Card>
@@ -102,10 +106,10 @@ const AdminOverviewPage = async () => {
                                     <TableHead>ACTIONS</TableHead>
                                 </TableRow>
                             </TableHeader>
-                             <TableBody>
+                            <TableBody>
                                 {summary.latestVagas.map((vaga) => (
                                     <TableRow key={vaga.id}>
-                                       <TableCell>
+                                        <TableCell>
                                             {vaga?.nome || 'Deleted User'}
                                         </TableCell>
                                         <TableCell>
@@ -121,11 +125,16 @@ const AdminOverviewPage = async () => {
                                         </TableCell>
                                     </TableRow>
                                 ))}
-                            </TableBody> 
+                            </TableBody>
                         </Table>
                     </CardContent>
                 </Card>
             </div>
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-2">
+                <ListaAgendamentos agendamentos={agendamentos} />
+                <EnviarNotificacao  />
+            </div>
+
         </div>
     );
 }

@@ -63,6 +63,14 @@ export function getMenuList(pathname: string): Group[] {
             {
               href: "/admin/servicos",
               label: "Serviços"
+            },
+            {
+              href: "/admin/visitantes",
+              label: "Visitantes"
+            },
+            {
+              href: "/admin/agendamentos",
+              label: "Agendamentos"
             }
           ]
         },

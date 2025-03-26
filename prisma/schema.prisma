@@ -113,3 +113,15 @@ model Recibo {
   dataVencimento DateTime
   createdAt      DateTime @default(now())
 }
+
+model Agendamento {
+  id          String      @id @default(uuid())
+  nome        String   
+  apartamento String   
+  horario     String 
+  status      String  
+  tipo        String  
+  descricao   String?  
+  createdAt   DateTime @default(now()) 
+  updatedAt   DateTime @updatedAt      
+}

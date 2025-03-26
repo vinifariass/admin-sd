@@ -93,11 +93,24 @@ export const singUpFormSchema = z.object({
 export const insertEncomendaSchema = z.object({
     numeroPedido: z.string().min(1, { message: "Número do pedido é obrigatório" }),
     moradorId: z.string().min(1, { message: "Selecione um morador" }),
-    status: z.enum(["DEVOLVIDO","ENTREGUE"]).optional(),
+    status: z.enum(["DEVOLVIDO", "ENTREGUE"]).optional(),
     assinadoPor: z.string().nullable().optional(),
     assinado: z.boolean().optional(),
 });
 
 export const updateEncomendaSchema = insertEncomendaSchema.extend({
     id: z.string().uuid({ message: "Encomenda inválida" }),
+});
+
+export const insertAgendamentoSchema = z.object({
+    nome: z.string().min(1, "Nome é obrigatório"),
+    apartamento: z.string().min(1, { message: "Apartamento é obrigatório" }),
+    status: z.string(),
+    horario: z.string().regex(/^([01]\d|2[0-3]):([0-5]\d)$/, "Formato inválido de horário (HH:mm)"),
+    tipo: z.string().min(1, "Tipo é obrigatório"),
+    descricao: z.string().min(1, "Descrição é obrigatória"),
+});
+
+export const updateAgendamentoSchema = insertAgendamentoSchema.extend({
+    id: z.string().uuid({ message: "Agendamento inválido" }),
 });

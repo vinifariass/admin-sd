@@ -3,7 +3,6 @@ import MainNav from "../admin/main-nav";
 import UserButton from "@/components/shared/header/user-button";
 import Link from "next/link";
 import Image from 'next/image';
-import AdminOverviewPage from "../admin/overview/page";
 import AdminPanelLayout from "@/components/admin-panel/admin-panel-layout";
 
 export default function RootLayout({
@@ -12,7 +11,12 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
+        <>
+            <AdminPanelLayout>{children}
 
-        <AdminPanelLayout>{children}</AdminPanelLayout>
+            </AdminPanelLayout>
+
+
+        </>
     );
 }

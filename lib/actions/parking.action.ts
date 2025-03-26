@@ -87,6 +87,7 @@ export async function getParkingSummary() {
         take: 6,
     })
 
+
     //TODO: Create total Sales de gastos e colocar aqui
 
     /*  const ordersCount = await prisma.order.count();
@@ -133,11 +134,12 @@ export async function getParkingSummary() {
      } */
 
     const parkingsCount = await prisma.parking.count();
-
+    const encomendasCount = await prisma.encomenda.count();
     return {
         parkingsCount,
         latestVagas,
-        vagasData
+        vagasData,
+        encomendasCount
     }
 }
 
@@ -157,14 +159,31 @@ export async function getAllParkings({
 ) {
 
 
-    const data = await prisma.parking.findMany({
 
+
+    const skip = (page - 1) * limit;
+
+    const queryFilter: Prisma.ParkingWhereInput =
+        query && query !== 'all'
+            ? {
+                placa: {
+                    contains: query,
+                    mode: 'insensitive',
+                } as Prisma.StringFilter,
+            }
+            : {};
+
+    const data = await prisma.parking.findMany({
+        where: {
+            ...queryFilter
+        },
         orderBy: {
             createdAt: 'desc'
         },
         skip: (page - 1) * limit,
         take: limit,
     });
+
 
     const dataCount = await prisma.parking.count();
 

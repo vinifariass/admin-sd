@@ -45,6 +45,12 @@ export const encomendaDefaultValues = {
     numeroPedido: "",
     moradorId: "",
 }
+
+export const agendamentoDefaultValues = {
+    nome: "",
+    horario: "",
+    status: "",
+}
      
 
 export const PAGE_SIZE = Number(process.env.PAGE_SIZE) || 12;
