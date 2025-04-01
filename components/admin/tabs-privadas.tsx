@@ -113,7 +113,7 @@ export default async function TabsPrivadas({ summary, summaryMoradores, agendame
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {summary.latestVagas.map((vaga) => (
+                                {summary.latestVagas.map((vaga: any) => (
                                     <TableRow key={vaga.id}>
                                         <TableCell>{vaga?.nome || "Deleted User"}</TableCell>
                                         <TableCell>{vaga.cpf}</TableCell>
