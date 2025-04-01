@@ -41,6 +41,7 @@ export const config = {
                         id: user.id,
                         name: user.name,
                         email: user.email,
+                        tipo: user.tipo,
                     };
                 } else {
                     return null;
@@ -55,7 +56,7 @@ export const config = {
         async session({ session, user, trigger, token }: any) {
             //Set the user ID from the token
             session.user.id = token.sub;
-            session.user.role = token.role;
+            session.user.tipo = token.tipo;
             session.user.name = token.name;
 
             // If there is an update, set the user name
@@ -67,7 +68,7 @@ export const config = {
         async jwt({ token, user, trigger, session }: any) {
             // Assign user fields to token
             if (user) {
-                token.role = user.role;
+                token.tipo = user.tipo;
                 token.id = user.id;
                 // If user has no name then use the email
                 if (user.name === "NO_NAME") {

@@ -114,3 +114,14 @@ export const insertAgendamentoSchema = z.object({
 export const updateAgendamentoSchema = insertAgendamentoSchema.extend({
     id: z.string().uuid({ message: "Agendamento inválido" }),
 });
+
+export const updateProfileSchema = z.object({
+    name: z.string().min(3, 'Name must be at least 3 characters'),
+    email: z.string().min(3, 'Email must be at least 3 characters'),
+})
+
+//Schema to update users
+export const updateUserSchema = updateProfileSchema.extend({
+    id: z.string().min(1, 'ID é obrigatório'),
+    tipo: z.enum(['MORADOR', 'ADMIN', 'FUNCIONARIO']),
+})

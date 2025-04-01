@@ -5,6 +5,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import Pagination from "@/components/shared/pagination";
 import DeleteDialog from "@/components/shared/delete-dialog";
 import { formatDateTime } from "@/lib/utils";
+import { auth } from "@/auth";
 const AdminMoradoresPage = async (props: {
     searchParams: Promise<{
         page: string;
@@ -24,7 +25,7 @@ const AdminMoradoresPage = async (props: {
         // morador: morador
     });
 
-
+    const session = await auth()
     return (<>
         <div className="space-y-2">
             <div className="flex-between">
@@ -43,9 +44,14 @@ const AdminMoradoresPage = async (props: {
                         </div>
                     )}
                 </div>
-                <Button asChild variant='default'>
-                    <Link href='/admin/moradores/create'>Criar Moradores</Link>
-                </Button>
+                {
+                    session?.user?.tipo === 'ADMIN' && (
+                        <Button asChild variant='default'>
+                        <Link href='/admin/moradores/create'>Criar Moradores</Link>
+                    </Button>
+                    )
+                }
+               
             </div>
 
             <Table>
@@ -70,7 +76,7 @@ const AdminMoradoresPage = async (props: {
                             <TableCell>{formatDateTime(morador.dataLocacao).dateOnly}</TableCell>
                             <TableCell>{
                                 morador.dataSaida ? formatDateTime(morador.dataSaida).dateOnly : ''
-                                }</TableCell>
+                            }</TableCell>
                             <TableCell className="flex gap-1">
                                 <Button asChild variant='outline' size='sm'>
                                     <Link href={`/admin/moradores/${morador.id}`}>Edit</Link>

@@ -53,7 +53,7 @@ const UserButton = async () => {
                     </Link>
                 </DropdownMenuItem>
 
-                {session?.user?.role === 'admin' && (
+                {session?.user?.tipo === 'admin' && (
                     <DropdownMenuItem>
                         <Link href='/admin/overview' className="w-full">
                             Admin

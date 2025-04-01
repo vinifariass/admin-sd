@@ -20,11 +20,17 @@ model User {
   emailVerified DateTime? @map("email_verified")
   image         String?
   password      String?
-
+  tipo          Tipo      @default(MORADOR)
   createdAt DateTime @default(now()) @db.Timestamp(6)
   updatedAt DateTime @updatedAt
 
   @@map("users")
+}
+
+enum Tipo {
+  ADMIN
+  FUNCIONARIO
+  MORADOR
 }
 
 enum TipoMorador {
@@ -115,13 +121,13 @@ model Recibo {
 }
 
 model Agendamento {
-  id          String      @id @default(uuid())
-  nome        String   
-  apartamento String   
-  horario     String 
-  status      String  
-  tipo        String  
-  descricao   String?  
-  createdAt   DateTime @default(now()) 
-  updatedAt   DateTime @updatedAt      
+  id          String   @id @default(uuid())
+  nome        String
+  apartamento String
+  horario     String
+  status      String
+  tipo        String
+  descricao   String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }

@@ -4,13 +4,21 @@ import MainNav from './main-nav';
 import UserButton from '@/components/shared/header/user-button';
 import AdminPanelLayout from '@/components/admin-panel/admin-panel-layout';
 import { SheetMenu } from '@/components/admin-panel/sheet-menu';
-export default function AdminLayout({
+import { auth } from '@/auth';
+export default async function AdminLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;
 }>) {
+
+    const session = await auth()
+
+    console.log(session) 
+
     return (
-        <><AdminPanelLayout>
+        <> <AdminPanelLayout
+            session={session}
+        >
             {/* Header */}
             <header className="border-b container mx-auto flex items-center h-16 px-4">
                 <SheetMenu />

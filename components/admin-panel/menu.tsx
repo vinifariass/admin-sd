@@ -15,14 +15,12 @@ import {
   TooltipContent,
   TooltipProvider
 } from "@/components/ui/tooltip";
+import { MenuProps } from "./menu-props";
 
-interface MenuProps {
-  isOpen: boolean | undefined;
-}
 
-export function Menu({ isOpen }: MenuProps) {
+export function Menu({ isOpen, session }: MenuProps) {
   const pathname = usePathname();
-  const menuList = getMenuList(pathname);
+  const menuList = getMenuList(pathname, session);
 
   return (
     <ScrollArea className="[&>div>div[style]]:!block">

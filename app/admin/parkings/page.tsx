@@ -13,6 +13,7 @@ import Pagination from "@/components/shared/pagination";
 import DeleteDialog from "@/components/shared/delete-dialog";
 import { Input } from "@/components/ui/input"; // Importação do Input do Shadcn/ui
 import { auth } from "@/auth";
+import { requireAdmin } from "@/lib/auth-guard";
 
 const AdminParkingsPage = async (props: {
   searchParams: Promise<{
@@ -21,6 +22,11 @@ const AdminParkingsPage = async (props: {
     category: string;
   }>;
 }) => {
+  
+  const session = await auth()
+
+  console.log(session) 
+
   const searchParams = await props.searchParams;
 
   const page = Number(searchParams.page) || 1;
@@ -66,11 +72,15 @@ const AdminParkingsPage = async (props: {
         </div>
 
         {/* Botão Criar Vagas */}
-        <div className="flex justify-end">
-          <Button asChild variant="default">
-            <Link href="/admin/parkings/create">Criar Vagas</Link>
-          </Button>
-        </div>
+        {
+          session?.user?.tipo === "ADMIN" && (
+            <div className="flex justify-end mb-4">
+              <Button asChild variant="default">
+                <Link href="/admin/parkings/create">Criar Vagas</Link>
+              </Button>
+            </div>
+          )
+        }
 
         {/* Tabela */}
         <Table>

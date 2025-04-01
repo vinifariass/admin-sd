@@ -94,3 +94,8 @@ export function parseSalary(value: string): number | null {
   const numericValue = value.replace(/\./g, "").replace(",", ".");
   return numericValue ? parseFloat(numericValue) : null;
 }
+
+// Shorteen UUID
+export function formatId(id: string) {
+  return `...${id.substring(id.length - 6)}`
+}

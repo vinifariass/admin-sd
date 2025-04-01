@@ -27,7 +27,12 @@ type Group = {
   menus: Menu[];
 };
 
-export function getMenuList(pathname: string): Group[] {
+export function getMenuList(
+  pathname: string,
+  session: any,
+): Group[] {
+
+  console.log("session", session);
   return [
     {
       groupLabel: "",
@@ -74,23 +79,14 @@ export function getMenuList(pathname: string): Group[] {
             }
           ]
         },
-        {
-          href: "/categories",
-          label: "Categories",
-          icon: Bookmark
-        },
-        {
-          href: "/tags",
-          label: "Tags",
-          icon: Tag
-        }
+        
       ]
     },
     {
-      groupLabel: "Settings",
+      groupLabel: "Configurações",
       menus: [
         {
-          href: "/users",
+          href: "/admin/users",
           label: "Users",
           icon: Users
         },
