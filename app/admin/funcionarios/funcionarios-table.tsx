@@ -44,7 +44,7 @@ const FuncionarioTable = ({ funcionarios }: Props) => {
             <TableCell>{funcionario.dataDemissao ? formatDateTime(funcionario.dataDemissao).dateOnly : ''}</TableCell>
             <TableCell className="flex gap-1">
               <Button asChild variant='outline' size='sm'>
-                <Link href={`/admin/funcionarios/${funcionario.id}`}>Edit</Link>
+                <Link href={`/admin/funcionarios/${funcionario.id}`}>Editar</Link>
               </Button>
               <DeleteDialog id={funcionario.id} action={deleteFuncionario} />
             </TableCell>

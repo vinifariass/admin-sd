@@ -23,7 +23,7 @@ const CredentialsSignInForm = () => {
         const { pending } = useFormStatus();
         return (
             <Button className="w-full" variant='default' disabled={pending}>
-                {pending ? 'Signing In...' : 'Sign In'}
+                {pending ? 'Entrando...' : 'Entrar'}
             </Button>
         );
     }
@@ -39,8 +39,8 @@ const CredentialsSignInForm = () => {
                 </div>
 
                 <div>
-                    <Label htmlFor="password">Password</Label>
-                    <Input type="password" id="password" name="password" placeholder="Password" required autoComplete="password"
+                    <Label htmlFor="password">Senha</Label>
+                    <Input type="password" id="password" name="password" placeholder="Senha" required autoComplete="password"
                         defaultValue={signInDefaultValues.password} />
                 </div>
                 <SignInButton />
@@ -52,8 +52,8 @@ const CredentialsSignInForm = () => {
 
 
                 <div className="text-sm text-center text-muted-foreground">
-                    Don&apos;t have and account? {' '}
-                    <Link href="/sign-up" target="_self" className="link">Sign Up</Link>
+                    Não tem uma conta? {' '}
+                    <Link href="/sign-up" target="_self" className="link">Cadastrar</Link>
                 </div>
             </div>
         </form>);

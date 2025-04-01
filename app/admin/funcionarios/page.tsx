@@ -73,7 +73,7 @@ const AdminFuncionariosPage = async (props: {
                                 }</TableCell>
                             <TableCell className="flex gap-1">
                                 <Button asChild variant='outline' size='sm'>
-                                    <Link href={`/admin/funcionarios/${funcionario.id}`}>Edit</Link>
+                                    <Link href={`/admin/funcionarios/${funcionario.id}`}>Editar</Link>
                                 </Button>
                                 {/* DELETE BUTTON */}
                                 <DeleteDialog id={funcionario.id} action={deleteFuncionario} />

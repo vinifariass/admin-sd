@@ -8,7 +8,7 @@ import { auth } from "@/auth";
 import { redirect } from 'next/navigation';
 
 export const metadata: Metadata = {
-    title: 'Sign In',
+    title: 'Entrar',
 };
 
 const SignInPage = async (props: {
@@ -35,9 +35,9 @@ console.log(callbackUrl);
                 <Link href="/" className="flex-center">
                     <Image src='/images/logo.png' width={100} height={100} alt={`${APP_NAME} logo`} priority={true} />
                 </Link>
-                <CardTitle className="text-center">Sign In</CardTitle>
+                <CardTitle className="text-center">Entrar</CardTitle>
                 <CardDescription className="text-center">
-                    Sign in to your account
+                    Entre na sua conta
                 </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">

@@ -23,7 +23,7 @@ const SignUpForm = () => {
         const { pending } = useFormStatus();
         return (
             <Button className="w-full" variant='default' disabled={pending}>
-                {pending ? 'Submitting...' : 'Sign Up'}
+                {pending ? 'Cadastrando...' : 'Cadastrar'}
             </Button>
         );
     }
@@ -34,7 +34,7 @@ const SignUpForm = () => {
             <div className="space-y-6">
 
                 <div>
-                    <Label htmlFor="name">Name</Label>
+                    <Label htmlFor="name">Nome</Label>
                     <Input type="text" id="name" name="name"  autoComplete="name"
                         defaultValue={signUpDefaultValues.name} />
                 </div>
@@ -46,13 +46,13 @@ const SignUpForm = () => {
                 </div>
 
                 <div>
-                    <Label htmlFor="password">Password</Label>
+                    <Label htmlFor="password">Senha</Label>
                     <Input type="password" id="password" name="password" required autoComplete="password"
                         defaultValue={signUpDefaultValues.password} />
                 </div>
 
                 <div>
-                    <Label htmlFor="confirmPassword">Confirm Password</Label>
+                    <Label htmlFor="confirmPassword">Confirmar Senha</Label>
                     <Input type="password" id="confirmPassword" name="confirmPassword" required autoComplete="confirmPassword"
                         defaultValue={signUpDefaultValues.confirmPassword} />
                 </div>
@@ -64,8 +64,8 @@ const SignUpForm = () => {
                 )}
 
                 <div className="text-sm text-center text-muted-foreground">
-                    Already have an account? {' '}
-                    <Link href="/sign-in" target="_self" className="link">Sign In</Link>
+                    Já possui uma conta? {' '}
+                    <Link href="/sign-in" target="_self" className="link">Entrar</Link>
                 </div>
             </div>
         </form>);

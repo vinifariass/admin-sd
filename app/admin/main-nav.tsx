@@ -23,7 +23,7 @@ import { HiUsers } from "react-icons/hi";
 import { TbBuilding } from "react-icons/tb";
 const links = [
     /*  {
-         title: 'Overview',
+         title: 'Visão Geral',
          href: '/admin/overview'
      },
      {

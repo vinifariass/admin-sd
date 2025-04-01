@@ -26,7 +26,7 @@ const DeleteDialog = ({ id, action }: {
         <AlertDialog open={open} onOpenChange={setOpen}>
             <AlertDialogTrigger asChild>
                 <Button size='sm' variant='destructive' className="ml-2"
-                >Delete
+                >Deletar
                 </Button>
             </AlertDialogTrigger>
             <AlertDialogContent >
@@ -46,7 +46,7 @@ const DeleteDialog = ({ id, action }: {
                         disabled={isPending}
                         onClick={handleDeleteClick}
                     >
-                        {isPending ? 'Deleting...' : 'Delete'}
+                        {isPending ? 'Deleting...' : 'Deletar'}
                     </Button>
                 </AlertDialogFooter>
             </AlertDialogContent>

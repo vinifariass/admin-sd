@@ -108,7 +108,7 @@ const AdminParkingsPage = async (props: {
                 <TableCell>{parking.placa}</TableCell>
                 <TableCell className="flex gap-1">
                   <Button asChild variant="outline" size="sm">
-                    <Link href={`/admin/parkings/${parking.id}`}>Edit</Link>
+                    <Link href={`/admin/parkings/${parking.id}`}>Editar</Link>
                   </Button>
                   {/* DELETE BUTTON */}
                   <DeleteDialog id={parking.id} action={deleteParking} />

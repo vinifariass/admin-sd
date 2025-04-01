@@ -8,7 +8,7 @@ import Link from "next/link";
 import Pagination from "@/components/shared/pagination";
 import { Badge } from "@/components/ui/badge";
 export const metadata: Metadata = {
-    title: 'Admin Users',
+    title: 'Admin Usuários',	
 };
 const AmdinUserPage = async (props: {
     searchParams: Promise<{
@@ -30,10 +30,10 @@ const AmdinUserPage = async (props: {
                     </h1>
                     {searchText && (
                         <div>
-                            Filtered by <i>&quot;{searchText}&quot;</i>{' '}
+                            Filtrado por <i>&quot;{searchText}&quot;</i>{' '}
                             <Link href='/admin/users'>
                                 <Button variant='outline' size='sm'>
-                                    Remove Filter
+                                    Remover filtro
                                 </Button>
                             </Link>
                         </div>
@@ -69,7 +69,7 @@ const AmdinUserPage = async (props: {
                                 <TableCell>
                                     <Button asChild variant='outline' size='sm'>
                                         <Link href={`/admin/users/${user.id}`}>
-                                            Edit
+                                            Editar
                                         </Link>
                                     </Button>
                                      <DeleteDialog id={user.id} action={deleteUser} />

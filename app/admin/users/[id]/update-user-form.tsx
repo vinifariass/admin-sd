@@ -64,7 +64,7 @@ const UpdateUserForm = ({ user }: {
                     control={form.control}
                     render={({ field }: { field: ControllerRenderProps<z.infer<typeof updateUserSchema>, 'name'> }) => (
                         <FormItem className='w-full'>
-                            <FormLabel>Name</FormLabel>
+                            <FormLabel>Nome</FormLabel>
                             <FormControl>
                                 <Input placeholder="Enter user name" {...field} />
                             </FormControl>
@@ -103,7 +103,7 @@ const UpdateUserForm = ({ user }: {
             </div>
             <div className="flex-between mt-4">
                 <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
-                    {form.formState.isSubmitting ? 'Submitting...' : 'Atualizar Usuário'}
+                    {form.formState.isSubmitting ? 'Atualizando...' : 'Atualizar Usuário'}
                 </Button></div>
         </form>
     </Form>);

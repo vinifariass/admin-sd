@@ -14,14 +14,13 @@ const UserButton = async () => {
         return (
             <Button asChild>
                 <Link href="/sign-in">
-                    <UserIcon />Sign In
+                    <UserIcon />Entrar
                 </Link>
             </Button>
         );
 
     }
     const firstInitial = session.user?.name?.charAt(0).toUpperCase() ?? 'U';
-    console.log(session.user?.name)
     return <div className="flex gap-2 items-center">
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -44,14 +43,14 @@ const UserButton = async () => {
                 </DropdownMenuLabel>
                 <DropdownMenuItem>
                     <Link href='/user/profile' className="w-full">
-                        User Profile
+                        Perfil de Usuário
                     </Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem>
+              {/*   <DropdownMenuItem>
                     <Link href='/user/orders' className="w-full">
                         Order History
                     </Link>
-                </DropdownMenuItem>
+                </DropdownMenuItem> */}
 
                 {session?.user?.tipo === 'admin' && (
                     <DropdownMenuItem>
@@ -63,7 +62,7 @@ const UserButton = async () => {
                 <DropdownMenuItem className="p-0 mb-1">
                     <form action={signOutUser} className="w-full">
                         <Button className="w-full py-4 px-2 h-4 justify-start" variant='ghost'>
-                            Sign Out
+                            Sair
                         </Button>
                     </form>
 

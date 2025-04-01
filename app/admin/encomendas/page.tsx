@@ -79,7 +79,7 @@ const AdminEncomendaPage = async ({ searchParams }: PageProps) => {
 
                             <TableCell className="flex gap-1">
                                 <Button asChild variant='outline' size='sm'>
-                                    <Link href={`/admin/encomendas/${encomenda.id}`}>Edit</Link>
+                                    <Link href={`/admin/encomendas/${encomenda.id}`}>Editar</Link>
                                 </Button>
                                 {/* DELETE BUTTON */}
                                 <DeleteDialog id={encomenda.id} action={deleteEncomenda} />

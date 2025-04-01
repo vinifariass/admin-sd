@@ -105,7 +105,7 @@ export async function getAllUsers({
     }
 }
 
-// Delete user
+// Deletar user
 export async function deleteUser(id: string) {
     try {
 

@@ -42,7 +42,6 @@ const MoradorForm = ({ type, morador, moradorId }: { type: 'Create' | 'Atualizar
 
     });
 
-    console.log(form.formState.errors);
 
     //Possivel erro é porque esqueci o apartamento e implementar bloco tbm
 

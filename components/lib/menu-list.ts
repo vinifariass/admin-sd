@@ -40,7 +40,7 @@ export function getMenuList(
         menus: [
           {
             href: "/admin/users",
-            label: "Users",
+            label: "Usuários",
             icon: Users
           },
           {
