@@ -31,8 +31,27 @@ export function getMenuList(
   pathname: string,
   session: any,
 ): Group[] {
-
-  console.log("session", session);
+  let configGroup: Group[] = [];
+ 
+  if (session?.user?.tipo === "ADMIN") {
+    configGroup = [
+      {
+        groupLabel: "Configurações",
+        menus: [
+          {
+            href: "/admin/users",
+            label: "Users",
+            icon: Users
+          },
+          {
+            href: "/account",
+            label: "Account",
+            icon: Settings
+          }
+        ]
+      }
+    ];
+  }
   return [
     {
       groupLabel: "",
@@ -82,20 +101,7 @@ export function getMenuList(
         
       ]
     },
-    {
-      groupLabel: "Configurações",
-      menus: [
-        {
-          href: "/admin/users",
-          label: "Users",
-          icon: Users
-        },
-        {
-          href: "/account",
-          label: "Account",
-          icon: Settings
-        }
-      ]
-    }
+    ...configGroup 
+   
   ];
 }
