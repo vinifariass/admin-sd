@@ -5,7 +5,7 @@ import UpdateUserForm from "./update-user-form";
 
 
 export const metadata: Metadata = {
-    title: 'Update User',
+    title: 'Atualizar User',
 };
 
 const AdminUserUpdatePage = async (props: {

@@ -74,7 +74,7 @@ export const config = {
                 if (user.name === "NO_NAME") {
                     token.name = user.email!.split('@')[0];
 
-                    //Update database to reflect the token name
+                    //Atualizar database to reflect the token name
                     await prisma.user.update({
                         where: {
                             id: user.id,

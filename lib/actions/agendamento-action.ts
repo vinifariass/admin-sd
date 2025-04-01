@@ -40,7 +40,7 @@ export async function createAgendamento(data: z.infer<typeof insertAgendamentoSc
     }
 }
 
-//Update a parking
+//Atualizar a parking
 export async function updateAgendamento(data: z.infer<typeof updateAgendamentoSchema> & { id: string }) {
     try {
         const agendamento = updateAgendamentoSchema.parse(data);

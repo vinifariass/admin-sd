@@ -139,7 +139,7 @@ export async function getUserById(userId: string) {
     return user;
 }
 
-//Update a user
+//Atualizar a user
 export async function updateUser(user: z.infer<typeof updateUserSchema>) {
     try {
         await prisma.user.update({

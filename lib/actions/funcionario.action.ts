@@ -29,7 +29,7 @@ export async function createFuncionario(data: z.infer<typeof insertFuncionarioSc
     }
 }
 
-//Update a funcionario
+//Atualizar a funcionario
 export async function updateFuncionario(data: z.infer<typeof updateFuncionarioSchema> & { id: string }) {
     try {
         const funcionario = updateFuncionarioSchema.parse(data);

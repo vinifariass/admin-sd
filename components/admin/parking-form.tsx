@@ -22,7 +22,7 @@ import { useRouter } from "next/navigation";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { useState } from "react";
 
-const ParkingForm = ({ type, parking, parkingId }: { type: 'Criar' | 'Update'; parking?: Parking, parkingId?: string }) => {
+const ParkingForm = ({ type, parking, parkingId }: { type: 'Criar' | 'Atualizar'; parking?: Parking, parkingId?: string }) => {
 
 
     const router = useRouter();
@@ -31,7 +31,7 @@ const ParkingForm = ({ type, parking, parkingId }: { type: 'Criar' | 'Update'; p
 
     const form = useForm<z.infer<typeof insertParkingSchema>>({
         resolver: zodResolver(type === 'Criar' ? insertParkingSchema : updateParkingSchema),
-        defaultValues: parking && type === 'Update' ? parking : parkingDefaultValues,
+        defaultValues: parking && type === 'Atualizar' ? parking : parkingDefaultValues,
 
     });
 
@@ -52,7 +52,7 @@ const ParkingForm = ({ type, parking, parkingId }: { type: 'Criar' | 'Update'; p
             }
 
             // Atualizar registro existente
-            if (type === 'Update' && parking?.id) {
+            if (type === 'Atualizar' && parking?.id) {
                 const res = await updateParking({ ...values, id: parking.id });
                 if (!res.success) {
                     toast.error(res.message);

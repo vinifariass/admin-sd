@@ -29,7 +29,7 @@ export async function createMorador(data: z.infer<typeof insertMoradorSchema>) {
     }
 }
 
-//Update a morador
+//Atualizar a morador
 export async function updateMorador(data: z.infer<typeof updateMoradorSchema> & { id: string }) {
     try {
         const morador = updateMoradorSchema.parse(data);

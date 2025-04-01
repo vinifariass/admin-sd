@@ -32,7 +32,8 @@ export function getMenuList(
   session: any,
 ): Group[] {
   let configGroup: Group[] = [];
- 
+  let configGroupSession: Group[] = [];
+
   if (session?.user?.tipo === "ADMIN") {
     configGroup = [
       {
@@ -51,6 +52,48 @@ export function getMenuList(
         ]
       }
     ];
+
+    if (session?.user?.tipo) {
+      configGroupSession = [
+        {
+          groupLabel: "Gerenciador",
+          menus: [
+            {
+              href: "",
+              label: "Condomínio",
+              icon: SquarePen,
+              submenus: [
+                {
+                  href: "/admin/moradores",
+                  label: "Moradores"
+                },
+                {
+                  href: "/admin/parkings",
+                  label: "Vagas"
+                },
+                {
+                  href: "/admin/encomendas",
+                  label: "Encomendas"
+                },
+                {
+                  href: "/admin/servicos",
+                  label: "Serviços"
+                },
+                {
+                  href: "/admin/visitantes",
+                  label: "Visitantes"
+                },
+                {
+                  href: "/admin/agendamentos",
+                  label: "Agendamentos"
+                }
+              ]
+            },
+
+          ]
+        },
+      ]
+    }
   }
   return [
     {
@@ -64,44 +107,8 @@ export function getMenuList(
         }
       ]
     },
-    {
-      groupLabel: "Gerenciador",
-      menus: [
-        {
-          href: "",
-          label: "Condomínio",
-          icon: SquarePen,
-          submenus: [
-            {
-              href: "/admin/moradores",
-              label: "Moradores"
-            },
-            {
-              href: "/admin/parkings",
-              label: "Vagas"
-            },
-            {
-              href: "/admin/encomendas",
-              label: "Encomendas"
-            },
-            {
-              href: "/admin/servicos",
-              label: "Serviços"
-            },
-            {
-              href: "/admin/visitantes",
-              label: "Visitantes"
-            },
-            {
-              href: "/admin/agendamentos",
-              label: "Agendamentos"
-            }
-          ]
-        },
-        
-      ]
-    },
-    ...configGroup 
-   
+    ...configGroupSession,
+    ...configGroup
+
   ];
 }

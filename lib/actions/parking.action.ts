@@ -40,7 +40,7 @@ export async function createParking(data: z.infer<typeof insertParkingSchema>) {
     }
 }
 
-//Update a parking
+//Atualizar a parking
 export async function updateParking(data: z.infer<typeof updateParkingSchema> & { id: string }) {
     try {
         const parking = updateParkingSchema.parse(data);

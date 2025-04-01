@@ -4,7 +4,7 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 export const metadata: Metadata = {
-    title: 'Update Vaga',
+    title: 'Atualizar Vaga',
 };
 const AdminVagaUpdatePage = async (props: {
     params: Promise<{ id: string; }>,
@@ -15,10 +15,10 @@ const AdminVagaUpdatePage = async (props: {
     return (<>
         <div className="space-y-8 max-w-5xl mx-auto">
             <h1 className="h2-bold">
-                Update Vaga
+                Atualizar Vaga
             </h1>
 
-            <ParkingForm type="Update" parking={parking} parkingId={parking.id} />
+            <ParkingForm type="Atualizar" parking={parking} parkingId={parking.id} />
         </div>
     </>);
 }
