@@ -11,7 +11,11 @@ import {
   SheetTitle
 } from "@/components/ui/sheet";
 
-export function SheetMenu() {
+interface SheetMenuProps {
+  session: object | null; 
+}
+
+export function SheetMenu({ session }: SheetMenuProps) {
   return (
     <Sheet>
       <SheetTrigger className="lg:hidden" asChild>
@@ -32,7 +36,7 @@ export function SheetMenu() {
             </Link>
           </Button>
         </SheetHeader>
-        <Menu isOpen />
+        <Menu isOpen session={session}/>
       </SheetContent>
     </Sheet>
   );

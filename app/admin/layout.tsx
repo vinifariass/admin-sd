@@ -21,7 +21,7 @@ export default async function AdminLayout({
         >
             {/* Header */}
             <header className="border-b container mx-auto flex items-center h-16 px-4">
-                <SheetMenu />
+                <SheetMenu session={session} />
                 {/* Logo */}
                 <Link href="/" className="w-22">
                     <Image src="/images/logo.png" height={48} width={48} alt="Logo" />
