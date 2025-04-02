@@ -46,11 +46,9 @@ const AdminFuncionariosPage = async (props: {
                         </div>
                     )}
                 </div>
-                {session?.user?.tipo === 'admin' && (
-                    <Button asChild variant='default'>
-                        <Link href='/admin/funcionarios/create'>Criar Funcionários</Link>
-                    </Button>
-                )}
+                <Button asChild variant='default'>
+                    <Link href='/admin/funcionarios/create'>Criar Funcionários</Link>
+                </Button>
             </div>
 
             <Table>

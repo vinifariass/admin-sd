@@ -66,7 +66,7 @@ const UpdateUserForm = ({ user }: {
                         <FormItem className='w-full'>
                             <FormLabel>Nome</FormLabel>
                             <FormControl>
-                                <Input placeholder="Enter user name" {...field} />
+                                <Input placeholder="Preencha o nome de usuário" {...field} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>

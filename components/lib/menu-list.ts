@@ -1,8 +1,6 @@
 import {
-  Tag,
   Users,
   Settings,
-  Bookmark,
   SquarePen,
   LayoutGrid,
   LucideIcon
@@ -29,124 +27,80 @@ type Group = {
 
 export function getMenuList(
   pathname: string,
-  session: any,
+  session: any
 ): Group[] {
-  let configGroup: Group[] = [];
-  let configGroupSession: Group[] = [];
+  const userType = session?.user?.tipo;
 
-  if (session?.user?.tipo === "ADMIN") {
-    configGroup = [
+  const defaultGroup: Group = {
+    groupLabel: "",
+    menus: [
       {
+        href: "/admin/overview",
+        label: "Dashboard",
+        icon: LayoutGrid,
+        active: pathname === "/admin/overview",
+      }
+    ]
+  };
+
+  const adminConfigGroup: Group | null = userType === "ADMIN"
+    ? {
         groupLabel: "Configurações",
         menus: [
           {
             href: "/admin/users",
             label: "Usuários",
-            icon: Users
+            icon: Users,
+            active: pathname.includes("/admin/users")
           },
           {
             href: "/account",
             label: "Account",
-            icon: Settings
+            icon: Settings,
+            active: pathname.includes("/account")
           }
         ]
       }
-    ];
+    : null;
 
-    if (session?.user?.tipo) {
-      configGroupSession = [
-        {
+  const managerGroup: Group | null =
+    ["ADMIN", "FUNCIONARIO", "MORADOR"].includes(userType)
+      ? {
           groupLabel: "Gerenciador",
           menus: [
             {
               href: "",
               label: "Condomínio",
               icon: SquarePen,
+              active: pathname.startsWith("/admin/"),
               submenus: [
-                {
-                  href: "/admin/moradores",
-                  label: "Moradores"
-                },
-                {
-                  href: "/admin/parkings",
-                  label: "Vagas"
-                },
-                {
-                  href: "/admin/encomendas",
-                  label: "Encomendas"
-                },
-                {
-                  href: "/admin/servicos",
-                  label: "Serviços"
-                },
-                {
-                  href: "/admin/visitantes",
-                  label: "Visitantes"
-                },
-                {
-                  href: "/admin/agendamentos",
-                  label: "Agendamentos"
-                },
-                {
-                  href: "/admin/funcionarios",
-                  label: "Funcionario"
-                }
+                { href: "/admin/moradores", label: "Moradores" },
+                { href: "/admin/parkings", label: "Vagas" },
+                { href: "/admin/encomendas", label: "Encomendas" },
+                { href: "/admin/servicos", label: "Serviços" },
+                { href: "/admin/visitantes", label: "Visitantes" },
+                { href: "/admin/agendamentos", label: "Agendamentos" },
+                { href: "/admin/funcionarios", label: "Funcionário" },
               ]
-            },
-
-          ]
-        },
-      ]
-    }
-
-    if(session?.user?.tipo === "FUNCIONARIO" || session?.user?.tipo === "MORADOR") {
-      configGroupSession = [
-        {
-          groupLabel: "Gerenciador",
-          menus: [
-            {
-              href: "",
-              label: "Condomínio",
-              icon: SquarePen,
-              submenus: [
-                {
-                  href: "/admin/agendamentos",
-                  label: "Agendamentos"
-                },
-                {
-                  href: "/admin/visitantes",
-                  label: "Visitantes"
-                },
-                {
-                  href: "/admin/encomendas",
-                  label: "Encomendas"
-                },
-                {
-                  href: "/admin/servicos",
-                  label: "Funcionario"
+              .filter((submenu) => {
+                if (["FUNCIONARIO", "MORADOR"].includes(userType)) {
+                  return ["Agendamentos", "Visitantes", "Encomendas", "Funcionário"]
+                    .includes(submenu.label);
                 }
-              ]
-            },
-
+                return true;
+              })
+              .map((submenu) => ({
+                ...submenu,
+                active: pathname.includes(submenu.href)
+              }))
+            }
           ]
-        },
-      ]
-    }
-  }
-  return [
-    {
-      groupLabel: "",
-      menus: [
-        {
-          href: "/admin/overview",
-          label: "Dashboard",
-          icon: LayoutGrid,
-          submenus: []
         }
-      ]
-    },
-    ...configGroupSession,
-    ...configGroup
+      : null;
 
+  return [
+    defaultGroup,
+    ...(managerGroup ? [managerGroup] : []),
+    ...(adminConfigGroup ? [adminConfigGroup] : [])
   ];
 }
