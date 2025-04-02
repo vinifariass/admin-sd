@@ -16,6 +16,7 @@ import {
   TooltipProvider
 } from "@/components/ui/tooltip";
 import { MenuProps } from "./menu-props";
+import { signOutUser } from "@/lib/actions/user.action";
 
 
 export function Menu({ isOpen, session }: MenuProps) {
@@ -59,7 +60,7 @@ export function Menu({ isOpen, session }: MenuProps) {
                               variant={
                                 (active === undefined &&
                                   pathname.startsWith(href)) ||
-                                active
+                                  active
                                   ? "secondary"
                                   : "ghost"
                               }
@@ -116,7 +117,7 @@ export function Menu({ isOpen, session }: MenuProps) {
               <Tooltip delayDuration={100}>
                 <TooltipTrigger asChild>
                   <Button
-                    onClick={() => {}}
+                    onClick={() => { }}
                     variant="outline"
                     className="w-full justify-center h-10 mt-5"
                   >
@@ -129,12 +130,18 @@ export function Menu({ isOpen, session }: MenuProps) {
                         isOpen === false ? "opacity-0 hidden" : "opacity-100"
                       )}
                     >
-                      Sign out
+                      <form action={signOutUser} className="w-full">
+                        Sair
+                      </form>
                     </p>
                   </Button>
                 </TooltipTrigger>
                 {isOpen === false && (
-                  <TooltipContent side="right">Sign out</TooltipContent>
+                  <TooltipContent side="right">
+                    <form action={signOutUser} className="w-full">
+                      Sair
+                    </form>
+                  </TooltipContent>
                 )}
               </Tooltip>
             </TooltipProvider>

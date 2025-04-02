@@ -1,10 +1,11 @@
+'use server'
 import { prisma } from "@/db/prisma";
 
 export async function salvarRecibos(recibos: { nomeServico: string; dataVencimento: string }[]) {
     try {
         const recibosFormatados = recibos.map((r) => ({
             nomeServico: r.nomeServico,
-            dataVencimento: r.dataVencimento ?? new Date(r.dataVencimento), // Converte para Date ou define como null
+            dataVencimento: new Date(`${r.dataVencimento}T00:00:00.000Z`),
         }));
 
         console.log(recibosFormatados)
