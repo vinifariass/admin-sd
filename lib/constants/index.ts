@@ -30,6 +30,7 @@ export const moradorDefaultValues = {
     email: "" ,
     telefone: "",
     tipoMorador: "Proprietário",
+    tipo: "carro",
 };
 
 

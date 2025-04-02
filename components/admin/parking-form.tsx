@@ -27,16 +27,12 @@ const ParkingForm = ({ type, parking, parkingId }: { type: 'Criar' | 'Atualizar'
 
     const router = useRouter();
     const [tipoMorador, setTipoMorador] = useState<string>(parking?.tipoMorador || "Proprietario");
-    const [tipoVeiculo, setTipoVeiculo] = useState<string>(parking?.tipoVeiculo || "CARRO");
 
     const form = useForm<z.infer<typeof insertParkingSchema>>({
         resolver: zodResolver(type === 'Criar' ? insertParkingSchema : updateParkingSchema),
         defaultValues: parking && type === 'Atualizar' ? parking : parkingDefaultValues,
 
     });
-
-
-    const statusVeiculo = form.watch("tipoVeiculo");
 
     const onSubmit: SubmitHandler<z.infer<typeof insertParkingSchema>> = async (values) => {
         console.log(values)
@@ -152,28 +148,22 @@ const ParkingForm = ({ type, parking, parkingId }: { type: 'Criar' | 'Atualizar'
 
                     <FormField
                         control={form.control}
-                        name="tipoVeiculo"
+                        name="tipo"
                         render={({ field }) => (
-                            <FormItem
-
-                            >
+                            <FormItem>
                                 <FormLabel>Tipo de Veículo</FormLabel>
                                 <Select
-                                    onValueChange={(value) => {
-                                        field.onChange(value);
-                                        setTipoVeiculo(value);
-                                    }}
-                                    defaultValue={field.value ?? ""}
-
+                                    onValueChange={field.onChange}
+                                    defaultValue={field.value}
                                 >
-                                    <FormControl >
+                                    <FormControl>
                                         <SelectTrigger>
-                                            <SelectValue placeholder="Selecione um status" />
+                                            <SelectValue placeholder="Selecione um tipo de veículo" />
                                         </SelectTrigger>
                                     </FormControl>
                                     <SelectContent>
-                                        <SelectItem value="CARRO">Carro</SelectItem>
-                                        <SelectItem value="MOTO">Moto</SelectItem>
+                                        <SelectItem value="carro">Carro</SelectItem>
+                                        <SelectItem value="moto">Moto</SelectItem>
                                     </SelectContent>
                                 </Select>
                                 <FormMessage />
@@ -181,37 +171,19 @@ const ParkingForm = ({ type, parking, parkingId }: { type: 'Criar' | 'Atualizar'
                         )}
                     />
 
-                    {statusVeiculo === "MOTO" ? (
-                        <FormField
-                            control={form.control}
-                            name="moto"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Moto</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="Ex: Honda Biz" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                    ) : (
-                        <FormField
-                            control={form.control}
-                            name="carro"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Carro</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="Ex: Honda Civic" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                    )}
-
-
+                    <FormField
+                        control={form.control}
+                        name="modelo"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Modelo</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="Ex: Honda Civic" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
 
                     <FormField
                         control={form.control}

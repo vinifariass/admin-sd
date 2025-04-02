@@ -53,7 +53,7 @@ const AdminAgendamentosPage = async (props: {
                         <TableHead>DESCRICAO</TableHead>
                         <TableHead>STATUS</TableHead>
                         <TableHead>TIPO</TableHead>
-                        <TableHead className="w-[100px]">ACTIONS</TableHead>
+                        <TableHead className="w-[100px]">AÇÕES</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>

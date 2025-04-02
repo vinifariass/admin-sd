@@ -11,9 +11,9 @@ import {
 } from "@/components/ui/table";
 import Pagination from "@/components/shared/pagination";
 import DeleteDialog from "@/components/shared/delete-dialog";
-import { Input } from "@/components/ui/input"; // Importação do Input do Shadcn/ui
+import { Input } from "@/components/ui/input";
 import { auth } from "@/auth";
-import { requireAdmin } from "@/lib/auth-guard";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 
 const AdminParkingsPage = async (props: {
   searchParams: Promise<{
@@ -22,67 +22,91 @@ const AdminParkingsPage = async (props: {
     category: string;
   }>;
 }) => {
-  
-  const session = await auth()
-
-  console.log(session) 
-
   const searchParams = await props.searchParams;
 
   const page = Number(searchParams.page) || 1;
   const searchText = searchParams.query || "";
+  const category = searchParams.category || "carro";
 
   const parkings = await getAllParkings({
     query: searchText,
     page,
+    category,
   });
 
-  return (
-    <>
-      <div className="space-y-2">
-        {/* Header */}
-        <div className="flex justify-between items-center">
-          <div className="flex items-center gap-3">
-            <h1 className="h2-bold">Vagas</h1>
-            {searchText && (
-              <div>
-                Filtered by <i>&quot;{searchText}&quot;</i>{" "}
-                <Link href="/admin/parkings">
-                  <Button variant="outline" size="sm">
-                    Remove Filter
-                  </Button>
-                </Link>
-              </div>
-            )}
-          </div>
 
-          {/* Search Input */}
-          <form action="/admin/parkings" method="GET" className="flex gap-2">
-            <Input
-              type="text"
-              name="query"
-              placeholder="Buscar por nome, CPF ou placa..."
-              defaultValue={searchText}
-              className="w-[250px]"
-            />
-            <Button type="submit" variant="default" size="sm">
-              Buscar
+  return (
+    <div className="space-y-6">
+      <Tabs defaultValue={category} className="w-full">
+        <TabsList className="flex gap-2 p-2 rounded-md bg-muted border">
+          <Link href="/admin/parkings?category=carro">
+            <Button variant={category === "carro" ? "default" : "outline"} size="sm">
+              Carros
             </Button>
-          </form>
+          </Link>
+          <Link href="/admin/parkings?category=moto">
+            <Button variant={category === "moto" ? "default" : "outline"} size="sm">
+              Motos
+            </Button>
+          </Link>
+        </TabsList>
+
+        {category === "carro" && (
+          <TableSection parkings={parkings} category="carro" page={page} searchText={searchText} />
+        )}
+        {category === "moto" && (
+          <TableSection parkings={parkings} category="moto" page={page} searchText={searchText} />
+        )}
+      </Tabs>
+    </div>
+  );
+};
+
+const TableSection = ({ parkings, category, page, searchText }: {
+  parkings: any;
+  category: string;
+  page: number;
+  searchText: string;
+}) => {
+  console.log(category);
+  return (
+    <div className="space-y-4">
+      <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
+        <div>
+          <h1 className="text-2xl font-bold">
+            {category === "carro" ? "Carros" : "Motos"}
+          </h1>
+          {searchText && (
+            <div className="mt-1 text-sm text-muted-foreground">
+              Filtrado por <i>"{searchText}"</i>{" "}
+              <Link href={`/admin/parkings?category=${category}`}>
+                <Button variant="link" size="sm" className="px-1 h-auto">Remover filtro</Button>
+              </Link>
+            </div>
+          )}
         </div>
 
-        {/* Botão Criar Vagas */}
-        {
-          session?.user?.tipo === "ADMIN" && (
-            <div className="flex justify-end mb-4">
-              <Button asChild variant="default">
-                <Link href="/admin/parkings/create">Criar Vagas</Link>
-              </Button>
-            </div>
-          )
-        }
+        <form action={`/admin/parkings?category=${category}`} method="GET" className="flex gap-2 items-center">
+          <Input
+            type="text"
+            name="query"
+            placeholder={`Buscar por nome, CPF ou placa (${category === "carro" ? "Carro" : "Moto"})...`}
+            defaultValue={searchText}
+            className="w-[260px]"
+          />
+          <Button type="submit" variant="default" size="sm">Buscar</Button>
+        </form>
+      </div>
 
-        {/* Tabela */}
+      <div className="flex justify-end">
+        <Button asChild size="sm">
+          <Link href={`/admin/parkings/create?category=${category}`}>
+            Criar Vaga ({category === "carro" ? "Carro" : "Moto"})
+          </Link>
+        </Button>
+      </div>
+
+      <div className="overflow-x-auto rounded-md border">
         <Table>
           <TableHeader>
             <TableRow>
@@ -90,40 +114,41 @@ const AdminParkingsPage = async (props: {
               <TableHead>CPF</TableHead>
               <TableHead>TIPO DE MORADOR</TableHead>
               <TableHead>APARTAMENTO</TableHead>
-              <TableHead>CARRO</TableHead>
+              <TableHead>MODELO</TableHead>
               <TableHead>COR</TableHead>
               <TableHead>PLACA</TableHead>
-              <TableHead className="w-[100px]">ACTIONS</TableHead>
+              <TableHead className="text-center">AÇÕES</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {parkings.data.map((parking) => (
+            {parkings.data.map((parking: any) => (
+
               <TableRow key={parking.id}>
                 <TableCell>{parking.nome}</TableCell>
                 <TableCell>{parking.cpf}</TableCell>
                 <TableCell>{parking.tipoMorador}</TableCell>
                 <TableCell>{parking.apartamento}</TableCell>
-                <TableCell>{parking.carro}</TableCell>
+                <TableCell>
+                  {category === "carro" ? parking.modelo : parking.modelo}
+                </TableCell>
                 <TableCell>{parking.cor}</TableCell>
                 <TableCell>{parking.placa}</TableCell>
-                <TableCell className="flex gap-1">
+                <TableCell className="flex gap-1 justify-center">
                   <Button asChild variant="outline" size="sm">
                     <Link href={`/admin/parkings/${parking.id}`}>Editar</Link>
                   </Button>
-                  {/* DELETE BUTTON */}
                   <DeleteDialog id={parking.id} action={deleteParking} />
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
-
-        {/* Paginação */}
-        {parkings?.totalPages > 1 && (
-          <Pagination page={page} totalPages={parkings.totalPages} />
-        )}
       </div>
-    </>
+
+      {parkings?.totalPages > 1 && (
+        <Pagination page={page} totalPages={parkings.totalPages} />
+      )}
+    </div>
   );
 };
 

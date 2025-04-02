@@ -33,6 +33,11 @@ enum Tipo {
   MORADOR
 }
 
+enum TipoVeiculo {
+  carro
+  moto
+}
+
 enum TipoMorador {
   Proprietario
   Inquilino
@@ -40,21 +45,15 @@ enum TipoMorador {
 
 model Parking {
   id          String      @id @default(uuid())
+  nome        String
+  cpf         String
   apartamento String
   placa       String
-  carro       String?
-  moto        String?
   cor         String
-  createdAt   DateTime    @default(now())
-  cpf         String
+  modelo      String
+  tipo        TipoVeiculo
   tipoMorador TipoMorador
-  nome        String
-  tipoVeiculo TipoVeiculo @default(CARRO)
-}
-
-enum TipoVeiculo {
-  CARRO
-  MOTO
+  createdAt   DateTime @default(now())
 }
 
 model Morador {

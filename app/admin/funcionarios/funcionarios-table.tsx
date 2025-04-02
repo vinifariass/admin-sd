@@ -30,7 +30,7 @@ const FuncionarioTable = ({ funcionarios }: Props) => {
           <TableHead>TELEFONE</TableHead>
           <TableHead>DATA DE LOCAÇÃO</TableHead>
           <TableHead>DATA DE DEMISSÃO</TableHead>
-          <TableHead className="w-[100px]">ACTIONS</TableHead>
+          <TableHead className="w-[100px]">AÇÕES</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>

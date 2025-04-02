@@ -129,7 +129,7 @@ export default async function TabsPrivadas({ summary, summaryMoradores, agendame
                                         <TableHead>NOME</TableHead>
                                         <TableHead>CPF</TableHead>
                                         <TableHead>APARTAMENTO</TableHead>
-                                        <TableHead>ACTIONS</TableHead>
+                                        <TableHead>AÇÕES</TableHead>
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>

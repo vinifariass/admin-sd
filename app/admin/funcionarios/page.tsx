@@ -62,7 +62,7 @@ const AdminFuncionariosPage = async (props: {
                         <TableHead>TELEFONE</TableHead>
                         <TableHead>DATA DE LOCAÇÃO</TableHead>
                         <TableHead>DATA DE DEMISSÂO</TableHead>
-                        <TableHead className="w-[100px]">ACTIONS</TableHead>
+                        <TableHead className="w-[100px]">AÇÕES</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>

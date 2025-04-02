@@ -64,7 +64,7 @@ const AdminEncomendaPage = async ({ searchParams }: PageProps) => {
                         <TableHead>DATA DE ENTREGA</TableHead>
                         <TableHead>DATA DE ASSINATURA</TableHead>
                         <TableHead>ASSINADO POR</TableHead>
-                        <TableHead className="w-[100px]">ACTIONS</TableHead>
+                        <TableHead className="w-[100px]">AÇÕES</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>

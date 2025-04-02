@@ -27,8 +27,7 @@ export const signInFormSchema = z.object({
 export const insertParkingSchema = z.object({
     apartamento: z.string().min(1, { message: "Apartamento é obrigatório" }),
     placa: z.string().min(1, { message: "Placa é obrigatória" }),
-    carro: z.string().optional(),
-    moto: z.string().optional(),
+    modelo: z.string().min(1, { message: "Modelo é obrigatório" }), // Substitui 'carro'
     cor: z.string().min(1, { message: "Cor é obrigatória" }),
     tipoMorador: z.enum(["Proprietario", "Inquilino"], { message: "Escolha uma opção válida" }),
     nome: z.string().min(1, { message: "Nome é obrigatório" }),
@@ -36,8 +35,7 @@ export const insertParkingSchema = z.object({
         .min(11, { message: "CPF deve ter 11 dígitos" })
         .max(14, { message: "CPF deve ter no máximo 14 caracteres" })
         .refine(isValidCPF, { message: "CPF inválido" }),
-    tipoVeiculo: z.enum(["CARRO", "MOTO"], { message: "Escolha uma opção válida" }),
-
+    tipo: z.enum(["carro", "moto"], { message: "Tipo de veículo inválido" }), // Novo campo
 });
 
 export const updateParkingSchema = insertParkingSchema.extend({

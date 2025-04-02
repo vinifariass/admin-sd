@@ -63,7 +63,7 @@ const AdminMoradoresPage = async (props: {
                         <TableHead>TELEFONE</TableHead>
                         <TableHead>DATA DE LOCAÇÃO</TableHead>
                         <TableHead>DATA DE SAÍDA</TableHead>
-                        <TableHead className="w-[100px]">ACTIONS</TableHead>
+                        <TableHead className="w-[100px]">AÇÕES</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>

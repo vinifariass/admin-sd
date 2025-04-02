@@ -150,17 +150,14 @@ export async function getAllParkings({
     limit = PAGE_SIZE,
     page,
     vaga,
+    category, 
 }: {
     query: string,
     limit?: number,
     page: number,
     vaga?: string,
-}
-) {
-
-
-
-
+    category?: string,
+}) {
     const skip = (page - 1) * limit;
 
     const queryFilter: Prisma.ParkingWhereInput =
@@ -169,27 +166,37 @@ export async function getAllParkings({
                 placa: {
                     contains: query,
                     mode: 'insensitive',
-                } as Prisma.StringFilter,
+                },
             }
+            : {};
+
+    const typeFilter: Prisma.ParkingWhereInput =
+        category && category !== 'all'
+            ? { tipo: category as 'carro' | 'moto' }
             : {};
 
     const data = await prisma.parking.findMany({
         where: {
-            ...queryFilter
+            ...queryFilter,
+            ...typeFilter,
         },
         orderBy: {
-            createdAt: 'desc'
+            createdAt: 'desc',
         },
-        skip: (page - 1) * limit,
+        skip,
         take: limit,
     });
 
-
-    const dataCount = await prisma.parking.count();
+    const dataCount = await prisma.parking.count({
+        where: {
+            ...queryFilter,
+            ...typeFilter,
+        },
+    });
 
     return {
         data,
-        totalPages: Math.ceil(dataCount / limit)
+        totalPages: Math.ceil(dataCount / limit),
     };
 }
 
