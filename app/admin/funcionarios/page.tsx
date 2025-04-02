@@ -5,6 +5,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import Pagination from "@/components/shared/pagination";
 import DeleteDialog from "@/components/shared/delete-dialog";
 import { formatDateTime } from "@/lib/utils";
+import { auth } from "@/auth";
 const AdminFuncionariosPage = async (props: {
     searchParams: Promise<{
         page: string;
@@ -23,6 +24,8 @@ const AdminFuncionariosPage = async (props: {
         page,
         // morador: morador
     });
+
+    const session = await auth();
 
 
     return (<>
@@ -43,9 +46,11 @@ const AdminFuncionariosPage = async (props: {
                         </div>
                     )}
                 </div>
-                <Button asChild variant='default'>
-                    <Link href='/admin/funcionarios/create'>Criar Funcionários</Link>
-                </Button>
+                {session?.user?.tipo === 'admin' && (
+                    <Button asChild variant='default'>
+                        <Link href='/admin/funcionarios/create'>Criar Funcionários</Link>
+                    </Button>
+                )}
             </div>
 
             <Table>
@@ -70,13 +75,16 @@ const AdminFuncionariosPage = async (props: {
                             <TableCell>{funcionario.dataAdmissao ? formatDateTime(funcionario.dataAdmissao).dateOnly : ''}</TableCell>
                             <TableCell>{
                                 funcionario.dataDemissao ? formatDateTime(funcionario.dataDemissao).dateOnly : ''
-                                }</TableCell>
+                            }</TableCell>
                             <TableCell className="flex gap-1">
                                 <Button asChild variant='outline' size='sm'>
                                     <Link href={`/admin/funcionarios/${funcionario.id}`}>Editar</Link>
                                 </Button>
                                 {/* DELETE BUTTON */}
-                                <DeleteDialog id={funcionario.id} action={deleteFuncionario} />
+                                {session?.user?.tipo === 'admin' && (
+                                    <DeleteDialog id={funcionario.id} action={deleteFuncionario} />
+
+                                )}
                             </TableCell>
 
                         </TableRow>

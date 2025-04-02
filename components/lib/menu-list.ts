@@ -86,6 +86,44 @@ export function getMenuList(
                 {
                   href: "/admin/agendamentos",
                   label: "Agendamentos"
+                },
+                {
+                  href: "/admin/funcionarios",
+                  label: "Funcionario"
+                }
+              ]
+            },
+
+          ]
+        },
+      ]
+    }
+
+    if(session?.user?.tipo === "FUNCIONARIO" || session?.user?.tipo === "MORADOR") {
+      configGroupSession = [
+        {
+          groupLabel: "Gerenciador",
+          menus: [
+            {
+              href: "",
+              label: "Condomínio",
+              icon: SquarePen,
+              submenus: [
+                {
+                  href: "/admin/agendamentos",
+                  label: "Agendamentos"
+                },
+                {
+                  href: "/admin/visitantes",
+                  label: "Visitantes"
+                },
+                {
+                  href: "/admin/encomendas",
+                  label: "Encomendas"
+                },
+                {
+                  href: "/admin/servicos",
+                  label: "Funcionario"
                 }
               ]
             },

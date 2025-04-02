@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Car, Users, Barcode, DoorClosed } from "lucide-react";
+import { Car, Users, Barcode, DoorClosed, CircleDollarSign } from "lucide-react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -11,9 +11,26 @@ import FuncionarioTable from "@/app/admin/funcionarios/funcionarios-table";
 import Charts from "@/app/admin/overview/charts";
 import ListaAgendamentos from "@/app/admin/overview/agendamentos";
 import EnviarNotificacao from "@/app/admin/overview/notificacoes";
-import { useSession } from "next-auth/react"
-import { useEffect } from "react";
 import { auth } from "@/auth";
+import {
+    LineChart,
+    Line,
+    XAxis,
+    YAxis,
+    CartesianGrid,
+    Tooltip,
+    ResponsiveContainer,
+} from 'recharts'
+import FinanceiroCharts from "@/app/admin/overview/finaceiro-charts";
+
+const chartData = [
+    { month: 'Jan', revenue: 4000 },
+    { month: 'Feb', revenue: 3000 },
+    { month: 'Mar', revenue: 5000 },
+    { month: 'Apr', revenue: 4000 },
+    { month: 'May', revenue: 6000 },
+    { month: 'Jun', revenue: 7000 },
+]
 
 
 export default async function TabsPrivadas({ summary, summaryMoradores, agendamentos, funcionarios }: {
@@ -30,6 +47,7 @@ export default async function TabsPrivadas({ summary, summaryMoradores, agendame
         <Tabs defaultValue="dashboard" className="w-full">
             <TabsList className="flex flex-wrap overflow-x-auto gap-2 border p-2 rounded-md bg-muted">
                 <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
+                <TabsTrigger value="financeiro">Financeiro</TabsTrigger>
                 <TabsTrigger value="funcionarios">Funcionários</TabsTrigger>
                 <TabsTrigger value="encomendas">Encomendas</TabsTrigger>
             </TabsList>
@@ -141,6 +159,39 @@ export default async function TabsPrivadas({ summary, summaryMoradores, agendame
                     <ListaAgendamentos agendamentos={agendamentos} />
                     <EnviarNotificacao />
                 </div>
+            </TabsContent>
+
+            {/* Conteúdo da aba FUNCIONÁRIOS */}
+            <TabsContent value="financeiro" className="space-y-4">
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Financeiro</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+
+                        <CardContent className="p-6 pt-0 pb-0">
+                            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
+
+                                <Card>
+                                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                                        <CardTitle className="text-sm font-medium">Gastos</CardTitle>
+                                        <CircleDollarSign />
+                                    </CardHeader>
+                                    <CardContent>
+                                        {/* Valor principal */}
+                                        <div className="text-2xl font-bold">$15,231.89</div>
+                                        {/* Descrição secundária */}
+                                        <p className="text-xs text-muted-foreground">+20.1% from last month</p>
+
+                                    </CardContent>
+                                </Card>
+
+                                <FinanceiroCharts />
+                            </div>
+
+                        </CardContent>
+                    </CardContent>
+                </Card>
             </TabsContent>
 
             {/* Conteúdo da aba FUNCIONÁRIOS */}

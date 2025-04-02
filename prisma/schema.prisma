@@ -21,8 +21,8 @@ model User {
   image         String?
   password      String?
   tipo          Tipo      @default(MORADOR)
-  createdAt DateTime @default(now()) @db.Timestamp(6)
-  updatedAt DateTime @updatedAt
+  createdAt     DateTime  @default(now()) @db.Timestamp(6)
+  updatedAt     DateTime  @updatedAt
 
   @@map("users")
 }
@@ -42,12 +42,19 @@ model Parking {
   id          String      @id @default(uuid())
   apartamento String
   placa       String
-  carro       String
+  carro       String?
+  moto        String?
   cor         String
   createdAt   DateTime    @default(now())
   cpf         String
   tipoMorador TipoMorador
   nome        String
+  tipoVeiculo TipoVeiculo @default(CARRO)
+}
+
+enum TipoVeiculo {
+  CARRO
+  MOTO
 }
 
 model Morador {
