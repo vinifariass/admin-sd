@@ -80,11 +80,11 @@ export function getMenuList(
                 { href: "/admin/servicos", label: "Serviços" },
                 { href: "/admin/visitantes", label: "Visitantes" },
                 { href: "/admin/agendamentos", label: "Agendamentos" },
-                { href: "/admin/funcionarios", label: "Funcionário" },
+                { href: "/admin/funcionarios", label: "Funcionários" },
               ]
               .filter((submenu) => {
                 if (["FUNCIONARIO", "MORADOR"].includes(userType)) {
-                  return ["Agendamentos", "Visitantes", "Encomendas", "Funcionário"]
+                  return ["Agendamentos", "Visitantes", "Encomendas", "Funcionários","Vagas"]
                     .includes(submenu.label);
                 }
                 return true;
