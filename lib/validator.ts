@@ -126,3 +126,13 @@ export const updateUserSchema = updateProfileSchema.extend({
     id: z.string().min(1, 'ID é obrigatório'),
     tipo: z.enum(['MORADOR', 'ADMIN', 'FUNCIONARIO']),
 })
+
+export const insertServicoSchema = z.object({
+    nomeServico: z.string().min(1, { message: "Nome do serviço é obrigatório" }),
+    dataVencimento: z.date().or(z.string().datetime()),
+
+});
+
+export const updateServicoSchema = insertServicoSchema.extend({
+    id: z.string().uuid({ message: "Recibo inválido" }),
+});

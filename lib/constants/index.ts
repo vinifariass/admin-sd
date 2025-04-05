@@ -53,6 +53,10 @@ export const agendamentoDefaultValues = {
     status: "",
 }
      
+export const servicoDefaultValues = {
+    nomeServico: "",
+    dataVencimento: "",
+}
 
 export const PAGE_SIZE = Number(process.env.PAGE_SIZE) || 12;
 

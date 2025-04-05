@@ -130,9 +130,7 @@ export function Menu({ isOpen, session }: MenuProps) {
                         isOpen === false ? "opacity-0 hidden" : "opacity-100"
                       )}
                     >
-                      <form action={signOutUser} className="w-full">
                         Sair
-                      </form>
                     </p>
                   </Button>
                 </TooltipTrigger>

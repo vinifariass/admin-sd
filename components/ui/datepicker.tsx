@@ -11,32 +11,35 @@ import {
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
-export function DatePicker({
-  value,
-  onChange,
-}: {
-  value: Date | undefined;
+type DatePickerProps = {
+  value?: Date;
   onChange: (date: Date | undefined) => void;
-}) {
+  name?: string;
+};
+
+export function DatePicker({ value, onChange, name }: DatePickerProps) {
   const [inputValue, setInputValue] = React.useState<string>(
     value ? format(value, "yyyy-MM-dd") : ""
   );
 
-  // Atualiza o estado interno ao alterar a data manualmente
+  React.useEffect(() => {
+    if (value) {
+      setInputValue(format(value, "yyyy-MM-dd"));
+    }
+  }, [value]);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
     setInputValue(newValue);
 
-    // Tenta converter a string digitada em uma data válida
     const parsedDate = new Date(newValue);
     if (!isNaN(parsedDate.getTime())) {
       onChange(parsedDate);
     } else {
-      onChange(undefined); // Limpa a data se for inválida
+      onChange(undefined);
     }
   };
 
-  // Atualiza o estado interno ao selecionar uma data no calendário
   const handleDateSelect = (date: Date | undefined) => {
     if (date) {
       setInputValue(format(date, "yyyy-MM-dd"));
@@ -62,15 +65,12 @@ export function DatePicker({
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">
         <div className="flex flex-col space-y-2 p-2">
-          {/* Campo de entrada para digitar a data */}
           <Input
             type="date"
+            name={name}
             value={inputValue}
             onChange={handleInputChange}
-            className="w-full"
           />
-
-          {/* Calendário para selecionar a data */}
           <Calendar
             mode="single"
             selected={value}
