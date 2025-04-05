@@ -7,11 +7,11 @@ import { formatErrors, convertToPlainObject } from "../utils";
 import { Agendamento, Prisma } from "@prisma/client";
 import { PAGE_SIZE } from "../constants";
 
-export async function getParkingById(parkingId: string) {
+export async function getAgendamentoById(agendamentoId: string) {
 
-    const data = await prisma.parking.findFirst({
+    const data = await prisma.agendamento.findFirst({
         where: {
-            id: parkingId
+            id: agendamentoId
         }
     });
 

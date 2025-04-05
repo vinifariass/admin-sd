@@ -41,7 +41,7 @@ const AdminAgendamentosPage = async (props: {
                     )}
                 </div>
                 <Button asChild variant='default'>
-                    <Link href='/admin/funcionarios/create'>Criar Funcionários</Link>
+                    <Link href='/admin/agendamentos/create'>Criar Agendamentos</Link>
                 </Button>
             </div>
 

@@ -8,9 +8,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { prisma } from "@/db/prisma";
-import { getAgendamentos } from "@/lib/actions/agendamento-action";
 import { Agendamento } from "@prisma/client";
 
 
@@ -25,11 +22,13 @@ const ListaAgendamentos: React.FC<ListaAgendamentosProps> = ({ agendamentos: ini
     "VISITANTE"
   );
 
+  
+  console.log(tipoFiltro)
   const agendamentosFiltrados = initialAgendamentos.filter((agendamento) => {
     if (tipoFiltro === "VISITANTE") {
-      return agendamento.status === "PENDENTE"; 
+      return agendamento.tipo === "VISITANTE"; 
     } else {
-      return agendamento.status === "CONFIRMADO";
+      return agendamento.tipo === "PRESTADOR";
     }
   });
 
@@ -77,12 +76,12 @@ const ListaAgendamentos: React.FC<ListaAgendamentosProps> = ({ agendamentos: ini
 
                 {/* Status */}
                 <span
-                  className={`px-2 py-1 text-xs rounded-full ${agendamento.status === "confirmado"
+                  className={`px-2 py-1 text-xs rounded-full ${agendamento.status === "CONFIRMADO"
                       ? "bg-green-500 text-white"
                       : "bg-yellow-500 text-black"
                     }`}
                 >
-                  {agendamento.status === "confirmado" ? "Confirmado" : "Pendente"}
+                  {agendamento.status === "CONFIRMADO" ? "Confirmado" : "Pendente"}
                 </span>
               </div>
             ))

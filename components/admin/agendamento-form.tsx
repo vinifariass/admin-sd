@@ -23,7 +23,7 @@ import { Textarea } from "../ui/textarea";
 import { Agendamento } from "@prisma/client";
 import { createAgendamento, updateAgendamento } from "@/lib/actions/agendamento-action";
 
-const AgendamentoForm = ({ type, agendamento, agendamentoId }: { type: 'Create' | 'Atualizar'; agendamento?:Agendamento, agendamentoId?: string }) => {
+const AgendamentoForm = ({ type, agendamento, agendamentoId }: { type: 'Create' | 'Atualizar'; agendamento?: Agendamento, agendamentoId?: string }) => {
 
 
     const router = useRouter();
@@ -160,7 +160,7 @@ const AgendamentoForm = ({ type, agendamento, agendamentoId }: { type: 'Create' 
                                         </SelectTrigger>
                                     </FormControl>
                                     <SelectContent>
-                                        <SelectItem value="CONFIRMADO">Visitante</SelectItem>
+                                        <SelectItem value="VISITANTE">Visitante</SelectItem>
                                         <SelectItem value="PRESTADOR">Prestador</SelectItem>
                                     </SelectContent>
                                 </Select>
@@ -169,19 +169,19 @@ const AgendamentoForm = ({ type, agendamento, agendamentoId }: { type: 'Create' 
                         )}
                     />
 
-                     <FormField
-                                            control={form.control}
-                                            name="apartamento"
-                                            render={({ field }) => (
-                                                <FormItem >
-                                                    <FormLabel>Apartamento</FormLabel>
-                                                    <FormControl>
-                                                        <Input placeholder="401" {...field} />
-                                                    </FormControl>
-                                                    <FormMessage />
-                                                </FormItem>
-                                            )}
-                                        />
+                    <FormField
+                        control={form.control}
+                        name="apartamento"
+                        render={({ field }) => (
+                            <FormItem >
+                                <FormLabel>Apartamento</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="401" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
 
                 </div>
                 <div className="flex flex-col md:flex-row gap-5">
