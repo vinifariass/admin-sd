@@ -136,3 +136,16 @@ export const insertServicoSchema = z.object({
 export const updateServicoSchema = insertServicoSchema.extend({
     id: z.string().uuid({ message: "Recibo inválido" }),
 });
+
+export const insertGastoSchema = z.object({
+    descricao: z.string().min(1, { message: "Descrição é obrigatória" }),
+    valor: z.string()
+        .min(1, "Informe um valor")
+        .transform((val) => parseFloat(val.replace(',', '.')))
+        .refine((val) => !isNaN(val), { message: "Valor inválido" }),
+    data: z.date(),
+});
+
+export const updateGastoSchema = insertGastoSchema.extend({
+    id: z.string().uuid({ message: "Gasto inválido" }),
+});

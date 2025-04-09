@@ -23,14 +23,14 @@ import { Textarea } from "../ui/textarea";
 import { Agendamento } from "@prisma/client";
 import { createAgendamento, updateAgendamento } from "@/lib/actions/agendamento-action";
 
-const AgendamentoForm = ({ type, agendamento, agendamentoId }: { type: 'Create' | 'Atualizar'; agendamento?: Agendamento, agendamentoId?: string }) => {
+const AgendamentoForm = ({ type, agendamento, agendamentoId }: { type: 'Criar' | 'Atualizar'; agendamento?: Agendamento, agendamentoId?: string }) => {
 
 
     const router = useRouter();
 
 
     const form = useForm<z.infer<typeof insertAgendamentoSchema>>({
-        resolver: zodResolver(type === 'Create' ? insertAgendamentoSchema : updateAgendamentoSchema),
+        resolver: zodResolver(type === 'Criar' ? insertAgendamentoSchema : updateAgendamentoSchema),
         defaultValues: agendamento && type === 'Atualizar' ? agendamento : agendamentoDefaultValues,
 
     });
@@ -39,7 +39,7 @@ const AgendamentoForm = ({ type, agendamento, agendamentoId }: { type: 'Create' 
 
     const onSubmit: SubmitHandler<z.infer<typeof insertAgendamentoSchema>> = async (values) => {
         try {
-            if (type === 'Create') {
+            if (type === 'Criar') {
                 const res = await createAgendamento(values);
                 if (!res.success) {
                     toast.error(res.message);

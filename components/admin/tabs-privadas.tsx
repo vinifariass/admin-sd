@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 
-import { formatNumber } from "@/lib/utils";
+import { formatCurrency, formatNumber } from "@/lib/utils";
 import FuncionarioTable from "@/app/admin/funcionarios/funcionarios-table";
 
 import Charts from "@/app/admin/overview/charts";
@@ -33,14 +33,18 @@ const chartData = [
 ]
 
 
-export default async function TabsPrivadas({ summary, summaryMoradores, agendamentos, funcionarios }: {
+export default async function TabsPrivadas({ summary, summaryMoradores, agendamentos, funcionarios, gastos }: {
     summary: any,
     summaryMoradores: any,
     agendamentos: any,
-    funcionarios: any
+    funcionarios: any,
+    gastos: any
 }) {
 
     const session = await auth();
+    const variation = gastos.variation;
+    const formattedVariation = variation.toFixed(1);
+    const isPositive = variation >= 0;
 
     return (
 
@@ -179,14 +183,18 @@ export default async function TabsPrivadas({ summary, summaryMoradores, agendame
                                     </CardHeader>
                                     <CardContent>
                                         {/* Valor principal */}
-                                        <div className="text-2xl font-bold">$15,231.89</div>
+                                        <div className="text-2xl font-bold">
+                                            {formatCurrency(gastos.gastos.reduce((acc: any, gasto: any) => acc + gasto.valor, 0))}
+                                        </div>
                                         {/* Descrição secundária */}
-                                        <p className="text-xs text-muted-foreground">+20.1% from last month</p>
-
+                                        <p className={`text-xs ${isPositive ? "text-green-600" : "text-red-600"}`}>
+                                            {isPositive ? "+" : ""}
+                                            {formattedVariation}% em relação ao mês anterior
+                                        </p>
                                     </CardContent>
                                 </Card>
 
-                                <FinanceiroCharts />
+                                <FinanceiroCharts data={{ gastosData: gastos.gastosData }} />
                             </div>
 
                         </CardContent>

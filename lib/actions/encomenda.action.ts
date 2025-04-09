@@ -19,7 +19,7 @@ export async function getEncomendaById(encomendaId: string) {
 }
 
 
-//Create a parking
+//Criar a parking
 export async function createEncomenda(data: z.infer<typeof insertEncomendaSchema>) {
     try {
         const encomenda = insertEncomendaSchema.parse(data);

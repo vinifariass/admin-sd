@@ -81,6 +81,7 @@ export function getMenuList(
                 { href: "/admin/visitantes", label: "Visitantes" },
                 { href: "/admin/agendamentos", label: "Agendamentos" },
                 { href: "/admin/funcionarios", label: "Funcionários" },
+                { href: "/admin/gastos", label: "Gastos" },
               ]
               .filter((submenu) => {
                 if (["FUNCIONARIO", "MORADOR"].includes(userType)) {

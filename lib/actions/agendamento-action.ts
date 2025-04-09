@@ -19,7 +19,7 @@ export async function getAgendamentoById(agendamentoId: string) {
 }
 
 
-//Create a parking
+//Criar a parking
 export async function createAgendamento(data: z.infer<typeof insertAgendamentoSchema>) {
     try {
         const agendamento = insertAgendamentoSchema.parse(data);

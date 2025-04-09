@@ -19,7 +19,7 @@ export async function getParkingById(parkingId: string) {
 }
 
 
-//Create a parking
+//Criar a parking
 export async function createParking(data: z.infer<typeof insertParkingSchema>) {
     try {
         const parking = insertParkingSchema.parse(data);
@@ -88,7 +88,7 @@ export async function getParkingSummary() {
     })
 
 
-    //TODO: Create total Sales de gastos e colocar aqui
+    //TODO: Criar total Sales de gastos e colocar aqui
 
     /*  const ordersCount = await prisma.order.count();
      const productsCount = await prisma.product.count();

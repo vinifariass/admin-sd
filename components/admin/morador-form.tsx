@@ -30,14 +30,14 @@ import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 
-const MoradorForm = ({ type, morador, moradorId }: { type: 'Create' | 'Atualizar'; morador?: Morador, moradorId?: string }) => {
+const MoradorForm = ({ type, morador, moradorId }: { type: 'Criar' | 'Atualizar'; morador?: Morador, moradorId?: string }) => {
 
 
     const router = useRouter();
 
 
     const form = useForm<z.infer<typeof insertMoradorSchema>>({
-        resolver: zodResolver(type === 'Create' ? insertMoradorSchema : updateMoradorSchema),
+        resolver: zodResolver(type === 'Criar' ? insertMoradorSchema : updateMoradorSchema),
         defaultValues: morador && type === 'Atualizar' ? morador : moradorDefaultValues,
 
     });
@@ -46,7 +46,7 @@ const MoradorForm = ({ type, morador, moradorId }: { type: 'Create' | 'Atualizar
     const onSubmit: SubmitHandler<z.infer<typeof insertMoradorSchema>> = async (values) => {
         console.log(values)
         try {
-            if (type === 'Create') {
+            if (type === 'Criar') {
                 const res = await createMorador(values);
                 if (!res.success) {
                     toast.error(res.message);

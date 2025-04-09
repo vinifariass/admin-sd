@@ -4,6 +4,7 @@ import { getParkingSummary } from "@/lib/actions/parking.action";
 import { getMoradoresSummary } from "@/lib/actions/morador.action";
 import { getAgendamentos } from "@/lib/actions/agendamento-action";
 import { getAllFuncionarios } from "@/lib/actions/funcionario.action";
+import { getGastos } from "@/lib/actions/gasto.action";
 
 export const metadata: Metadata = {
     title: "Admin Visão Geral",
@@ -14,6 +15,7 @@ const AdminOverviewPage = async () => {
     const summary = await getParkingSummary();
     const summaryMoradores = await getMoradoresSummary();
     const agendamentos = await getAgendamentos();
+    const gastos = await getGastos()
 
     const funcionarios = await getAllFuncionarios({
         query: "",
@@ -28,6 +30,7 @@ const AdminOverviewPage = async () => {
                 summaryMoradores={summaryMoradores}
                 agendamentos={agendamentos}
                 funcionarios={funcionarios.data}
+                gastos={gastos}
             />
             {/* Tabs de navegação */}
 
