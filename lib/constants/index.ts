@@ -17,15 +17,15 @@ export const parkingDefaultValues = {
     placa: "",
     carro: "",
     cor: "",
-    nome : "",
-    cpf : "",
+    nome: "",
+    cpf: "",
 };
 
 export const moradorDefaultValues = {
     nome: "",
     cpf: "",
     apartamento: "",
-    dataLocacao:null,
+    dataLocacao: null,
     dataSaida: null,
     email: null,
     telefone: null,
@@ -39,7 +39,7 @@ export const funcionarioDefaultValues = {
     cpf: "",
     email: "",
     telefone: "",
-    
+
 };
 
 export const encomendaDefaultValues = {
@@ -52,10 +52,16 @@ export const agendamentoDefaultValues = {
     horario: "",
     status: "",
 }
-     
+
 export const servicoDefaultValues = {
     nomeServico: "",
     dataVencimento: "",
+}
+
+export const gastoDefaultValues = {
+    descricao: "",
+    valor: 0,
+    data: null as unknown as Date,
 }
 
 export const PAGE_SIZE = Number(process.env.PAGE_SIZE) || 12;

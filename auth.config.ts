@@ -26,7 +26,7 @@ export const authConfig = {
         // Generate new session cart id cookie
         const sessionCartId = crypto.randomUUID()
 
-        // Create new response and add the new headers
+        // Criar new response and add the new headers
         const response = NextResponse.next({
           request: {
             headers: new Headers(request.headers),

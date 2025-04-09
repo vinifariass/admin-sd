@@ -31,14 +31,14 @@ import { servicoDefaultValues } from "@/lib/constants";
 import { updateServico } from "@/lib/actions/recibo.action";
 import { DatePicker } from "../ui/datepicker";
 import { useState } from "react";
-const ServicoForm = ({ type, servico, servicoId }: { type: 'Create' | 'Atualizar'; servico?: Servico, servicoId?: string }) => {
+const ServicoForm = ({ type, servico, servicoId }: { type: 'Criar' | 'Atualizar'; servico?: Servico, servicoId?: string }) => {
 
 
     const router = useRouter();
     const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
 
     const form = useForm<z.infer<typeof insertServicoSchema>>({
-        resolver: zodResolver(type === 'Create' ? insertServicoSchema : updateServicoSchema),
+        resolver: zodResolver(type === 'Criar' ? insertServicoSchema : updateServicoSchema),
         defaultValues: servico && type === 'Atualizar' ? servico : servicoDefaultValues,
 
     });

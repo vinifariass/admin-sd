@@ -8,7 +8,7 @@ import { Prisma } from "@prisma/client";
 import { PAGE_SIZE } from "../constants";
 
 
-//Create a parking
+//Criar a parking
 export async function createMorador(data: z.infer<typeof insertMoradorSchema>) {
     try {
         const morador = insertMoradorSchema.parse(data);

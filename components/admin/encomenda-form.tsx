@@ -25,7 +25,7 @@ import { DatePicker } from "../ui/datepicker";
 import { createEncomenda, updateEncomenda } from "@/lib/actions/encomenda.action";
 import { getAllMoradores } from "@/lib/actions/morador.action";
 
-const EncomendaForm = ({ type, encomenda, encomendaId }: { type: 'Create' | 'Atualizar'; encomenda?: Encomenda, encomendaId?: string }) => {
+const EncomendaForm = ({ type, encomenda, encomendaId }: { type: 'Criar' | 'Atualizar'; encomenda?: Encomenda, encomendaId?: string }) => {
 
 
     const router = useRouter();
@@ -49,7 +49,7 @@ const EncomendaForm = ({ type, encomenda, encomendaId }: { type: 'Create' | 'Atu
 
 
     const form = useForm<z.infer<typeof insertEncomendaSchema>>({
-        resolver: zodResolver(type === 'Create' ? insertEncomendaSchema : updateEncomendaSchema),
+        resolver: zodResolver(type === 'Criar' ? insertEncomendaSchema : updateEncomendaSchema),
         defaultValues: encomenda && type === 'Atualizar' ? encomenda : encomendaDefaultValues,
 
     });
@@ -64,7 +64,7 @@ const EncomendaForm = ({ type, encomenda, encomendaId }: { type: 'Create' | 'Atu
         console.log("Dados enviados:", values);
         try {
 
-            if (type === 'Create') {
+            if (type === 'Criar') {
                 const res = await createEncomenda(values);
                 if (!res.success) {
                     toast.error(res.message);

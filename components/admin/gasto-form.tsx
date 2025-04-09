@@ -2,7 +2,6 @@
 
 import { insertGastoSchema, updateGastoSchema } from "@/lib/validator";
 import { ptBR } from "date-fns/locale"; // Importa a localidade brasileira
-import { Funcionario } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -17,41 +16,33 @@ import {
 import { z } from "zod";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { funcionarioDefaultValues } from "@/lib/constants";
+import { gastoDefaultValues } from "@/lib/constants";
 import { useRouter } from "next/navigation";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { useState } from "react";
-import { createFuncionario, updateFuncionario } from "@/lib/actions/funcionario.action";
 import { Textarea } from "../ui/textarea";
 import { DatePicker } from "../ui/datepicker";
+import { Gasto } from "@/types";
+import { createGasto, updateGasto } from "@/lib/actions/gasto.action";
 
 const categorias = ["Manutenção", "RH", "Copa", "TI", "Serviços Gerais"];
 
-const GastoForm = ({ type, funcionario, funcionarioId }: { type: 'Create' | 'Atualizar'; funcionario?: Funcionario, funcionarioId?: string }) => {
+const GastoForm = ({ type, gasto, gastoId }: { type: 'Criar' | 'Atualizar'; gasto?: Gasto, gastoId?: string }) => {
 
     const router = useRouter();
-    const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
+    const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
     const form = useForm<z.infer<typeof insertGastoSchema>>({
-        resolver: zodResolver(type === 'Create' ? insertGastoSchema : updateGastoSchema),
-        defaultValues: funcionario && type === 'Atualizar' ? funcionario : funcionarioDefaultValues,
+        resolver: zodResolver(type === 'Criar' ? insertGastoSchema : updateGastoSchema),
+        defaultValues: gasto && type === 'Atualizar' ? gasto : gastoDefaultValues,
 
     });
-
-
-    const handleSelectCategoria = (value: string) => {
-        form.setValue("categoria", value);
-    };
-
-    const [status, setStatus] = useState<string>(funcionario?.status || "Ativo");
-
     //Possivel erro é porque esqueci o apartamento e implementar bloco tbm
 
-    const onSubmit: SubmitHandler<z.infer<typeof insertFuncionarioSchema>> = async (values) => {
-        console.log(values)
+    const onSubmit: SubmitHandler<z.infer<typeof insertGastoSchema>> = async (values) => {
         try {
-            if (type === 'Create') {
-                const res = await createFuncionario(values);
+            if (type === 'Criar') {
+                const res = await createGasto(values);
                 if (!res.success) {
                     toast.error(res.message);
                 } else {
@@ -60,13 +51,13 @@ const GastoForm = ({ type, funcionario, funcionarioId }: { type: 'Create' | 'Atu
             }
 
             // Atualizar registro existente
-            if (type === 'Atualizar' && funcionario?.id) {
-                const res = await updateFuncionario({ ...values, id: funcionario.id });
+            if (type === 'Atualizar' && gasto?.id) {
+                const res = await updateGasto({ ...values, id: gasto.id });
                 if (!res.success) {
                     toast.error(res.message);
                 } else {
                     toast.success(res.message);
-                    router.push('/admin/funcionarios');
+                    router.push('/admin/gastos');
 
                 }
             }
@@ -95,12 +86,12 @@ const GastoForm = ({ type, funcionario, funcionarioId }: { type: 'Create' | 'Atu
                             </FormItem>
                         )}
                     />
-                    <FormField
+                    {/* <FormField
                         control={form.control}
                         name="categoria"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Valor (R$)</FormLabel>
+                                <FormLabel>Categoria</FormLabel>
                                 <FormControl>
                                     <Select onValueChange={handleSelectCategoria}>
                                         <SelectTrigger>
@@ -118,15 +109,18 @@ const GastoForm = ({ type, funcionario, funcionarioId }: { type: 'Create' | 'Atu
                                 <FormMessage />
                             </FormItem>
                         )}
-                    />
+                    /> */}
 
                     <FormField
                         control={form.control}
                         name="data"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Data de Entrega</FormLabel>
-                                <DatePicker value={selectedDate} onChange={setSelectedDate} />
+                                <FormLabel>Data</FormLabel>
+                                <DatePicker
+                                    value={field.value || null} // Certifique-se de que o valor seja null quando vazio
+                                    onChange={(newValue) => field.onChange(newValue)} // Atualiza o estado do react-hook-form
+                                />
                                 <FormMessage />
                             </FormItem>
                         )}
@@ -138,30 +132,17 @@ const GastoForm = ({ type, funcionario, funcionarioId }: { type: 'Create' | 'Atu
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Valor</FormLabel>
-                                <FormControl>
-                                    <div key="1" className="grid w-full max-w-sm items-center gap-1.5">
-                                        <div className="relative">
-                                            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                                <span className="text-gray-500 dark:text-gray-400">$</span>
-                                            </div>
-                                            <Input
-                                                className="pl-9 border border-gray-300 dark:border-gray-600"
-                                                placeholder="Enter salary"
-                                                type="number"
-                                                {...field}
-                                                onChange={(e) => {
-                                                    const value = e.target.value;
-                                                    // Converte o valor para inteiro antes de atualizar o formulário
-                                                    field.onChange(value === "" ? null : parseInt(value, 10));
-                                                }}
-                                            />
-                                        </div>
-                                    </div>
-                                </FormControl>
+                                <Input
+                                    type="text"
+                                    inputMode="decimal"
+                                    value={field.value ?? ""}
+                                    onChange={(e) => field.onChange(e.target.value)}
+                                />
                                 <FormMessage />
                             </FormItem>
                         )}
                     />
+
 
 
                 </div>
@@ -176,7 +157,7 @@ const GastoForm = ({ type, funcionario, funcionarioId }: { type: 'Create' | 'Atu
                         disabled={form.formState.isSubmitting}
                         className="w-full sm:w-3/4 md:w-1/2 lg:w-1/4"
                     >
-                        {form.formState.isSubmitting ? "Submitting..." : `${type} Morador`}
+                        {form.formState.isSubmitting ? "Submitting..." : `${type} Gasto`}
                     </Button>
                 </div>
 
@@ -186,5 +167,6 @@ const GastoForm = ({ type, funcionario, funcionarioId }: { type: 'Create' | 'Atu
 }
 
 export default GastoForm;
+
 
 

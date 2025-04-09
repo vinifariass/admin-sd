@@ -89,13 +89,25 @@ export function formatNumber(number: number) {
   return NUMBER_FORMATTER.format(number)
 }
 
-export function parseSalary(value: string): number | null {
-  // Remove pontos e substitui vírgula por ponto para converter para número
-  const numericValue = value.replace(/\./g, "").replace(",", ".");
-  return numericValue ? parseFloat(numericValue) : null;
+export function parseSalary(valor: string | number) {
+  const numero = typeof valor === 'string' ? parseFloat(valor) : valor;
+
+  if (isNaN(numero)) return '0,00';
+
+  return numero.toLocaleString('pt-BR', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
 }
 
 // Shorteen UUID
 export function formatId(id: string) {
   return `...${id.substring(id.length - 6)}`
+}
+
+export function formatCurrency(value: number) {
+  return value.toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  });
 }

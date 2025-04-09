@@ -19,7 +19,6 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { funcionarioDefaultValues } from "@/lib/constants";
 import { useRouter } from "next/navigation";
-import { createMorador, updateMorador } from "@/lib/actions/morador.action";
 import { Calendar } from "@/components/ui/calendar"
 import {
     Popover,
@@ -28,20 +27,19 @@ import {
 } from "@/components/ui/popover"
 import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
-import { cn, parseSalary } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { useState } from "react";
 import { createFuncionario, updateFuncionario } from "@/lib/actions/funcionario.action";
-import { Label } from "../ui/label";
 
-const MoradorForm = ({ type, funcionario, funcionarioId }: { type: 'Create' | 'Atualizar'; funcionario?: Funcionario, funcionarioId?: string }) => {
+const MoradorForm = ({ type, funcionario, funcionarioId }: { type: 'Criar' | 'Atualizar'; funcionario?: Funcionario, funcionarioId?: string }) => {
 
 
     const router = useRouter();
 
 
     const form = useForm<z.infer<typeof insertFuncionarioSchema>>({
-        resolver: zodResolver(type === 'Create' ? insertFuncionarioSchema : updateFuncionarioSchema),
+        resolver: zodResolver(type === 'Criar' ? insertFuncionarioSchema : updateFuncionarioSchema),
         defaultValues: funcionario && type === 'Atualizar' ? funcionario : funcionarioDefaultValues,
 
     });
@@ -53,7 +51,7 @@ const MoradorForm = ({ type, funcionario, funcionarioId }: { type: 'Create' | 'A
     const onSubmit: SubmitHandler<z.infer<typeof insertFuncionarioSchema>> = async (values) => {
         console.log(values)
         try {
-            if (type === 'Create') {
+            if (type === 'Criar') {
                 const res = await createFuncionario(values);
                 if (!res.success) {
                     toast.error(res.message);
@@ -403,7 +401,7 @@ const MoradorForm = ({ type, funcionario, funcionarioId }: { type: 'Create' | 'A
                         disabled={form.formState.isSubmitting}
                         className="w-full sm:w-3/4 md:w-1/2 lg:w-1/4"
                     >
-                        {form.formState.isSubmitting ? "Submitting..." : `${type} Morador`}
+                        {form.formState.isSubmitting ? "Submitting..." : `${type} Funcionário`}
                     </Button>
                 </div>
 

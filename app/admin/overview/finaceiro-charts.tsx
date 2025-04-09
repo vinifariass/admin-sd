@@ -14,53 +14,42 @@ import {
   ResponsiveContainer,
   Tooltip
 } from "recharts"
+const FinanceiroCharts = ({ data: { gastosData } }: {
+  data: {
+    gastosData: {
+      month: string;
+      totalGastos: number;
+    }[]
+  }
+}) => {
 
-const data = [
-  { name: "Jan", total: 6000 },
-  { name: "Feb", total: 4800 },
-  { name: "Mar", total: 3000 },
-  { name: "Apr", total: 4000 },
-  { name: "May", total: 5800 },
-  { name: "Jun", total: 2700 },
-  { name: "Jul", total: 5200 },
-  { name: "Aug", total: 1600 },
-  { name: "Sep", total: 1900 },
-  { name: "Oct", total: 4600 },
-  { name: "Nov", total: 1700 },
-  { name: "Dec", total: 4700 },
-]
-
-export default function TotalVendasChart() {
   return (
     <Card className="bg-background col-span-4">
       <CardHeader>
-        <CardTitle>Total de Vendas</CardTitle>
+        <CardTitle>Total de Gastos</CardTitle>
       </CardHeader>
       <CardContent className="pl-2">
         <ResponsiveContainer width="100%" height={350}>
-          <BarChart data={data}>
+          <BarChart data={gastosData}>
             <XAxis
-              dataKey="name"
-              stroke="#888888"
+              dataKey='month'
+              stroke='#888888'
               fontSize={12}
               tickLine={false}
               axisLine={false}
             />
             <YAxis
-              stroke="#888888"
+              stroke='#888888'
               fontSize={12}
               tickLine={false}
               axisLine={false}
-              tickFormatter={(value) => `$${value}`}
-            />
-            <Tooltip
-              cursor={{ fill: "#f1f1f1" }}
-              formatter={(value) => `$${value}`}
+              tickFormatter={(value) => `${value}`}
             />
             <Bar
-              dataKey="total"
+              dataKey='totalGastos'
+              fill='currentColor'
               radius={[4, 4, 0, 0]}
-              className="fill-primary"
+              className='fill-primary'
             />
           </BarChart>
         </ResponsiveContainer>
@@ -68,3 +57,5 @@ export default function TotalVendasChart() {
     </Card>
   )
 }
+
+export default FinanceiroCharts

@@ -8,7 +8,7 @@ import { Prisma } from "@prisma/client";
 import { PAGE_SIZE } from "../constants";
 
 
-//Create a funcionario
+//Criar a funcionario
 export async function createFuncionario(data: z.infer<typeof insertFuncionarioSchema>) {
     try {
         const funcionario = insertFuncionarioSchema.parse(data);
@@ -43,7 +43,7 @@ export async function updateFuncionario(data: z.infer<typeof updateFuncionarioSc
 
         return {
             success: true,
-            message: "Morador atualizado com sucesso"
+            message: "Funcionário atualizado com sucesso"
         }
     } catch (error) {
 
