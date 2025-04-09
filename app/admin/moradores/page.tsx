@@ -47,11 +47,11 @@ const AdminMoradoresPage = async (props: {
                 {
                     session?.user?.tipo === 'ADMIN' && (
                         <Button asChild variant='default'>
-                        <Link href='/admin/moradores/create'>Criar Moradores</Link>
-                    </Button>
+                            <Link href='/admin/moradores/create'>Criar Moradores</Link>
+                        </Button>
                     )
                 }
-               
+
             </div>
 
             <Table>
@@ -59,6 +59,7 @@ const AdminMoradoresPage = async (props: {
                     <TableRow>
                         <TableHead>NOME</TableHead>
                         <TableHead>CPF</TableHead>
+                        <TableHead>APARTAMENTO</TableHead>
                         <TableHead>EMAIL</TableHead>
                         <TableHead>TELEFONE</TableHead>
                         <TableHead>DATA DE LOCAÇÃO</TableHead>
@@ -71,9 +72,10 @@ const AdminMoradoresPage = async (props: {
                         <TableRow key={morador.id}>
                             <TableCell>{morador.nome}</TableCell>
                             <TableCell>{morador.cpf}</TableCell>
+                            <TableCell className="items-center">{morador.apartamento}</TableCell>
                             <TableCell>{morador.email}</TableCell>
                             <TableCell>{morador.telefone}</TableCell>
-                            <TableCell>{formatDateTime(morador.dataLocacao).dateOnly}</TableCell>
+                            <TableCell>{morador.dataLocacao ? formatDateTime(morador.dataLocacao).dateOnly : ''}</TableCell>
                             <TableCell>{
                                 morador.dataSaida ? formatDateTime(morador.dataSaida).dateOnly : ''
                             }</TableCell>
