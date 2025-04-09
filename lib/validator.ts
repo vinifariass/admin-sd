@@ -50,10 +50,10 @@ export const insertMoradorSchema = z.object({
         .max(14, { message: "CPF deve ter no máximo 14 caracteres" })
         .refine(isValidCPF, { message: "CPF inválido" }),
     apartamento: z.string().min(1, { message: "Apartamento é obrigatório" }),
-    dataLocacao: z.date().or(z.string().datetime()),
+    dataLocacao: z.date().or(z.string().datetime()).nullable().optional(),
+    dataSaida: z.date().or(z.string().datetime()).nullable().optional(),
     email: z.string().email("E-mail inválido").nullable().optional(),
     telefone: z.string().nullable().optional(),
-    dataSaida: z.date().or(z.string().datetime()).nullable().optional(),
 });
 
 export const updateMoradorSchema = insertMoradorSchema.extend({

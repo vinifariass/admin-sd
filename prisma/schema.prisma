@@ -63,7 +63,7 @@ model Morador {
   apartamento String
   email       String?
   telefone    String?
-  dataLocacao DateTime
+  dataLocacao DateTime?
   dataSaida   DateTime?
   createdAt   DateTime  @default(now())
 
@@ -134,6 +134,15 @@ model Agendamento {
   status      String
   tipo        String
   descricao   String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Gasto {
+  id          String   @id @default(uuid())
+  descricao   String
+  valor       Float
+  data        DateTime
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }

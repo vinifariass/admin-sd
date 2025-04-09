@@ -26,12 +26,12 @@ const Pagination = ({ page, totalPages, urlParamName }: PaginationProps) => {
             onClick={() => 
                 handleClick('prev')}
         >
-            Previous
+            Anterior
         </Button>
         <Button size='lg' variant='outline' className="w-28" disabled={Number(page) >= totalPages}
              onClick={() => 
                 handleClick('next')}>
-            Next
+            Próximo
         </Button>
     </div>
     </> );

@@ -43,8 +43,6 @@ const MoradorForm = ({ type, morador, moradorId }: { type: 'Create' | 'Atualizar
     });
 
 
-    //Possivel erro é porque esqueci o apartamento e implementar bloco tbm
-
     const onSubmit: SubmitHandler<z.infer<typeof insertMoradorSchema>> = async (values) => {
         console.log(values)
         try {
@@ -100,7 +98,15 @@ const MoradorForm = ({ type, morador, moradorId }: { type: 'Create' | 'Atualizar
                             <FormItem>
                                 <FormLabel>CPF</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="Ex: 000.000.000-00" {...field} />
+                                    <Input
+                                        placeholder="Ex: 000.000.000-00"
+                                        {...field}
+                                        onChange={(e) => {
+                                            // Remove espaços em branco do valor
+                                            const cleanedValue = e.target.value.replace(/\s+/g, "");
+                                            field.onChange(cleanedValue); // Atualiza o valor no formulário
+                                        }}
+                                    />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -117,7 +123,7 @@ const MoradorForm = ({ type, morador, moradorId }: { type: 'Create' | 'Atualizar
                             <FormItem>
                                 <FormLabel>Email</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="Ex: example@gmail.com" {...field} value={field.value ?? ""}/>
+                                    <Input placeholder="Ex: example@gmail.com" {...field} value={field.value ?? ""} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -131,7 +137,7 @@ const MoradorForm = ({ type, morador, moradorId }: { type: 'Create' | 'Atualizar
                             <FormItem >
                                 <FormLabel>Telefone</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="Ex: (99) 99999-9999" {...field} value={field.value ?? ""}/>
+                                    <Input placeholder="Ex: (99) 99999-9999" {...field} value={field.value ?? ""} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
