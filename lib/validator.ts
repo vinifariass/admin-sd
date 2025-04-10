@@ -139,11 +139,8 @@ export const updateServicoSchema = insertServicoSchema.extend({
 
 export const insertGastoSchema = z.object({
     descricao: z.string().min(1, { message: "Descrição é obrigatória" }),
-    valor: z.string()
-        .min(1, "Informe um valor")
-        .transform((val) => parseFloat(val.replace(',', '.')))
-        .refine((val) => !isNaN(val), { message: "Valor inválido" }),
-    data: z.date(),
+    valor: z.coerce.number({ invalid_type_error: "Valor deve ser um número" }).positive({ message: "Valor deve ser positivo" }),
+    data: z.coerce.date(),
 });
 
 export const updateGastoSchema = insertGastoSchema.extend({
