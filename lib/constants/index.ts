@@ -61,7 +61,7 @@ export const servicoDefaultValues = {
 export const gastoDefaultValues = {
     descricao: "",
     valor: 0,
-    data: null as unknown as Date,
+    data: undefined as Date | undefined,
 }
 
 export const PAGE_SIZE = Number(process.env.PAGE_SIZE) || 12;
