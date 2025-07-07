@@ -138,6 +138,35 @@ model Agendamento {
   updatedAt   DateTime @updatedAt
 }
 
+model Visitante {
+  id             String   @id @default(uuid())
+  nome           String
+  cpf            String
+  telefone       String?
+  email          String?
+  apartamento    String
+  dataVisita     DateTime
+  horario        String
+  status         String   @default("AGENDADO")
+  observacoes    String?
+  autorizado     Boolean  @default(false)
+  autorizadoPor  String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Notificacao {
+  id          String   @id @default(uuid())
+  titulo      String
+  mensagem    String
+  tipo        String   @default("INFO") // INFO, AVISO, URGENTE
+  remetente   String
+  destinatario String
+  lida        Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
 model Gasto {
   id          String   @id @default(uuid())
   descricao   String

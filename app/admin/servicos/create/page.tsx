@@ -169,7 +169,7 @@ export default function ExcelImporter() {
                 date.getMonth() === month - 1 && 
                 date.getDate() === day) {
               return {
-                formatted: `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`,
+                formatted: `${String(day).padStart(2, "0")}/${String(month).padStart(2, "0")}/${year}`,
                 isValid: true
               };
             }

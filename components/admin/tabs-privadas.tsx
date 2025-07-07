@@ -10,7 +10,7 @@ import FuncionarioTable from "@/app/admin/funcionarios/funcionarios-table";
 
 import Charts from "@/app/admin/overview/charts";
 import ListaAgendamentos from "@/app/admin/overview/agendamentos";
-import EnviarNotificacao from "@/app/admin/overview/notificacoes";
+import EnviarNotificacao from "@/components/admin/enviar-notificacao";
 import { auth } from "@/auth";
 import {
     LineChart,
@@ -161,7 +161,12 @@ export default async function TabsPrivadas({ summary, summaryMoradores, agendame
                 {/* Agendamentos + Notificações */}
                 <div className="grid gap-4 md:grid-cols-2">
                     <ListaAgendamentos agendamentos={agendamentos} />
-                    <EnviarNotificacao />
+                    {session?.user?.tipo === 'ADMIN' && session.user.id && (
+                        <EnviarNotificacao 
+                            remetente={session.user.id}
+                            remetenteNome={session.user.name || 'Administrador'}
+                        />
+                    )}
                 </div>
             </TabsContent>
 

@@ -23,7 +23,13 @@ export default async function RootLayout({
                     <SheetMenu session={session} />
                     {/* Logo */}
                     <Link href="/" className="w-22">
-                        <Image src="/images/logo.png" height={48} width={48} alt="Logo" />
+                        <Image 
+                            src="/images/logo.png" 
+                            height={48} 
+                            width={48} 
+                            alt="Logo" 
+                            className="dark:invert dark:brightness-0 dark:contrast-100"
+                        />
                     </Link>
                     {/* Botão da Conta */}
                     <div className="ml-auto flex items-center space-x-4">
