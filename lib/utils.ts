@@ -50,6 +50,42 @@ export function convertToPlainObject<T>(object: T): T {
   return JSON.parse(JSON.stringify(object))
 }
 
+// Converte valores null para string vazia para compatibilidade com formulários
+export function convertNullToEmptyString<T extends Record<string, any>>(
+  object: T,
+  fieldsToConvert: (keyof T)[]
+): T {
+  if (!object) return object;
+  
+  const converted = { ...object };
+  
+  for (const field of fieldsToConvert) {
+    if (converted[field] === null || converted[field] === undefined) {
+      converted[field] = "" as any;
+    }
+  }
+  
+  return converted;
+}
+
+// Converte strings vazias para null para compatibilidade com banco de dados
+export function convertEmptyStringToNull<T extends Record<string, any>>(
+  object: T,
+  fieldsToConvert: (keyof T)[]
+): T {
+  if (!object) return object;
+  
+  const converted = { ...object };
+  
+  for (const field of fieldsToConvert) {
+    if (converted[field] === "" || converted[field] === undefined) {
+      converted[field] = null as any;
+    }
+  }
+  
+  return converted;
+}
+
 export const formatDateTime = (dateInput: string | Date) => {
   // Se for uma string, converte para Date
   const date = dateInput instanceof Date ? dateInput : new Date(dateInput);

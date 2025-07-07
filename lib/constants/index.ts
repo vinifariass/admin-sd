@@ -64,6 +64,29 @@ export const gastoDefaultValues = {
     data: undefined as Date | undefined,
 }
 
+export const visitanteDefaultValues = {
+    nome: "",
+    cpf: "",
+    telefone: "",
+    email: "",
+    apartamento: "",
+    dataVisita: undefined as Date | undefined,
+    horario: "",
+    status: "AGENDADO",
+    observacoes: "",
+    autorizado: false,
+    autorizadoPor: "",
+}
+
+export const notificacaoDefaultValues = {
+    titulo: "",
+    mensagem: "",
+    tipo: "INFO" as 'INFO' | 'AVISO' | 'URGENTE',
+    remetente: "",
+    destinatario: "",
+    lida: false,
+}
+
 export const PAGE_SIZE = Number(process.env.PAGE_SIZE) || 12;
 
 export const USER_ROLES = process.env.USER_ROLES ? process.env.USER_ROLES.split(', ') : ['MORADOR', 'FUNCIONARIO', 'ADMIN'];

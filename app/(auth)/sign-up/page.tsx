@@ -6,6 +6,7 @@ import Image from "next/image";
 import { auth } from "@/auth";
 import { redirect } from 'next/navigation';
 import SignUpForm from "./sign-up-form";
+import { ModeToggle } from "@/components/mode-toggle";
 
 export const metadata: Metadata = {
     title: 'cadastro',
@@ -25,10 +26,20 @@ const SignUpPage = async (props: {
         return redirect(callbackUrl || '/');
     }
     return (<div className="w-full max-w-md mx-auto">
+        <div className="absolute top-4 right-4">
+            <ModeToggle />
+        </div>
         <Card>
             <CardHeader className="space-y-4">
                 <Link href="/" className="flex-center">
-                    <Image src='/images/logo.png' width={100} height={100} alt={`${APP_NAME} logo`} priority={true} />
+                    <Image 
+                        src='/images/logo.png' 
+                        width={100} 
+                        height={100} 
+                        alt={`${APP_NAME} logo`} 
+                        priority={true}
+                        className="dark:invert dark:brightness-0 dark:contrast-100" 
+                    />
                 </Link>
                 <CardTitle className="text-center">Criar Contar</CardTitle>
                 <CardDescription className="text-center">

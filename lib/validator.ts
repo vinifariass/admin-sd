@@ -146,3 +146,43 @@ export const insertGastoSchema = z.object({
 export const updateGastoSchema = insertGastoSchema.extend({
     id: z.string().uuid({ message: "Gasto inválido" }),
 });
+
+export const insertVisitanteSchema = z.object({
+    nome: z.string().min(1, { message: "Nome é obrigatório" }),
+    cpf: z.string()
+        .min(11, { message: "CPF deve ter 11 dígitos" })
+        .max(14, { message: "CPF deve ter no máximo 14 caracteres" })
+        .refine(isValidCPF, { message: "CPF inválido" }),
+    telefone: z.string().optional(),
+    email: z.string().email("E-mail inválido").or(z.literal("")).optional(),
+    apartamento: z.string().min(1, { message: "Apartamento é obrigatório" }),
+    dataVisita: z.date().or(z.string().datetime()),
+    horario: z.string().regex(/^([01]\d|2[0-3]):([0-5]\d)$/, "Formato inválido de horário (HH:mm)"),
+    status: z.string().default("AGENDADO"),
+    observacoes: z.string().optional(),
+    autorizado: z.boolean().default(false),
+    autorizadoPor: z.string().optional(),
+});
+
+export const updateVisitanteSchema = insertVisitanteSchema.extend({
+    id: z.string().uuid({ message: "Visitante inválido" }),
+});
+
+export const insertNotificacaoSchema = z.object({
+    titulo: z.string().min(1, { message: "Título é obrigatório" }),
+    mensagem: z.string().min(1, { message: "Mensagem é obrigatória" }),
+    tipo: z.enum(["INFO", "AVISO", "URGENTE"]).default("INFO"),
+    remetente: z.string().min(1, { message: "Remetente é obrigatório" }),
+    destinatario: z.string().min(1, { message: "Destinatário é obrigatório" }),
+});
+
+export const updateNotificacaoSchema = insertNotificacaoSchema.extend({
+    id: z.string().uuid({ message: "Notificação inválida" }),
+});
+
+export const enviarNotificacaoSchema = z.object({
+    titulo: z.string().min(1, { message: "Título é obrigatório" }),
+    mensagem: z.string().min(1, { message: "Mensagem é obrigatória" }),
+    tipo: z.enum(["INFO", "AVISO", "URGENTE"]).default("INFO"),
+    destinatarios: z.array(z.string()).min(1, { message: "Selecione pelo menos um destinatário" }),
+});
