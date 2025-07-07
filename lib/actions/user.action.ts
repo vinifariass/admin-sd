@@ -132,6 +132,16 @@ export async function getUserById(userId: string) {
     const user = await prisma.user.findUnique({
         where: {
             id: userId
+        },
+        include: {
+            moradores: {
+                select: {
+                    id: true,
+                    nome: true,
+                    apartamento: true,
+                    cpf: true,
+                }
+            }
         }
     });
 

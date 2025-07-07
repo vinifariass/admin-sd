@@ -24,6 +24,8 @@ model User {
   createdAt     DateTime  @default(now()) @db.Timestamp(6)
   updatedAt     DateTime  @updatedAt
 
+  moradores     Morador[] // Um usuário pode ter múltiplos moradores
+
   @@map("users")
 }
 
@@ -61,6 +63,8 @@ model Morador {
   nome        String
   cpf         String
   apartamento String
+  usuarioId   String?   @db.Uuid
+  usuario     User?     @relation(fields: [usuarioId], references: [id])
   email       String?
   telefone    String?
   dataLocacao DateTime?
@@ -68,6 +72,7 @@ model Morador {
   createdAt   DateTime  @default(now())
 
   Encomenda Encomenda[]
+  boletos   Boleto[]
 }
 
 model Encomenda {
@@ -174,4 +179,20 @@ model Gasto {
   data        DateTime
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+model Boleto {
+  id              String   @id @default(uuid())
+  numeroBoleto    String   @unique
+  codigoBarras    String   @unique
+  apartamento     String
+  moradorId       String?
+  morador         Morador? @relation(fields: [moradorId], references: [id])
+  valor           Float
+  dataVencimento  DateTime
+  dataPagamento   DateTime?
+  pago            Boolean  @default(false)
+  observacoes     String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }

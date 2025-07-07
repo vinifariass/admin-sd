@@ -1,7 +1,7 @@
 'use client'
 
 import { insertMoradorSchema, updateMoradorSchema } from "@/lib/validator";
-import { ptBR } from "date-fns/locale"; // Importa a localidade brasileira
+import { ptBR } from "date-fns/locale";
 import { Morador } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -19,7 +19,7 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { moradorDefaultValues } from "@/lib/constants";
 import { useRouter } from "next/navigation";
-import { createMorador, updateMorador } from "@/lib/actions/morador.action";
+import { createMorador, updateMorador, getAllUsuarios } from "@/lib/actions/morador.action";
 import { Calendar } from "@/components/ui/calendar"
 import {
     Popover,
@@ -29,17 +29,27 @@ import {
 import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useState, useEffect } from "react";
 
 const MoradorForm = ({ type, morador, moradorId }: { type: 'Criar' | 'Atualizar'; morador?: Morador, moradorId?: string }) => {
-
-
     const router = useRouter();
+    const [usuarios, setUsuarios] = useState<any[]>([]);
 
+    // Buscar usuários ao carregar o componente
+    useEffect(() => {
+        const fetchUsuarios = async () => {
+            const result = await getAllUsuarios();
+            if (result.success) {
+                setUsuarios(result.data || []);
+            }
+        };
+        fetchUsuarios();
+    }, []);
 
     const form = useForm<z.infer<typeof insertMoradorSchema>>({
         resolver: zodResolver(type === 'Criar' ? insertMoradorSchema : updateMoradorSchema),
         defaultValues: morador && type === 'Atualizar' ? morador : moradorDefaultValues,
-
     });
 
 
@@ -158,7 +168,37 @@ const MoradorForm = ({ type, morador, moradorId }: { type: 'Criar' | 'Atualizar'
                         )}
                     />
 
+                    <FormField
+                        control={form.control}
+                        name="usuarioId"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Usuário Associado (Opcional)</FormLabel>
+                                <Select
+                                    onValueChange={(value) => field.onChange(value === "none" ? null : value)}
+                                    value={field.value || "none"}
+                                >
+                                    <FormControl>
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="Selecione um usuário" />
+                                        </SelectTrigger>
+                                    </FormControl>
+                                    <SelectContent>
+                                        <SelectItem value="none">Nenhum usuário</SelectItem>
+                                        {usuarios.map((usuario) => (
+                                            <SelectItem key={usuario.id} value={usuario.id}>
+                                                {usuario.name} ({usuario.email})
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                </div>
 
+                <div className="flex flex-col col-span-6 md:flex-row gap-5">
                     <FormField
                         control={form.control}
                         name="dataLocacao"

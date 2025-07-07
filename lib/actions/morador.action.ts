@@ -181,13 +181,22 @@ export async function getMoradoresSummary() {
 }
 
 export async function getMoradorById(moradorId: string) {
-
     const data = await prisma.morador.findFirst({
         where: {
             id: moradorId
+        },
+        include: {
+            usuario: {
+                select: {
+                    id: true,
+                    name: true,
+                    email: true,
+                }
+            }
         }
     });
 
+    if (!data) return null;
 
     return convertToPlainObject(data);
 }
@@ -206,6 +215,33 @@ export async function getMoradorNameById(moradorId: string): Promise<string | nu
     } catch (error) {
         throw formatErrors(error);
 
+    }
+}
+
+// Buscar todos os usuários para seleção no formulário
+export async function getAllUsuarios() {
+    try {
+        const usuarios = await prisma.user.findMany({
+            select: {
+                id: true,
+                name: true,
+                email: true,
+            },
+            orderBy: {
+                name: 'asc'
+            }
+        });
+
+        return {
+            success: true,
+            data: usuarios
+        };
+    } catch (error) {
+        console.error('Erro ao buscar usuários:', error);
+        return {
+            success: false,
+            message: 'Erro ao buscar usuários'
+        };
     }
 }
 

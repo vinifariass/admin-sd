@@ -213,16 +213,62 @@ export async function getMoradoresSummary() {
     }
 }
 
-export async function getMoradorById(moradorId: string) {
+// Get latest encomendas for dashboard
+export async function getLatestEncomendas(limit: number = 5) {
+    try {
+        const encomendas = await prisma.encomenda.findMany({
+            orderBy: {
+                createdAt: 'desc'
+            },
+            take: limit,
+            include: {
+                morador: {
+                    select: {
+                        nome: true
+                    }
+                }
+            }
+        });
 
-    const data = await prisma.morador.findFirst({
-        where: {
-            id: moradorId
-        }
-    });
+        return encomendas;
+    } catch (error) {
+        console.error('Error fetching latest encomendas:', error);
+        return [];
+    }
+}
 
+// Get encomendas summary for dashboard
+export async function getEncomendasSummary() {
+    try {
+        const encomendasCount = await prisma.encomenda.count();
+        const encomendasEntregues = await prisma.encomenda.count({
+            where: {
+                dataEntrega: {
+                    not: null
+                }
+            }
+        });
+        const encomendasAssinadas = await prisma.encomenda.count({
+            where: {
+                dataAssinatura: {
+                    not: null
+                }
+            }
+        });
 
-    return convertToPlainObject(data);
+        return {
+            encomendasCount,
+            encomendasEntregues,
+            encomendasAssinadas
+        };
+    } catch (error) {
+        console.error('Error fetching encomendas summary:', error);
+        return {
+            encomendasCount: 0,
+            encomendasEntregues: 0,
+            encomendasAssinadas: 0
+        };
+    }
 }
 
 

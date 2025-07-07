@@ -25,12 +25,11 @@ export const moradorDefaultValues = {
     nome: "",
     cpf: "",
     apartamento: "",
+    usuarioId: null,
     dataLocacao: null,
     dataSaida: null,
     email: null,
     telefone: null,
-    tipoMorador: "Proprietário",
-    tipo: "carro",
 };
 
 
@@ -85,6 +84,18 @@ export const notificacaoDefaultValues = {
     remetente: "",
     destinatario: "",
     lida: false,
+}
+
+export const boletoDefaultValues = {
+    numeroBoleto: "",
+    codigoBarras: "",
+    apartamento: "",
+    moradorId: undefined,
+    valor: 0,
+    dataVencimento: null,
+    dataPagamento: null,
+    pago: false,
+    observacoes: "",
 }
 
 export const PAGE_SIZE = Number(process.env.PAGE_SIZE) || 12;

@@ -77,6 +77,7 @@ export function getMenuList(
                 { href: "/admin/moradores", label: "Moradores" },
                 { href: "/admin/parkings", label: "Vagas" },
                 { href: "/admin/encomendas", label: "Encomendas" },
+                { href: "/admin/boletos", label: "Boletos" },
                 { href: "/admin/servicos", label: "Serviços" },
                 { href: "/admin/visitantes", label: "Visitantes" },
                 { href: "/admin/agendamentos", label: "Agendamentos" },
@@ -85,7 +86,7 @@ export function getMenuList(
               ]
               .filter((submenu) => {
                 if (["FUNCIONARIO", "MORADOR"].includes(userType)) {
-                  return ["Agendamentos", "Visitantes", "Encomendas", "Funcionários","Vagas"]
+                  return ["Agendamentos", "Visitantes", "Encomendas", "Funcionários","Vagas", "Boletos"]
                     .includes(submenu.label);
                 }
                 return true;

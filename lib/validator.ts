@@ -50,6 +50,7 @@ export const insertMoradorSchema = z.object({
         .max(14, { message: "CPF deve ter no máximo 14 caracteres" })
         .refine(isValidCPF, { message: "CPF inválido" }),
     apartamento: z.string().min(1, { message: "Apartamento é obrigatório" }),
+    usuarioId: z.string().uuid({ message: "Usuário inválido" }).nullable().optional(),
     dataLocacao: z.date().or(z.string().datetime()).nullable().optional(),
     dataSaida: z.date().or(z.string().datetime()).nullable().optional(),
     email: z.string().email("E-mail inválido").nullable().optional(),
@@ -185,4 +186,26 @@ export const enviarNotificacaoSchema = z.object({
     mensagem: z.string().min(1, { message: "Mensagem é obrigatória" }),
     tipo: z.enum(["INFO", "AVISO", "URGENTE"]).default("INFO"),
     destinatarios: z.array(z.string()).min(1, { message: "Selecione pelo menos um destinatário" }),
+});
+
+export const insertBoletoSchema = z.object({
+    numeroBoleto: z.string().min(1, { message: "Número do boleto é obrigatório" }),
+    codigoBarras: z.string().min(44, { message: "Código de barras deve ter 44 dígitos" }).max(44, { message: "Código de barras deve ter 44 dígitos" }),
+    apartamento: z.string().min(1, { message: "Apartamento é obrigatório" }),
+    moradorId: z.string().uuid({ message: "Morador inválido" }).optional(),
+    valor: z.number().min(0.01, { message: "Valor deve ser maior que zero" }),
+    dataVencimento: z.date().or(z.string().datetime()),
+    dataPagamento: z.date().or(z.string().datetime()).optional(),
+    pago: z.boolean().default(false),
+    observacoes: z.string().optional(),
+});
+
+export const updateBoletoSchema = insertBoletoSchema.extend({
+    id: z.string().uuid({ message: "Boleto inválido" }),
+});
+
+export const marcarPagoBoletoSchema = z.object({
+    id: z.string().uuid({ message: "Boleto inválido" }),
+    pago: z.boolean(),
+    dataPagamento: z.date().or(z.string().datetime()).optional(),
 });
