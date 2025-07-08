@@ -3,7 +3,9 @@ import {
   Settings,
   SquarePen,
   LayoutGrid,
-  LucideIcon
+  LucideIcon,
+  BookOpen,
+  HelpCircle
 } from "lucide-react";
 
 type Submenu = {
@@ -100,9 +102,28 @@ export function getMenuList(
         }
       : null;
 
+  const helpGroup: Group = {
+    groupLabel: "Ajuda",
+    menus: [
+      {
+        href: "/admin/documentacao",
+        label: "Como Usar",
+        icon: BookOpen,
+        active: pathname.includes("/admin/documentacao")
+      },
+      {
+        href: "/admin/suporte",
+        label: "Suporte",
+        icon: HelpCircle,
+        active: pathname.includes("/admin/suporte")
+      }
+    ]
+  };
+
   return [
     defaultGroup,
     ...(managerGroup ? [managerGroup] : []),
-    ...(adminConfigGroup ? [adminConfigGroup] : [])
+    ...(adminConfigGroup ? [adminConfigGroup] : []),
+    helpGroup
   ];
 }
