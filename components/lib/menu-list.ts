@@ -5,7 +5,8 @@ import {
   LayoutGrid,
   LucideIcon,
   BookOpen,
-  HelpCircle
+  HelpCircle,
+  FileText
 } from "lucide-react";
 
 type Submenu = {
@@ -54,6 +55,12 @@ export function getMenuList(
             label: "Usuários",
             icon: Users,
             active: pathname.includes("/admin/users")
+          },
+          {
+            href: "/admin/relatorios",
+            label: "Relatórios",
+            icon: FileText,
+            active: pathname.includes("/admin/relatorios")
           },
           {
             href: "/account",
