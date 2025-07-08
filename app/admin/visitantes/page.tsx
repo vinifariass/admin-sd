@@ -104,7 +104,7 @@ const AdminVisitantesPage = async (props: {
                         <TableHead>HORÁRIO</TableHead>
                         <TableHead>STATUS</TableHead>
                         <TableHead>TELEFONE</TableHead>
-                        <TableHead className="w-[100px]">AÇÕES</TableHead>
+                        {session?.user?.tipo !== 'MORADOR' && <TableHead className="w-[100px]">AÇÕES</TableHead>}
                     </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -121,12 +121,14 @@ const AdminVisitantesPage = async (props: {
                                 {getStatusBadge(visitante.status, visitante.autorizado)}
                             </TableCell>
                             <TableCell>{visitante.telefone || '-'}</TableCell>
-                            <TableCell className="flex gap-1">
-                                <Button asChild variant='outline' size='sm'>
-                                    <Link href={`/admin/visitantes/${visitante.id}`}>Editar</Link>
-                                </Button>
-                                <DeleteDialog id={visitante.id} action={deleteVisitante} />
-                            </TableCell>
+                            {session?.user?.tipo !== 'MORADOR' && (
+                                <TableCell className="flex gap-1">
+                                    <Button asChild variant='outline' size='sm'>
+                                        <Link href={`/admin/visitantes/${visitante.id}`}>Editar</Link>
+                                    </Button>
+                                    <DeleteDialog id={visitante.id} action={deleteVisitante} />
+                                </TableCell>
+                            )}
                         </TableRow>
                     ))}
                 </TableBody>

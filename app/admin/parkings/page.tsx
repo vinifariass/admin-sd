@@ -34,6 +34,8 @@ const AdminParkingsPage = async (props: {
     category,
   });
 
+  const session = await auth();
+
 
   return (
     <div className="space-y-6">
@@ -52,21 +54,22 @@ const AdminParkingsPage = async (props: {
         </TabsList>
 
         {category === "carro" && (
-          <TableSection parkings={parkings} category="carro" page={page} searchText={searchText} />
+          <TableSection parkings={parkings} category="carro" page={page} searchText={searchText} session={session} />
         )}
         {category === "moto" && (
-          <TableSection parkings={parkings} category="moto" page={page} searchText={searchText} />
+          <TableSection parkings={parkings} category="moto" page={page} searchText={searchText} session={session} />
         )}
       </Tabs>
     </div>
   );
 };
 
-const TableSection = ({ parkings, category, page, searchText }: {
+const TableSection = ({ parkings, category, page, searchText, session }: {
   parkings: any;
   category: string;
   page: number;
   searchText: string;
+  session: any;
 }) => {
   console.log(category);
   return (
@@ -99,11 +102,13 @@ const TableSection = ({ parkings, category, page, searchText }: {
       </div>
 
       <div className="flex justify-end">
-        <Button asChild size="sm">
-          <Link href={`/admin/parkings/create?category=${category}`}>
-            Criar Vaga ({category === "carro" ? "Carro" : "Moto"})
-          </Link>
-        </Button>
+        {session?.user?.tipo === 'ADMIN' && (
+          <Button asChild size="sm">
+            <Link href={`/admin/parkings/create?category=${category}`}>
+              Criar Vaga ({category === "carro" ? "Carro" : "Moto"})
+            </Link>
+          </Button>
+        )}
       </div>
 
       <div className="overflow-x-auto rounded-md border">
@@ -117,7 +122,7 @@ const TableSection = ({ parkings, category, page, searchText }: {
               <TableHead>MODELO</TableHead>
               <TableHead>COR</TableHead>
               <TableHead>PLACA</TableHead>
-              <TableHead className="text-center">AÇÕES</TableHead>
+              {session?.user?.tipo !== 'MORADOR' && <TableHead className="text-center">AÇÕES</TableHead>}
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -133,12 +138,14 @@ const TableSection = ({ parkings, category, page, searchText }: {
                 </TableCell>
                 <TableCell>{parking.cor}</TableCell>
                 <TableCell>{parking.placa}</TableCell>
-                <TableCell className="flex gap-1 justify-center">
-                  <Button asChild variant="outline" size="sm">
-                    <Link href={`/admin/parkings/${parking.id}`}>Editar</Link>
-                  </Button>
-                  <DeleteDialog id={parking.id} action={deleteParking} />
-                </TableCell>
+                {session?.user?.tipo !== 'MORADOR' && (
+                  <TableCell className="flex gap-1 justify-center">
+                    <Button asChild variant="outline" size="sm">
+                      <Link href={`/admin/parkings/${parking.id}`}>Editar</Link>
+                    </Button>
+                    <DeleteDialog id={parking.id} action={deleteParking} />
+                  </TableCell>
+                )}
               </TableRow>
             ))}
           </TableBody>

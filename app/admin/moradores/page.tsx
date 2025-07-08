@@ -64,7 +64,7 @@ const AdminMoradoresPage = async (props: {
                         <TableHead>TELEFONE</TableHead>
                         <TableHead>DATA DE LOCAÇÃO</TableHead>
                         <TableHead>DATA DE SAÍDA</TableHead>
-                        <TableHead className="w-[100px]">AÇÕES</TableHead>
+                        {session?.user?.tipo !== 'MORADOR' && <TableHead className="w-[100px]">AÇÕES</TableHead>}
                     </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -79,13 +79,15 @@ const AdminMoradoresPage = async (props: {
                             <TableCell>{
                                 morador.dataSaida ? formatDateTime(morador.dataSaida).dateOnly : ''
                             }</TableCell>
-                            <TableCell className="flex gap-1">
-                                <Button asChild variant='outline' size='sm'>
-                                    <Link href={`/admin/moradores/${morador.id}`}>Editar</Link>
-                                </Button>
-                                {/* DELETE BUTTON */}
-                                <DeleteDialog id={morador.id} action={deleteMorador} />
-                            </TableCell>
+                            {session?.user?.tipo !== 'MORADOR' && (
+                                <TableCell className="flex gap-1">
+                                    <Button asChild variant='outline' size='sm'>
+                                        <Link href={`/admin/moradores/${morador.id}`}>Editar</Link>
+                                    </Button>
+                                    {/* DELETE BUTTON */}
+                                    <DeleteDialog id={morador.id} action={deleteMorador} />
+                                </TableCell>
+                            )}
 
                         </TableRow>
                     ))}

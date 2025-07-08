@@ -43,7 +43,8 @@ export default async function TabsPrivadas({
     encomendas, 
     encomendasSummary,
     boletos,
-    boletosSummary
+    boletosSummary,
+    session
 }: {
     summary: any,
     summaryMoradores: any,
@@ -53,10 +54,10 @@ export default async function TabsPrivadas({
     encomendas?: any,
     encomendasSummary?: any,
     boletos?: any,
-    boletosSummary?: any
+    boletosSummary?: any,
+    session?: any
 }) {
 
-    const session = await auth();
     const variation = gastos.variation;
     const formattedVariation = variation.toFixed(1);
     const isPositive = variation >= 0;
@@ -73,52 +74,68 @@ export default async function TabsPrivadas({
             </TabsList>
 
             {/* Conteúdo da aba DASHBOARD */}
-            <TabsContent value="dashboard" className="space-y-4">
+            <TabsContent value="dashboard" className="space-y-6">
                 {/* Estatísticas */}
-                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
                     {/* Total de Vagas */}
-                    <Card>
-                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <CardTitle className="text-sm font-medium">Total de Vagas</CardTitle>
-                            <Car />
+                    <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-blue-500 via-blue-600 to-indigo-600 dark:from-blue-600 dark:via-blue-700 dark:to-indigo-700 shadow-xl">
+                        <div className="absolute inset-0 bg-black/10 dark:bg-white/5"></div>
+                        <div className="absolute -right-4 -top-4 w-16 h-16 bg-white/10 rounded-full"></div>
+                        <CardHeader className="relative flex flex-row items-center justify-between space-y-0 pb-2">
+                            <CardTitle className="text-sm font-medium text-blue-100">Total de Vagas</CardTitle>
+                            <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+                                <Car className="w-5 h-5 text-white" />
+                            </div>
                         </CardHeader>
-                        <CardContent>
-                            <div className="text-2xl font-bold">{summary.parkingsCount}</div>
+                        <CardContent className="relative">
+                            <div className="text-3xl font-bold text-white">{summary.parkingsCount}</div>
                         </CardContent>
                     </Card>
 
                     {/* Moradores */}
-                    <Card>
-                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <CardTitle className="text-sm font-medium">Moradores</CardTitle>
-                            <Users />
+                    <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-emerald-500 via-emerald-600 to-teal-600 dark:from-emerald-600 dark:via-emerald-700 dark:to-teal-700 shadow-xl">
+                        <div className="absolute inset-0 bg-black/10 dark:bg-white/5"></div>
+                        <div className="absolute -right-4 -top-4 w-16 h-16 bg-white/10 rounded-full"></div>
+                        <CardHeader className="relative flex flex-row items-center justify-between space-y-0 pb-2">
+                            <CardTitle className="text-sm font-medium text-emerald-100">Moradores</CardTitle>
+                            <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+                                <Users className="w-5 h-5 text-white" />
+                            </div>
                         </CardHeader>
-                        <CardContent>
-                            <div className="text-2xl font-bold">
+                        <CardContent className="relative">
+                            <div className="text-3xl font-bold text-white">
                                 {formatNumber(summaryMoradores.moradoresCount)}
                             </div>
                         </CardContent>
                     </Card>
 
                     {/* Funcionários */}
-                    <Card>
-                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <CardTitle className="text-sm font-medium">Funcionários</CardTitle>
-                            <DoorClosed />
+                    <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-purple-500 via-purple-600 to-violet-600 dark:from-purple-600 dark:via-purple-700 dark:to-violet-700 shadow-xl">
+                        <div className="absolute inset-0 bg-black/10 dark:bg-white/5"></div>
+                        <div className="absolute -right-4 -top-4 w-16 h-16 bg-white/10 rounded-full"></div>
+                        <CardHeader className="relative flex flex-row items-center justify-between space-y-0 pb-2">
+                            <CardTitle className="text-sm font-medium text-purple-100">Funcionários</CardTitle>
+                            <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+                                <DoorClosed className="w-5 h-5 text-white" />
+                            </div>
                         </CardHeader>
-                        <CardContent>
-                            <div className="text-2xl font-bold">—</div>
+                        <CardContent className="relative">
+                            <div className="text-3xl font-bold text-white">—</div>
                         </CardContent>
                     </Card>
 
                     {/* Encomendas */}
-                    <Card>
-                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <CardTitle className="text-sm font-medium">Encomendas</CardTitle>
-                            <Barcode />
+                    <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-orange-500 via-orange-600 to-red-600 dark:from-orange-600 dark:via-orange-700 dark:to-red-700 shadow-xl">
+                        <div className="absolute inset-0 bg-black/10 dark:bg-white/5"></div>
+                        <div className="absolute -right-4 -top-4 w-16 h-16 bg-white/10 rounded-full"></div>
+                        <CardHeader className="relative flex flex-row items-center justify-between space-y-0 pb-2">
+                            <CardTitle className="text-sm font-medium text-orange-100">Encomendas</CardTitle>
+                            <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+                                <Barcode className="w-5 h-5 text-white" />
+                            </div>
                         </CardHeader>
-                        <CardContent>
-                            <div className="text-2xl font-bold">
+                        <CardContent className="relative">
+                            <div className="text-3xl font-bold text-white">
                                 {formatNumber(summary.encomendasCount)}
                             </div>
                         </CardContent>
@@ -149,7 +166,7 @@ export default async function TabsPrivadas({
                                         <TableHead>NOME</TableHead>
                                         <TableHead>CPF</TableHead>
                                         <TableHead>APARTAMENTO</TableHead>
-                                        <TableHead>AÇÕES</TableHead>
+                                        {session?.user?.tipo !== 'MORADOR' && <TableHead>AÇÕES</TableHead>}
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
@@ -158,14 +175,15 @@ export default async function TabsPrivadas({
                                             <TableCell>{vaga?.nome || "Deleted User"}</TableCell>
                                             <TableCell>{vaga.cpf}</TableCell>
                                             <TableCell>{vaga.apartamento}</TableCell>
-                                            <TableCell>
-
-                                                {session?.user?.tipo === "ADMIN" && (
-                                                    <Link href={`/admin/parkings/${vaga.id}`}>
-                                                        <span className="px-2">Detalhes</span>
-                                                    </Link>
-                                                )}
-                                            </TableCell>
+                                            {session?.user?.tipo !== 'MORADOR' && (
+                                                <TableCell>
+                                                    {session?.user?.tipo === "ADMIN" && (
+                                                        <Link href={`/admin/parkings/${vaga.id}`}>
+                                                            <span className="px-2">Detalhes</span>
+                                                        </Link>
+                                                    )}
+                                                </TableCell>
+                                            )}
                                         </TableRow>
                                     ))}
                                 </TableBody>
@@ -195,20 +213,24 @@ export default async function TabsPrivadas({
                     <CardContent>
 
                         <CardContent className="p-6 pt-0 pb-0">
-                            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
+                            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-7">
 
-                                <Card>
-                                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                                        <CardTitle className="text-sm font-medium">Gastos</CardTitle>
-                                        <CircleDollarSign />
+                                <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-emerald-500 via-emerald-600 to-green-600 dark:from-emerald-600 dark:via-emerald-700 dark:to-green-700 shadow-xl">
+                                    <div className="absolute inset-0 bg-black/10 dark:bg-white/5"></div>
+                                    <div className="absolute -right-4 -top-4 w-16 h-16 bg-white/10 rounded-full"></div>
+                                    <CardHeader className="relative flex flex-row items-center justify-between space-y-0 pb-2">
+                                        <CardTitle className="text-sm font-medium text-emerald-100">Gastos</CardTitle>
+                                        <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+                                            <CircleDollarSign className="w-5 h-5 text-white" />
+                                        </div>
                                     </CardHeader>
-                                    <CardContent>
+                                    <CardContent className="relative">
                                         {/* Valor principal */}
-                                        <div className="text-2xl font-bold">
+                                        <div className="text-2xl font-bold text-white">
                                             {formatCurrency(gastos.gastos.reduce((acc: any, gasto: any) => acc + gasto.valor, 0))}
                                         </div>
                                         {/* Descrição secundária */}
-                                        <p className={`text-xs ${isPositive ? "text-green-600" : "text-red-600"}`}>
+                                        <p className={`text-xs ${isPositive ? "text-emerald-200" : "text-red-200"}`}>
                                             {isPositive ? "+" : ""}
                                             {formattedVariation}% em relação ao mês anterior
                                         </p>
@@ -224,55 +246,139 @@ export default async function TabsPrivadas({
             </TabsContent>
 
             {/* Conteúdo da aba FUNCIONÁRIOS */}
-            <TabsContent value="funcionarios" className="space-y-4">
+            <TabsContent value="funcionarios" className="space-y-6">
+                {/* Estatísticas dos Funcionários */}
+                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+                    <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-blue-500 via-blue-600 to-indigo-600 dark:from-blue-600 dark:via-blue-700 dark:to-indigo-700 shadow-xl">
+                        <div className="absolute inset-0 bg-black/10 dark:bg-white/5"></div>
+                        <div className="absolute -right-4 -top-4 w-16 h-16 bg-white/10 rounded-full"></div>
+                        <CardHeader className="relative flex flex-row items-center justify-between space-y-0 pb-2">
+                            <CardTitle className="text-sm font-medium text-blue-100">Total de Funcionários</CardTitle>
+                            <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+                                <Users className="w-5 h-5 text-white" />
+                            </div>
+                        </CardHeader>
+                        <CardContent className="relative">
+                            <div className="text-3xl font-bold text-white">
+                                {formatNumber(funcionarios?.data?.length || 0)}
+                            </div>
+                        </CardContent>
+                    </Card>
+
+                    <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-emerald-500 via-emerald-600 to-teal-600 dark:from-emerald-600 dark:via-emerald-700 dark:to-teal-700 shadow-xl">
+                        <div className="absolute inset-0 bg-black/10 dark:bg-white/5"></div>
+                        <div className="absolute -right-4 -top-4 w-16 h-16 bg-white/10 rounded-full"></div>
+                        <CardHeader className="relative flex flex-row items-center justify-between space-y-0 pb-2">
+                            <CardTitle className="text-sm font-medium text-emerald-100">Ativos</CardTitle>
+                            <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+                                <DoorClosed className="w-5 h-5 text-white" />
+                            </div>
+                        </CardHeader>
+                        <CardContent className="relative">
+                            <div className="text-3xl font-bold text-white">
+                                {formatNumber(funcionarios?.data?.filter((f: any) => f.ativo)?.length || 0)}
+                            </div>
+                        </CardContent>
+                    </Card>
+
+                    <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-red-500 via-red-600 to-rose-600 dark:from-red-600 dark:via-red-700 dark:to-rose-700 shadow-xl">
+                        <div className="absolute inset-0 bg-black/10 dark:bg-white/5"></div>
+                        <div className="absolute -right-4 -top-4 w-16 h-16 bg-white/10 rounded-full"></div>
+                        <CardHeader className="relative flex flex-row items-center justify-between space-y-0 pb-2">
+                            <CardTitle className="text-sm font-medium text-red-100">Inativos</CardTitle>
+                            <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+                                <DoorClosed className="w-5 h-5 text-white" />
+                            </div>
+                        </CardHeader>
+                        <CardContent className="relative">
+                            <div className="text-3xl font-bold text-white">
+                                {formatNumber(funcionarios?.data?.filter((f: any) => !f.ativo)?.length || 0)}
+                            </div>
+                        </CardContent>
+                    </Card>
+
+                    <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-purple-500 via-purple-600 to-violet-600 dark:from-purple-600 dark:via-purple-700 dark:to-violet-700 shadow-xl">
+                        <div className="absolute inset-0 bg-black/10 dark:bg-white/5"></div>
+                        <div className="absolute -right-4 -top-4 w-16 h-16 bg-white/10 rounded-full"></div>
+                        <CardHeader className="relative flex flex-row items-center justify-between space-y-0 pb-2">
+                            <CardTitle className="text-sm font-medium text-purple-100">Departamentos</CardTitle>
+                            <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+                                <Users className="w-5 h-5 text-white" />
+                            </div>
+                        </CardHeader>
+                        <CardContent className="relative">
+                            <div className="text-3xl font-bold text-white">
+                                {formatNumber(new Set(funcionarios?.data?.map((f: any) => f.departamento)).size || 0)}
+                            </div>
+                        </CardContent>
+                    </Card>
+                </div>
+
+                {/* Tabela de Funcionários */}
                 <Card>
-                    <CardHeader>
-                        <CardTitle>Funcionários</CardTitle>
+                    <CardHeader className="flex flex-row items-center justify-between">
+                        <CardTitle>Lista de Funcionários</CardTitle>
+                        {session?.user?.tipo === "ADMIN" && (
+                            <Link href="/admin/funcionarios">
+                                <Button variant="outline" size="sm">
+                                    Gerenciar Funcionários
+                                </Button>
+                            </Link>
+                        )}
                     </CardHeader>
                     <CardContent>
-
-                        <CardContent>
-                            <FuncionarioTable funcionarios={funcionarios.data} />
-                        </CardContent>
+                        <FuncionarioTable funcionarios={funcionarios?.data} />
                     </CardContent>
                 </Card>
             </TabsContent>
 
             {/* Conteúdo da aba ENCOMENDAS */}
-            <TabsContent value="encomendas" className="space-y-4">
+            <TabsContent value="encomendas" className="space-y-6">
                 {/* Estatísticas das Encomendas */}
-                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                    <Card>
-                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <CardTitle className="text-sm font-medium">Total de Encomendas</CardTitle>
-                            <Barcode />
+                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                    <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-blue-500 via-blue-600 to-indigo-600 dark:from-blue-600 dark:via-blue-700 dark:to-indigo-700 shadow-xl">
+                        <div className="absolute inset-0 bg-black/10 dark:bg-white/5"></div>
+                        <div className="absolute -right-4 -top-4 w-16 h-16 bg-white/10 rounded-full"></div>
+                        <CardHeader className="relative flex flex-row items-center justify-between space-y-0 pb-2">
+                            <CardTitle className="text-sm font-medium text-blue-100">Total de Encomendas</CardTitle>
+                            <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+                                <Barcode className="w-5 h-5 text-white" />
+                            </div>
                         </CardHeader>
-                        <CardContent>
-                            <div className="text-2xl font-bold">
+                        <CardContent className="relative">
+                            <div className="text-3xl font-bold text-white">
                                 {formatNumber(encomendasSummary?.encomendasCount || 0)}
                             </div>
                         </CardContent>
                     </Card>
 
-                    <Card>
-                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <CardTitle className="text-sm font-medium">Entregues</CardTitle>
-                            <Barcode />
+                    <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-emerald-500 via-emerald-600 to-teal-600 dark:from-emerald-600 dark:via-emerald-700 dark:to-teal-700 shadow-xl">
+                        <div className="absolute inset-0 bg-black/10 dark:bg-white/5"></div>
+                        <div className="absolute -right-4 -top-4 w-16 h-16 bg-white/10 rounded-full"></div>
+                        <CardHeader className="relative flex flex-row items-center justify-between space-y-0 pb-2">
+                            <CardTitle className="text-sm font-medium text-emerald-100">Entregues</CardTitle>
+                            <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+                                <Barcode className="w-5 h-5 text-white" />
+                            </div>
                         </CardHeader>
-                        <CardContent>
-                            <div className="text-2xl font-bold">
+                        <CardContent className="relative">
+                            <div className="text-3xl font-bold text-white">
                                 {formatNumber(encomendasSummary?.encomendasEntregues || 0)}
                             </div>
                         </CardContent>
                     </Card>
 
-                    <Card>
-                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <CardTitle className="text-sm font-medium">Assinadas</CardTitle>
-                            <Barcode />
+                    <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-purple-500 via-purple-600 to-violet-600 dark:from-purple-600 dark:via-purple-700 dark:to-violet-700 shadow-xl">
+                        <div className="absolute inset-0 bg-black/10 dark:bg-white/5"></div>
+                        <div className="absolute -right-4 -top-4 w-16 h-16 bg-white/10 rounded-full"></div>
+                        <CardHeader className="relative flex flex-row items-center justify-between space-y-0 pb-2">
+                            <CardTitle className="text-sm font-medium text-purple-100">Assinadas</CardTitle>
+                            <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+                                <Barcode className="w-5 h-5 text-white" />
+                            </div>
                         </CardHeader>
-                        <CardContent>
-                            <div className="text-2xl font-bold">
+                        <CardContent className="relative">
+                            <div className="text-3xl font-bold text-white">
                                 {formatNumber(encomendasSummary?.encomendasAssinadas || 0)}
                             </div>
                         </CardContent>
@@ -300,7 +406,7 @@ export default async function TabsPrivadas({
                                         <TableHead>MORADOR</TableHead>
                                         <TableHead>DATA DE ENTREGA</TableHead>
                                         <TableHead>STATUS</TableHead>
-                                        <TableHead>AÇÕES</TableHead>
+                                        {session?.user?.tipo !== 'MORADOR' && <TableHead>AÇÕES</TableHead>}
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
@@ -334,15 +440,17 @@ export default async function TabsPrivadas({
                                                     }
                                                 </span>
                                             </TableCell>
-                                            <TableCell>
-                                                {session?.user?.tipo === "ADMIN" && (
-                                                    <Link href={`/admin/encomendas/${encomenda.id}`}>
-                                                        <Button variant="outline" size="sm">
-                                                            Detalhes
-                                                        </Button>
-                                                    </Link>
-                                                )}
-                                            </TableCell>
+                                            {session?.user?.tipo !== 'MORADOR' && (
+                                                <TableCell>
+                                                    {session?.user?.tipo === "ADMIN" && (
+                                                        <Link href={`/admin/encomendas/${encomenda.id}`}>
+                                                            <Button variant="outline" size="sm">
+                                                                Detalhes
+                                                            </Button>
+                                                        </Link>
+                                                    )}
+                                                </TableCell>
+                                            )}
                                         </TableRow>
                                     ))}
                                 </TableBody>
@@ -358,52 +466,68 @@ export default async function TabsPrivadas({
             </TabsContent>
 
             {/* Conteúdo da aba BOLETOS */}
-            <TabsContent value="boletos" className="space-y-4">
+            <TabsContent value="boletos" className="space-y-6">
                 {/* Estatísticas dos Boletos */}
-                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-                    <Card>
-                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <CardTitle className="text-sm font-medium">Total de Boletos</CardTitle>
-                            <Barcode />
+                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+                    <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-blue-500 via-blue-600 to-indigo-600 dark:from-blue-600 dark:via-blue-700 dark:to-indigo-700 shadow-xl">
+                        <div className="absolute inset-0 bg-black/10 dark:bg-white/5"></div>
+                        <div className="absolute -right-4 -top-4 w-16 h-16 bg-white/10 rounded-full"></div>
+                        <CardHeader className="relative flex flex-row items-center justify-between space-y-0 pb-2">
+                            <CardTitle className="text-sm font-medium text-blue-100">Total de Boletos</CardTitle>
+                            <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+                                <Barcode className="w-5 h-5 text-white" />
+                            </div>
                         </CardHeader>
-                        <CardContent>
-                            <div className="text-2xl font-bold">
+                        <CardContent className="relative">
+                            <div className="text-3xl font-bold text-white">
                                 {formatNumber(boletosSummary?.boletosCount || 0)}
                             </div>
                         </CardContent>
                     </Card>
 
-                    <Card>
-                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <CardTitle className="text-sm font-medium">Boletos Pagos</CardTitle>
-                            <CircleDollarSign />
+                    <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-emerald-500 via-emerald-600 to-teal-600 dark:from-emerald-600 dark:via-emerald-700 dark:to-teal-700 shadow-xl">
+                        <div className="absolute inset-0 bg-black/10 dark:bg-white/5"></div>
+                        <div className="absolute -right-4 -top-4 w-16 h-16 bg-white/10 rounded-full"></div>
+                        <CardHeader className="relative flex flex-row items-center justify-between space-y-0 pb-2">
+                            <CardTitle className="text-sm font-medium text-emerald-100">Boletos Pagos</CardTitle>
+                            <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+                                <CircleDollarSign className="w-5 h-5 text-white" />
+                            </div>
                         </CardHeader>
-                        <CardContent>
-                            <div className="text-2xl font-bold">
+                        <CardContent className="relative">
+                            <div className="text-3xl font-bold text-white">
                                 {formatNumber(boletosSummary?.boletosPagos || 0)}
                             </div>
                         </CardContent>
                     </Card>
 
-                    <Card>
-                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <CardTitle className="text-sm font-medium">Vencidos</CardTitle>
-                            <CircleDollarSign />
+                    <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-red-500 via-red-600 to-rose-600 dark:from-red-600 dark:via-red-700 dark:to-rose-700 shadow-xl">
+                        <div className="absolute inset-0 bg-black/10 dark:bg-white/5"></div>
+                        <div className="absolute -right-4 -top-4 w-16 h-16 bg-white/10 rounded-full"></div>
+                        <CardHeader className="relative flex flex-row items-center justify-between space-y-0 pb-2">
+                            <CardTitle className="text-sm font-medium text-red-100">Vencidos</CardTitle>
+                            <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+                                <CircleDollarSign className="w-5 h-5 text-white" />
+                            </div>
                         </CardHeader>
-                        <CardContent>
-                            <div className="text-2xl font-bold text-red-600">
+                        <CardContent className="relative">
+                            <div className="text-3xl font-bold text-white">
                                 {formatNumber(boletosSummary?.boletosVencidos || 0)}
                             </div>
                         </CardContent>
                     </Card>
 
-                    <Card>
-                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <CardTitle className="text-sm font-medium">Vencem Hoje</CardTitle>
-                            <CircleDollarSign />
+                    <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-orange-500 via-orange-600 to-amber-600 dark:from-orange-600 dark:via-orange-700 dark:to-amber-700 shadow-xl">
+                        <div className="absolute inset-0 bg-black/10 dark:bg-white/5"></div>
+                        <div className="absolute -right-4 -top-4 w-16 h-16 bg-white/10 rounded-full"></div>
+                        <CardHeader className="relative flex flex-row items-center justify-between space-y-0 pb-2">
+                            <CardTitle className="text-sm font-medium text-orange-100">Vencem Hoje</CardTitle>
+                            <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+                                <CircleDollarSign className="w-5 h-5 text-white" />
+                            </div>
                         </CardHeader>
-                        <CardContent>
-                            <div className="text-2xl font-bold text-orange-600">
+                        <CardContent className="relative">
+                            <div className="text-3xl font-bold text-white">
                                 {formatNumber(boletosSummary?.boletosVencendoHoje || 0)}
                             </div>
                         </CardContent>
@@ -433,7 +557,7 @@ export default async function TabsPrivadas({
                                         <TableHead>VALOR</TableHead>
                                         <TableHead>VENCIMENTO</TableHead>
                                         <TableHead>STATUS</TableHead>
-                                        <TableHead>AÇÕES</TableHead>
+                                        {session?.user?.tipo !== 'MORADOR' && <TableHead>AÇÕES</TableHead>}
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
@@ -470,15 +594,17 @@ export default async function TabsPrivadas({
                                                     }
                                                 </span>
                                             </TableCell>
-                                            <TableCell>
-                                                {session?.user?.tipo === "ADMIN" && (
-                                                    <Link href={`/admin/boletos/${boleto.id}`}>
-                                                        <Button variant="outline" size="sm">
-                                                            Detalhes
-                                                        </Button>
-                                                    </Link>
-                                                )}
-                                            </TableCell>
+                                            {session?.user?.tipo !== 'MORADOR' && (
+                                                <TableCell>
+                                                    {session?.user?.tipo === "ADMIN" && (
+                                                        <Link href={`/admin/boletos/${boleto.id}`}>
+                                                            <Button variant="outline" size="sm">
+                                                                Detalhes
+                                                            </Button>
+                                                        </Link>
+                                                    )}
+                                                </TableCell>
+                                            )}
                                         </TableRow>
                                     ))}
                                 </TableBody>

@@ -44,39 +44,57 @@ export default async function UserProfilePage() {
                 </div>
 
                 {/* Stats Cards */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <Card>
-                        <CardContent className="p-4">
-                            <div className="flex items-center space-x-2">
-                                <Settings className="w-5 h-5 text-blue-600" />
-                                <div>
-                                    <p className="text-sm text-gray-600 dark:text-gray-400">Tipo</p>
-                                    <p className="font-semibold">{user.tipo}</p>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-blue-500 via-blue-600 to-blue-700 dark:from-blue-600 dark:via-blue-700 dark:to-blue-800 shadow-xl">
+                        <div className="absolute inset-0 bg-black/10 dark:bg-white/5"></div>
+                        <CardContent className="relative p-6">
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center space-x-3">
+                                    <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+                                        <Settings className="w-6 h-6 text-white" />
+                                    </div>
+                                    <div>
+                                        <p className="text-sm text-blue-100">Tipo de Usuário</p>
+                                        <p className="text-xl font-bold text-white">{user.tipo}</p>
+                                    </div>
                                 </div>
+                                <div className="absolute -right-4 -top-4 w-16 h-16 bg-white/10 rounded-full"></div>
                             </div>
                         </CardContent>
                     </Card>
                     
-                    <Card>
-                        <CardContent className="p-4">
-                            <div className="flex items-center space-x-2">
-                                <User className="w-5 h-5 text-green-600" />
-                                <div>
-                                    <p className="text-sm text-gray-600 dark:text-gray-400">Status</p>
-                                    <p className="font-semibold text-green-600">Ativo</p>
+                    <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-emerald-500 via-emerald-600 to-emerald-700 dark:from-emerald-600 dark:via-emerald-700 dark:to-emerald-800 shadow-xl">
+                        <div className="absolute inset-0 bg-black/10 dark:bg-white/5"></div>
+                        <CardContent className="relative p-6">
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center space-x-3">
+                                    <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+                                        <User className="w-6 h-6 text-white" />
+                                    </div>
+                                    <div>
+                                        <p className="text-sm text-emerald-100">Status</p>
+                                        <p className="text-xl font-bold text-white">Ativo</p>
+                                    </div>
                                 </div>
+                                <div className="absolute -right-4 -top-4 w-16 h-16 bg-white/10 rounded-full"></div>
                             </div>
                         </CardContent>
                     </Card>
                     
-                    <Card>
-                        <CardContent className="p-4">
-                            <div className="flex items-center space-x-2">
-                                <Home className="w-5 h-5 text-purple-600" />
-                                <div>
-                                    <p className="text-sm text-gray-600 dark:text-gray-400">Apartamentos</p>
-                                    <p className="font-semibold">{user.moradores?.length || 0}</p>
+                    <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-purple-500 via-purple-600 to-purple-700 dark:from-purple-600 dark:via-purple-700 dark:to-purple-800 shadow-xl">
+                        <div className="absolute inset-0 bg-black/10 dark:bg-white/5"></div>
+                        <CardContent className="relative p-6">
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center space-x-3">
+                                    <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+                                        <Home className="w-6 h-6 text-white" />
+                                    </div>
+                                    <div>
+                                        <p className="text-sm text-purple-100">Apartamentos</p>
+                                        <p className="text-xl font-bold text-white">{user.moradores?.length || 0}</p>
+                                    </div>
                                 </div>
+                                <div className="absolute -right-4 -top-4 w-16 h-16 bg-white/10 rounded-full"></div>
                             </div>
                         </CardContent>
                     </Card>

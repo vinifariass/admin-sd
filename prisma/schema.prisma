@@ -24,7 +24,7 @@ model User {
   createdAt     DateTime  @default(now()) @db.Timestamp(6)
   updatedAt     DateTime  @updatedAt
 
-  moradores     Morador[] // Um usuário pode ter múltiplos moradores
+  moradores     Morador[] @relation("UserMoradores") // Um usuário pode ter múltiplos moradores
 
   @@map("users")
 }
@@ -64,7 +64,7 @@ model Morador {
   cpf         String
   apartamento String
   usuarioId   String?   @db.Uuid
-  usuario     User?     @relation(fields: [usuarioId], references: [id])
+  usuario     User?     @relation("UserMoradores", fields: [usuarioId], references: [id])
   email       String?
   telefone    String?
   dataLocacao DateTime?

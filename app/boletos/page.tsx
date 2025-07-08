@@ -78,25 +78,31 @@ const BoletoConsultaPage = async ({ searchParams }: { searchParams: Promise<Sear
             {/* Formulários de Busca */}
             <div className="grid gap-6 md:grid-cols-2">
                 {/* Busca por Apartamento */}
-                <Card>
-                    <CardHeader>
-                        <CardTitle className="flex items-center gap-2">
-                            <Search className="h-5 w-5" />
+                <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-cyan-500 via-cyan-600 to-blue-600 dark:from-cyan-600 dark:via-cyan-700 dark:to-blue-700 shadow-xl">
+                    <div className="absolute inset-0 bg-black/10 dark:bg-white/5"></div>
+                    <div className="absolute -right-8 -top-8 w-24 h-24 bg-white/10 rounded-full"></div>
+                    <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-white/10 rounded-full"></div>
+                    <CardHeader className="relative">
+                        <CardTitle className="flex items-center gap-3 text-white">
+                            <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+                                <Search className="h-6 w-6 text-white" />
+                            </div>
                             Buscar por Apartamento
                         </CardTitle>
                     </CardHeader>
-                    <CardContent>
+                    <CardContent className="relative">
                         <form action="" method="GET" className="space-y-4">
                             <div>
-                                <Label htmlFor="apartamento">Número do Apartamento</Label>
+                                <Label htmlFor="apartamento" className="text-cyan-100">Número do Apartamento</Label>
                                 <Input
                                     id="apartamento"
                                     name="apartamento"
                                     placeholder="Ex: 101, 202, 303"
                                     defaultValue={apartamento || ''}
+                                    className="bg-white/20 border-white/30 placeholder:text-white/70 text-white backdrop-blur-sm"
                                 />
                             </div>
-                            <Button type="submit" className="w-full">
+                            <Button type="submit" className="w-full bg-white/20 hover:bg-white/30 text-white border-white/30 backdrop-blur-sm">
                                 Buscar Boletos
                             </Button>
                         </form>
@@ -104,25 +110,31 @@ const BoletoConsultaPage = async ({ searchParams }: { searchParams: Promise<Sear
                 </Card>
 
                 {/* Busca por Código de Barras */}
-                <Card>
-                    <CardHeader>
-                        <CardTitle className="flex items-center gap-2">
-                            <CreditCard className="h-5 w-5" />
+                <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-emerald-500 via-emerald-600 to-teal-600 dark:from-emerald-600 dark:via-emerald-700 dark:to-teal-700 shadow-xl">
+                    <div className="absolute inset-0 bg-black/10 dark:bg-white/5"></div>
+                    <div className="absolute -left-8 -top-8 w-24 h-24 bg-white/10 rounded-full"></div>
+                    <div className="absolute -left-4 -bottom-4 w-16 h-16 bg-white/10 rounded-full"></div>
+                    <CardHeader className="relative">
+                        <CardTitle className="flex items-center gap-3 text-white">
+                            <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+                                <CreditCard className="h-6 w-6 text-white" />
+                            </div>
                             Buscar por Código de Barras
                         </CardTitle>
                     </CardHeader>
-                    <CardContent>
+                    <CardContent className="relative">
                         <form action="" method="GET" className="space-y-4">
                             <div>
-                                <Label htmlFor="codigoBarras">Código de Barras</Label>
+                                <Label htmlFor="codigoBarras" className="text-emerald-100">Código de Barras</Label>
                                 <Input
                                     id="codigoBarras"
                                     name="codigoBarras"
                                     placeholder="Cole o código de barras aqui"
                                     defaultValue={codigoBarras || ''}
+                                    className="bg-white/20 border-white/30 placeholder:text-white/70 text-white backdrop-blur-sm"
                                 />
                             </div>
-                            <Button type="submit" className="w-full">
+                            <Button type="submit" className="w-full bg-white/20 hover:bg-white/30 text-white border-white/30 backdrop-blur-sm">
                                 Buscar Boleto
                             </Button>
                         </form>
@@ -132,35 +144,49 @@ const BoletoConsultaPage = async ({ searchParams }: { searchParams: Promise<Sear
 
             {/* Resultado da Busca por Código de Barras */}
             {boletoEspecifico && (
-                <Card>
-                    <CardHeader>
-                        <CardTitle className="flex items-center justify-between">
-                            Boleto Encontrado
-                            <Badge variant={boletoEspecifico.pago ? "default" : "secondary"}>
+                <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-orange-500 via-orange-600 to-red-600 dark:from-orange-600 dark:via-orange-700 dark:to-red-700 shadow-xl">
+                    <div className="absolute inset-0 bg-black/10 dark:bg-white/5"></div>
+                    <div className="absolute -right-12 -top-12 w-32 h-32 bg-white/10 rounded-full"></div>
+                    <div className="absolute -left-8 -bottom-8 w-24 h-24 bg-white/10 rounded-full"></div>
+                    <CardHeader className="relative">
+                        <CardTitle className="flex items-center justify-between text-white">
+                            <div className="flex items-center gap-3">
+                                <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+                                    <CreditCard className="h-6 w-6 text-white" />
+                                </div>
+                                Boleto Encontrado
+                            </div>
+                            <Badge 
+                                variant={boletoEspecifico.pago ? "default" : "secondary"}
+                                className={boletoEspecifico.pago 
+                                    ? "bg-green-500 hover:bg-green-600 text-white" 
+                                    : "bg-yellow-500 hover:bg-yellow-600 text-yellow-900"
+                                }
+                            >
                                 {boletoEspecifico.pago ? 'Pago' : 'Não Pago'}
                             </Badge>
                         </CardTitle>
                     </CardHeader>
-                    <CardContent>
+                    <CardContent className="relative">
                         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                            <div>
-                                <Label className="text-sm font-medium text-muted-foreground">Número do Boleto</Label>
-                                <p className="text-lg font-mono">{boletoEspecifico.numeroBoleto}</p>
+                            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                                <Label className="text-sm font-medium text-orange-100">Número do Boleto</Label>
+                                <p className="text-lg font-mono text-white">{boletoEspecifico.numeroBoleto}</p>
                             </div>
-                            <div>
-                                <Label className="text-sm font-medium text-muted-foreground">Apartamento</Label>
-                                <p className="text-lg">{boletoEspecifico.apartamento}</p>
+                            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                                <Label className="text-sm font-medium text-orange-100">Apartamento</Label>
+                                <p className="text-lg text-white">{boletoEspecifico.apartamento}</p>
                             </div>
-                            <div>
-                                <Label className="text-sm font-medium text-muted-foreground">Valor</Label>
-                                <p className="text-2xl font-bold text-green-600">{formatCurrency(boletoEspecifico.valor)}</p>
+                            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                                <Label className="text-sm font-medium text-orange-100">Valor</Label>
+                                <p className="text-2xl font-bold text-white">{formatCurrency(boletoEspecifico.valor)}</p>
                             </div>
-                            <div>
-                                <Label className="text-sm font-medium text-muted-foreground">Data de Vencimento</Label>
+                            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                                <Label className="text-sm font-medium text-orange-100">Data de Vencimento</Label>
                                 <div className="flex items-center gap-2">
-                                    <p className="text-lg">{new Date(boletoEspecifico.dataVencimento).toLocaleDateString('pt-BR')}</p>
+                                    <p className="text-lg text-white">{new Date(boletoEspecifico.dataVencimento).toLocaleDateString('pt-BR')}</p>
                                     {isVencendoHoje(boletoEspecifico.dataVencimento) && (
-                                        <Badge variant="secondary" className="text-orange-600">
+                                        <Badge variant="secondary" className="bg-yellow-500 text-yellow-900">
                                             <Clock className="h-3 w-3 mr-1" />
                                             Vence hoje
                                         </Badge>

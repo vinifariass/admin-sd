@@ -44,6 +44,7 @@ const AdminOverviewPage = async () => {
                 encomendasSummary={encomendasSummary}
                 boletos={latestBoletos}
                 boletosSummary={boletosSummary}
+                session={session}
             />
         </div>
     );

@@ -8,7 +8,7 @@ import DeleteDialog from "@/components/shared/delete-dialog";
 import { formatDateTime } from "@/lib/utils";
 
 type Props = {
-  funcionarios: {
+  funcionarios?: {
     id: string;
     nome: string;
     cpf: string;
@@ -34,22 +34,30 @@ const FuncionarioTable = ({ funcionarios }: Props) => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {funcionarios.map((funcionario) => (
-          <TableRow key={funcionario.id}>
-            <TableCell>{funcionario.nome}</TableCell>
-            <TableCell>{funcionario.cpf}</TableCell>
-            <TableCell>{funcionario.email}</TableCell>
-            <TableCell>{funcionario.telefone}</TableCell>
-            <TableCell>{funcionario.dataAdmissao ? formatDateTime(funcionario.dataAdmissao).dateOnly : ''}</TableCell>
-            <TableCell>{funcionario.dataDemissao ? formatDateTime(funcionario.dataDemissao).dateOnly : ''}</TableCell>
-            <TableCell className="flex gap-1">
-              <Button asChild variant='outline' size='sm'>
-                <Link href={`/admin/funcionarios/${funcionario.id}`}>Editar</Link>
-              </Button>
-              <DeleteDialog id={funcionario.id} action={deleteFuncionario} />
+        {funcionarios && funcionarios.length > 0 ? (
+          funcionarios.map((funcionario) => (
+            <TableRow key={funcionario.id}>
+              <TableCell>{funcionario.nome}</TableCell>
+              <TableCell>{funcionario.cpf}</TableCell>
+              <TableCell>{funcionario.email}</TableCell>
+              <TableCell>{funcionario.telefone}</TableCell>
+              <TableCell>{funcionario.dataAdmissao ? formatDateTime(funcionario.dataAdmissao).dateOnly : ''}</TableCell>
+              <TableCell>{funcionario.dataDemissao ? formatDateTime(funcionario.dataDemissao).dateOnly : ''}</TableCell>
+              <TableCell className="flex gap-1">
+                <Button asChild variant='outline' size='sm'>
+                  <Link href={`/admin/funcionarios/${funcionario.id}`}>Editar</Link>
+                </Button>
+                <DeleteDialog id={funcionario.id} action={deleteFuncionario} />
+              </TableCell>
+            </TableRow>
+          ))
+        ) : (
+          <TableRow>
+            <TableCell colSpan={7} className="text-center py-8 text-muted-foreground">
+              Nenhum funcionário encontrado
             </TableCell>
           </TableRow>
-        ))}
+        )}
       </TableBody>
     </Table>
   );

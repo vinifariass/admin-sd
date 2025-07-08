@@ -6,12 +6,12 @@ import UserNavbar from "@/components/user/user-navbar";
 export const metadata: Metadata = {
     title: {
         template: '%s | Admin SD',
-        default: 'Perfil do Usuário | Admin SD'
+        default: 'Meus Boletos | Admin SD'
     },
-    description: 'Área do usuário do sistema Admin SD',
+    description: 'Consulte e gerencie seus boletos do condomínio',
 };
 
-export default async function UserLayout({
+export default async function BoletosLayout({
     children,
 }: {
     children: React.ReactNode;

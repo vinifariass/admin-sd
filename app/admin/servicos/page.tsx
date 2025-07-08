@@ -72,7 +72,7 @@ const AdminReciboPage = async (props: {
               <TableHead>ID</TableHead>
               <TableHead>NOME</TableHead>
               <TableHead>DATA DE VENCIMENTO</TableHead>
-              <TableHead>AÇÕES</TableHead>
+              {session?.user?.tipo !== 'MORADOR' && <TableHead>AÇÕES</TableHead>}
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -81,15 +81,16 @@ const AdminReciboPage = async (props: {
                 <TableCell>{formatId(servico.id)}</TableCell>
                 <TableCell>{servico.nomeServico}</TableCell>
                 <TableCell>{servico.dataVencimento.toLocaleDateString()}</TableCell>
-                <TableCell>
-                  <Button asChild variant='outline' size='sm'>
-                    <Link href={`/admin/servicos/${servico.id}`}>
-                      Editar
-                    </Link>
-                  </Button>
-                  <DeleteDialog id={servico.id} action={deleteRecibo} />
-
-                </TableCell>
+                {session?.user?.tipo !== 'MORADOR' && (
+                  <TableCell>
+                    <Button asChild variant='outline' size='sm'>
+                      <Link href={`/admin/servicos/${servico.id}`}>
+                        Editar
+                      </Link>
+                    </Button>
+                    <DeleteDialog id={servico.id} action={deleteRecibo} />
+                  </TableCell>
+                )}
               </TableRow>
             ))}
           </TableBody>

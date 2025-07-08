@@ -122,38 +122,58 @@ export default async function UserNotificationsPage() {
                 </div>
 
                 {/* Stats */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <Card>
-                        <CardContent className="p-4">
-                            <div className="flex items-center space-x-2">
-                                <Bell className="w-5 h-5 text-blue-600" />
-                                <div>
-                                    <p className="text-sm text-gray-600 dark:text-gray-400">Total</p>
-                                    <p className="font-semibold">{notifications.length}</p>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-indigo-500 via-indigo-600 to-purple-600 dark:from-indigo-600 dark:via-indigo-700 dark:to-purple-700 shadow-xl">
+                        <div className="absolute inset-0 bg-black/10 dark:bg-white/5"></div>
+                        <div className="absolute -right-4 -top-4 w-16 h-16 bg-white/10 rounded-full"></div>
+                        <CardContent className="relative p-6">
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center space-x-3">
+                                    <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+                                        <Bell className="w-6 h-6 text-white" />
+                                    </div>
+                                    <div>
+                                        <p className="text-sm text-indigo-100">Total</p>
+                                        <p className="text-xl font-bold text-white">{notifications.length}</p>
+                                    </div>
                                 </div>
                             </div>
                         </CardContent>
                     </Card>
                     
-                    <Card>
-                        <CardContent className="p-4">
-                            <div className="flex items-center space-x-2">
-                                <div className="w-2 h-2 bg-red-500 rounded-full" />
-                                <div>
-                                    <p className="text-sm text-gray-600 dark:text-gray-400">Não lidas</p>
-                                    <p className="font-semibold text-red-600">{unreadCount}</p>
+                    <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-rose-500 via-rose-600 to-red-600 dark:from-rose-600 dark:via-rose-700 dark:to-red-700 shadow-xl">
+                        <div className="absolute inset-0 bg-black/10 dark:bg-white/5"></div>
+                        <div className="absolute -right-4 -top-4 w-16 h-16 bg-white/10 rounded-full"></div>
+                        <CardContent className="relative p-6">
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center space-x-3">
+                                    <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+                                        <div className="w-6 h-6 flex items-center justify-center">
+                                            <div className="w-3 h-3 bg-white rounded-full animate-pulse" />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p className="text-sm text-rose-100">Não lidas</p>
+                                        <p className="text-xl font-bold text-white">{unreadCount}</p>
+                                    </div>
                                 </div>
                             </div>
                         </CardContent>
                     </Card>
                     
-                    <Card>
-                        <CardContent className="p-4">
-                            <div className="flex items-center space-x-2">
-                                <Check className="w-5 h-5 text-green-600" />
-                                <div>
-                                    <p className="text-sm text-gray-600 dark:text-gray-400">Lidas</p>
-                                    <p className="font-semibold text-green-600">{notifications.length - unreadCount}</p>
+                    <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-emerald-500 via-emerald-600 to-teal-600 dark:from-emerald-600 dark:via-emerald-700 dark:to-teal-700 shadow-xl">
+                        <div className="absolute inset-0 bg-black/10 dark:bg-white/5"></div>
+                        <div className="absolute -right-4 -top-4 w-16 h-16 bg-white/10 rounded-full"></div>
+                        <CardContent className="relative p-6">
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center space-x-3">
+                                    <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+                                        <Check className="w-6 h-6 text-white" />
+                                    </div>
+                                    <div>
+                                        <p className="text-sm text-emerald-100">Lidas</p>
+                                        <p className="text-xl font-bold text-white">{notifications.length - unreadCount}</p>
+                                    </div>
                                 </div>
                             </div>
                         </CardContent>

@@ -46,9 +46,11 @@ const AdminFuncionariosPage = async (props: {
                         </div>
                     )}
                 </div>
-                <Button asChild variant='default'>
-                    <Link href='/admin/funcionarios/create'>Criar Funcionários</Link>
-                </Button>
+                {session?.user?.tipo === 'ADMIN' && (
+                    <Button asChild variant='default'>
+                        <Link href='/admin/funcionarios/create'>Criar Funcionários</Link>
+                    </Button>
+                )}
             </div>
 
             <Table>
@@ -60,7 +62,7 @@ const AdminFuncionariosPage = async (props: {
                         <TableHead>TELEFONE</TableHead>
                         <TableHead>DATA DE LOCAÇÃO</TableHead>
                         <TableHead>DATA DE DEMISSÂO</TableHead>
-                        <TableHead className="w-[100px]">AÇÕES</TableHead>
+                        {session?.user?.tipo !== 'MORADOR' && <TableHead className="w-[100px]">AÇÕES</TableHead>}
                     </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -74,16 +76,17 @@ const AdminFuncionariosPage = async (props: {
                             <TableCell>{
                                 funcionario.dataDemissao ? formatDateTime(funcionario.dataDemissao).dateOnly : ''
                             }</TableCell>
-                            <TableCell className="flex gap-1">
-                                <Button asChild variant='outline' size='sm'>
-                                    <Link href={`/admin/funcionarios/${funcionario.id}`}>Editar</Link>
-                                </Button>
-                                {/* DELETE BUTTON */}
-                                {session?.user?.tipo === 'admin' && (
-                                    <DeleteDialog id={funcionario.id} action={deleteFuncionario} />
-
-                                )}
-                            </TableCell>
+                            {session?.user?.tipo !== 'MORADOR' && (
+                                <TableCell className="flex gap-1">
+                                    <Button asChild variant='outline' size='sm'>
+                                        <Link href={`/admin/funcionarios/${funcionario.id}`}>Editar</Link>
+                                    </Button>
+                                    {/* DELETE BUTTON */}
+                                    {session?.user?.tipo === 'ADMIN' && (
+                                        <DeleteDialog id={funcionario.id} action={deleteFuncionario} />
+                                    )}
+                                </TableCell>
+                            )}
 
                         </TableRow>
                     ))}

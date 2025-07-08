@@ -12,6 +12,7 @@ import { formatCurrency, formatDateTime } from "@/lib/utils";
 import BoletoFilter from "@/components/admin/boleto-filter";
 import DeleteDialog from "@/components/shared/delete-dialog";
 import { deleteBoleto } from "@/lib/actions/boleto.action";
+import { auth } from "@/auth";
 
 type SearchParams = {
     query?: string;
@@ -26,6 +27,8 @@ const AdminBoletosPage = async ({ searchParams }: { searchParams: Promise<Search
     const page = Number(resolvedSearchParams.page) || 1;
     const status = resolvedSearchParams.status || '';
     const apartamento = resolvedSearchParams.apartamento || '';
+
+    const session = await auth();
 
     const [boletos, summary] = await Promise.all([
         getAllBoletos({ query, page, status, apartamento }),
@@ -50,12 +53,14 @@ const AdminBoletosPage = async ({ searchParams }: { searchParams: Promise<Search
                     <h1 className="text-3xl font-bold">Boletos</h1>
                     <p className="text-muted-foreground">Gerencie os boletos do condomínio</p>
                 </div>
-                <Link href="/admin/boletos/create">
-                    <Button className="flex items-center gap-2">
-                        <Plus className="h-4 w-4" />
-                        Novo Boleto
-                    </Button>
-                </Link>
+                {session?.user?.tipo === 'ADMIN' && (
+                    <Link href="/admin/boletos/create">
+                        <Button className="flex items-center gap-2">
+                            <Plus className="h-4 w-4" />
+                            Novo Boleto
+                        </Button>
+                    </Link>
+                )}
             </div>
 
             {/* Estatísticas */}
@@ -121,7 +126,7 @@ const AdminBoletosPage = async ({ searchParams }: { searchParams: Promise<Search
                                         <TableHead>Valor</TableHead>
                                         <TableHead>Vencimento</TableHead>
                                         <TableHead>Status</TableHead>
-                                        <TableHead>Ações</TableHead>
+                                        {session?.user?.tipo !== 'MORADOR' && <TableHead>Ações</TableHead>}
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
@@ -157,19 +162,21 @@ const AdminBoletosPage = async ({ searchParams }: { searchParams: Promise<Search
                                                     {boleto.pago ? 'Pago' : 'Não Pago'}
                                                 </Badge>
                                             </TableCell>
-                                            <TableCell>
-                                                <div className="flex items-center gap-2">
-                                                    <Link href={`/admin/boletos/${boleto.id}`}>
-                                                        <Button variant="ghost" size="sm">
-                                                            <Eye className="h-4 w-4" />
-                                                        </Button>
-                                                    </Link>
-                                                    <DeleteDialog
-                                                        id={boleto.id}
-                                                        action={deleteBoleto}
-                                                    />
-                                                </div>
-                                            </TableCell>
+                                            {session?.user?.tipo !== 'MORADOR' && (
+                                                <TableCell>
+                                                    <div className="flex items-center gap-2">
+                                                        <Link href={`/admin/boletos/${boleto.id}`}>
+                                                            <Button variant="ghost" size="sm">
+                                                                <Eye className="h-4 w-4" />
+                                                            </Button>
+                                                        </Link>
+                                                        <DeleteDialog
+                                                            id={boleto.id}
+                                                            action={deleteBoleto}
+                                                        />
+                                                    </div>
+                                                </TableCell>
+                                            )}
                                         </TableRow>
                                     ))}
                                 </TableBody>
