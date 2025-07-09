@@ -18,27 +18,28 @@ export default async function AdminLayout({
 
     return (
         <> <AdminPanelLayout
-            session={session}
-        >
+            session={session}>
             {/* Header */}
-            <header className="border-b container mx-auto flex items-center h-16 px-4">
-                <SheetMenu session={session} />
-                {/* Logo */}
-                <Link href="/" className="w-22">
-                    <Image 
-                        src="/images/logo.png" 
-                        height={48} 
-                        width={48} 
-                        alt="Logo" 
-                        className="dark:invert dark:brightness-0 dark:contrast-100"
-                    />
-                </Link>
-                {/* Botão da Conta */}
-                <div className="ml-auto items-center flex space-x-4">
-                    <ModeToggle />
-                    <nav className="hidden md:flex w-full max-w-xs gap-1">
-                        <UserButton />
-                    </nav>
+            <header className="border-bdark:bg-background bg-background backdrop-blur supports-[backdrop-filter]:bg-background dark:backdrop-blur">
+                <div className="mx-4 sm:mx-8 flex h-14 items-center">
+                    <SheetMenu session={session} />
+                    {/* Logo */}
+                    <Link href="/" className="w-22">
+                        <Image 
+                            src="/images/logo.png" 
+                            height={48} 
+                            width={48} 
+                            alt="Logo" 
+                            className="dark:invert dark:brightness-0 dark:contrast-100"
+                        />
+                    </Link>
+                    {/* Botão da Conta */}
+                    <div className="ml-auto items-center flex space-x-4">
+                        <ModeToggle />
+                        <nav className="hidden md:flex w-full max-w-xs gap-1">
+                            <UserButton />
+                        </nav>
+                    </div>
                 </div>
             </header>
 

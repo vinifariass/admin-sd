@@ -13,18 +13,20 @@ export async function Navbar({ title, session }: NavbarProps) {
   const currentSession = session || await auth();
   
   return (
-    <header className="sticky top-0 z-10 w-full bg-background/95 shadow backdrop-blur supports-[backdrop-filter]:bg-background/60 dark:shadow-secondary">
+    <header className="w-full bg-background border-b border-border backdrop-blur supports-[backdrop-filter]:bg-background dark:bg-background">
       <div className="mx-4 sm:mx-8 flex h-14 items-center">
-        <div className="flex items-center space-x-4 lg:space-x-0">
+        <div className="flex items-center gap-2 lg:gap-4">
           <SheetMenu session={currentSession} />
-          <h1 className="font-bold">{title}</h1>
+          <h1 className="font-semibold text-lg">{title}</h1>
         </div>
-        <div className="flex flex-1 items-center justify-end space-x-2">
-          {currentSession?.user?.id && (
-            <NotificationBell userId={currentSession.user.id} />
-          )}
-          <ModeToggle />
-          <UserNav />
+        <div className="flex flex-1 items-center justify-end">
+          <div className="flex items-center gap-2">
+            {currentSession?.user?.id && (
+              <NotificationBell userId={currentSession.user.id} />
+            )}
+            <ModeToggle />
+            <UserNav />
+          </div>
         </div>
       </div>
     </header>

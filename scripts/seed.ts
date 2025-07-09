@@ -1,8 +1,30 @@
 import { prisma } from '@/db/prisma';
+import bcrypt from 'bcryptjs';
 
 async function seedDatabase() {
   try {
     console.log('🌱 Iniciando seed do banco de dados...');
+    
+    // Criar usuário admin se não existir
+    const existingAdmin = await prisma.user.findUnique({
+      where: { email: 'admin@example.com' }
+    });
+    
+    if (!existingAdmin) {
+      const hashedPassword = await bcrypt.hash('password', 12);
+      await prisma.user.create({
+        data: {
+          email: 'admin@example.com',
+          name: 'Administrador',
+          password: hashedPassword,
+          tipo: 'ADMIN',
+          emailVerified: new Date()
+        }
+      });
+      console.log('✅ Usuário admin criado: admin@example.com / password');
+    } else {
+      console.log('ℹ️ Usuário admin já existe: admin@example.com');
+    }
     
     // Limpar dados existentes
     await prisma.$executeRaw`DELETE FROM "reservas_espacos"`;
@@ -18,9 +40,9 @@ async function seedDatabase() {
       (
         gen_random_uuid(),
         'Churrasco Gourmet',
-        'Espaço com churrasqueira profissional, pia, geladeira e área coberta para até 50 pessoas.',
-        50,
-        80.00,
+        'Espaço com churrasqueira profissional, pia, geladeira e área coberta para até 20 pessoas.',
+        20,
+        200.00,
         3,
         8,
         true,
@@ -35,7 +57,7 @@ async function seedDatabase() {
         gen_random_uuid(),
         'Salão de Festas',
         'Amplo salão climatizado com palco, sistema de som e iluminação para eventos especiais.',
-        100,
+        50,
         150.00,
         4,
         12,

@@ -30,7 +30,11 @@ import {
   XCircle,
   Clock,
   AlertTriangle,
-  Info
+  Info,
+  QrCode,
+  MapPin,
+  ChefHat,
+  Music
 } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -177,6 +181,39 @@ export default function DocumentacaoPage() {
                 "Integre com Telegram para alertas",
                 "Monitore vencimentos próximos",
                 "Renove serviços periodicamente"
+            ]
+        },
+        {
+            title: "Portaria Digital",
+            icon: Shield,
+            route: "/admin/portaria",
+            description: "Controle de acesso com QR Code",
+            features: ["Geração de QR Code", "Controle de visitantes", "Tipos de acesso", "Códigos temporários", "Verificação de entrada"],
+            howTo: [
+                "Selecione o tipo de acesso (Visitante, Prestador, Delivery, etc.)",
+                "Preencha os dados do visitante (nome, CPF, telefone)",
+                "Defina apartamento de destino e horário",
+                "Configure data e hora de validade",
+                "Gere o QR Code automaticamente",
+                "Visualize e copie o código de acesso",
+                "Use o QR Code para liberação na portaria"
+            ]
+        },
+        {
+            title: "Espaços Comuns",
+            icon: MapPin,
+            route: "/admin/espacos",
+            description: "Agendamento de áreas comuns",
+            features: ["Churrasco Gourmet (R$ 200/dia)", "Salão de Festas (R$ 150/dia)", "Controle de reservas", "Equipamentos inclusos", "Gestão de eventos"],
+            howTo: [
+                "Visualize os espaços disponíveis na primeira aba",
+                "Verifique equipamentos e regras de cada espaço",
+                "Na aba 'Reservar', selecione o espaço desejado",
+                "Escolha data e horário de uso",
+                "Informe número de convidados e telefone",
+                "Adicione observações sobre o evento",
+                "Confirme a reserva (valor fixo por dia)",
+                "Acompanhe status na aba 'Minhas Reservas'"
             ]
         },
         {
@@ -472,6 +509,20 @@ export default function DocumentacaoPage() {
                             <h4 className="font-semibold text-purple-900 dark:text-purple-300 mb-2">📱 Mobile</h4>
                             <p className="text-sm text-purple-800 dark:text-purple-400">
                                 O sistema é responsivo e funciona perfeitamente em dispositivos móveis. Use a navegação hambúrguer no mobile.
+                            </p>
+                        </div>
+                        
+                        <div className="p-4 bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-200 dark:border-indigo-800 rounded-lg">
+                            <h4 className="font-semibold text-indigo-900 dark:text-indigo-300 mb-2">🏠 Portaria Digital</h4>
+                            <p className="text-sm text-indigo-800 dark:text-indigo-400">
+                                QR Codes gerados têm validade de 24h por padrão. Cada código é único e pode ser usado para verificação na portaria.
+                            </p>
+                        </div>
+                        
+                        <div className="p-4 bg-teal-50 dark:bg-teal-900/20 border border-teal-200 dark:border-teal-800 rounded-lg">
+                            <h4 className="font-semibold text-teal-900 dark:text-teal-300 mb-2">🎉 Espaços Comuns</h4>
+                            <p className="text-sm text-teal-800 dark:text-teal-400">
+                                Valores são fixos por dia: Churrasco Gourmet R$ 200 e Salão de Festas R$ 150. Reservas precisam de aprovação.
                             </p>
                         </div>
                     </div>

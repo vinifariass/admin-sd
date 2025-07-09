@@ -7,6 +7,7 @@
     "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
+    "seed": "npx tsx scripts/seed.ts",
     "job": "ts-node jobs/check-servicos-telegram.job.ts"
   },
   "dependencies": {
@@ -31,11 +32,13 @@
     "@radix-ui/react-tooltip": "^1.1.8",
     "@shadcn/ui": "^0.0.4",
     "@tanstack/react-query": "^5.81.5",
+    "@types/bcryptjs": "^3.0.0",
     "@types/qrcode": "^1.5.5",
     "@uploadthing/react": "^7.3.0",
     "autoprefixer": "^10.4.21",
     "axios": "^1.8.4",
     "bcrypt-ts-edge": "^3.0.1",
+    "bcryptjs": "^3.0.2",
     "chart.js": "^4.4.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

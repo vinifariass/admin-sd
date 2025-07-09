@@ -29,8 +29,9 @@ export function UserNav() {
           <TooltipTrigger asChild>
             <DropdownMenuTrigger asChild>
               <Button
-                variant="outline"
-                className="relative h-8 w-8 rounded-full"
+                className="relative w-8 h-8 rounded-full flex items-center justify-center bg-muted text-foreground hover:bg-muted/80 flex-shrink-0"
+                variant="ghost"
+                size="icon"
               >
                 <Avatar className="h-8 w-8">
                   <AvatarImage src="#" alt="Avatar" />

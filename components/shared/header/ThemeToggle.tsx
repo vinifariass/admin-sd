@@ -30,7 +30,7 @@ export default function ThemeToggle() {
             variant="outline"
             size="icon"
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            className="rounded-full w-8 h-8 bg-background relative transition-all"
+            className="rounded-full w-8 h-8 bg-background relative transition-all flex-shrink-0"
           >
             <SunIcon
               className="h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"
