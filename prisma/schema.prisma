@@ -71,8 +71,10 @@ model Morador {
   dataSaida   DateTime?
   createdAt   DateTime  @default(now())
 
-  Encomenda Encomenda[]
-  boletos   Boleto[]
+  Encomenda     Encomenda[]
+  boletos       Boleto[]
+  acessos       AcessoPortaria[]
+  reservas      ReservaEspaco[]
 }
 
 model Encomenda {
@@ -195,4 +197,105 @@ model Boleto {
   observacoes     String?
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
+}
+
+// ========== PORTARIA DIGITAL ==========
+model AcessoPortaria {
+  id              String        @id @default(uuid())
+  tipo            TipoAcesso    @default(VISITANTE)
+  nomeVisitante   String?
+  cpfVisitante    String?
+  telefone        String?
+  apartamento     String
+  moradorId       String?
+  morador         Morador?      @relation(fields: [moradorId], references: [id])
+  dataVisita      DateTime
+  horaInicio      String
+  horaFim         String?
+  observacoes     String?
+  status          StatusAcesso  @default(AGENDADO)
+  qrCode          String?       @unique
+  codigoAcesso    String?       @unique
+  liberadoPor     String?
+  dataLiberacao   DateTime?
+  entradaEfetuada Boolean       @default(false)
+  horaEntrada     DateTime?
+  validoAte       DateTime?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  @@map("acesso_portaria")
+}
+
+enum TipoAcesso {
+  VISITANTE
+  PRESTADOR_SERVICO
+  DELIVERY
+  MORADOR
+  FUNCIONARIO
+}
+
+enum StatusAcesso {
+  AGENDADO
+  APROVADO
+  NEGADO
+  EXPIRADO
+  UTILIZADO
+  CANCELADO
+}
+
+// ========== AGENDA DE ESPAÇOS COMUNS ==========
+model EspacoComum {
+  id           String            @id @default(uuid())
+  nome         String
+  descricao    String?
+  capacidade   Int?
+  preco        Float?            @default(0)
+  tempoMinimo  Int?              @default(2) // horas
+  tempoMaximo  Int?              @default(8) // horas
+  ativo        Boolean           @default(true)
+  observacoes  String?
+  imagens      String[]          @default([])
+  equipamentos String[]          @default([])
+  regras       String[]          @default([])
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+  
+  reservas     ReservaEspaco[]
+
+  @@map("espacos_comuns")
+}
+
+model ReservaEspaco {
+  id              String         @id @default(uuid())
+  espacoId        String
+  espaco          EspacoComum    @relation(fields: [espacoId], references: [id])
+  moradorId       String
+  morador         Morador        @relation(fields: [moradorId], references: [id])
+  dataReserva     DateTime
+  horaInicio      String
+  horaFim         String
+  valorTotal      Float?         @default(0)
+  status          StatusReserva  @default(PENDENTE)
+  observacoes     String?
+  convidados      Int?           @default(0)
+  telefoneContato String?
+  eventoPrincipal String?        // Aniversário, Casamento, etc.
+  equipamentos    String[]       @default([])
+  servicosExtras  String[]       @default([])
+  aprovadoPor     String?
+  dataAprovacao   DateTime?
+  motivoCancelamento String?
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  @@map("reservas_espacos")
+}
+
+enum StatusReserva {
+  PENDENTE
+  APROVADA
+  REJEITADA
+  CANCELADA
+  REALIZADA
 }

@@ -6,7 +6,10 @@ import {
   LucideIcon,
   BookOpen,
   HelpCircle,
-  FileText
+  FileText,
+  Shield,
+  Calendar,
+  MapPin
 } from "lucide-react";
 
 type Submenu = {
@@ -104,6 +107,18 @@ export function getMenuList(
                 ...submenu,
                 active: pathname.includes(submenu.href)
               }))
+            },
+            {
+              href: "/admin/portaria",
+              label: "Portaria Digital",
+              icon: Shield,
+              active: pathname.includes("/admin/portaria")
+            },
+            {
+              href: "/admin/espacos",
+              label: "Espaços Comuns",
+              icon: MapPin,
+              active: pathname.includes("/admin/espacos")
             }
           ]
         }

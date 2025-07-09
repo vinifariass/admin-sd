@@ -22,9 +22,7 @@ export default function RelatoriosPage() {
     let toastId: string | number | undefined;
     
     try {
-      toastId = toast.loading('Gerando relatório PDF...', {
-        description: 'Isso pode levar alguns segundos'
-      });
+      toastId = toast.loading('Gerando relatório PDF...');
 
       const response = await fetch('/api/relatorios', {
         method: 'POST',
@@ -54,16 +52,10 @@ export default function RelatoriosPage() {
       window.URL.revokeObjectURL(url);
       document.body.removeChild(a);
 
-      toast.success('Relatório gerado com sucesso!', {
-        id: toastId,
-        description: 'O download do PDF foi iniciado automaticamente.',
-      });
+      toast.success('Relatório gerado com sucesso!');
     } catch (error) {
       console.error('Erro ao gerar relatório:', error);
-      toast.error('Erro ao gerar relatório', {
-        id: toastId,
-        description: error instanceof Error ? error.message : 'Erro desconhecido',
-      });
+      toast.error('Erro ao gerar relatório');
     } finally {
       setGerando(false);
     }
