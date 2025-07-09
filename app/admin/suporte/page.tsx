@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import AdminChatbot from "@/components/admin/admin-chatbot";
 import { 
   HelpCircle, 
   MessageCircle, 
@@ -44,6 +45,7 @@ export default function SuportePage() {
     const toggleTutorial = (tutorialTitle: string) => {
         setExpandedTutorial(expandedTutorial === tutorialTitle ? null : tutorialTitle);
     };
+
     const faq = [
         {
             question: "Como redefinir minha senha?",
@@ -198,571 +200,485 @@ export default function SuportePage() {
             color: "text-green-600",
             uptime: "99.9%"
         },
-        {
-            service: "Notificações",
-            status: "Operacional",
-            icon: CheckCircle,
-            color: "text-green-600",
-            uptime: "99.5%"
-        },
-        {
-            service: "Backup Automático",
-            status: "Operacional",
-            icon: CheckCircle,
-            color: "text-green-600",
-            uptime: "100%"
-        }
     ];
 
     const tutorials = [
         {
-            title: "Primeiros Passos",
-            description: "Como começar a usar o sistema",
-            duration: "5 min",
-            level: "Iniciante",
+            title: "Como cadastrar um novo visitante",
             icon: Home,
-            topics: ["Login no sistema", "Navegação básica", "Perfil do usuário"],
             steps: [
-                {
-                    title: "1. Fazendo Login",
-                    content: "Acesse o sistema com suas credenciais. Se não tiver acesso, entre em contato com o administrador.",
-                    details: [
-                        "Digite seu email e senha na tela de login",
-                        "Clique em 'Entrar' para acessar o sistema",
-                        "Se esquecer a senha, entre em contato com o administrador"
-                    ]
-                },
-                {
-                    title: "2. Navegação Básica",
-                    content: "Use o menu lateral para navegar entre os módulos. No mobile, use o botão hambúrguer.",
-                    details: [
-                        "Menu lateral esquerdo: principais funcionalidades",
-                        "Topo direito: perfil do usuário e configurações",
-                        "Botão de tema: alterne entre claro e escuro",
-                        "No mobile: clique no ícone ☰ para abrir o menu"
-                    ]
-                },
-                {
-                    title: "3. Configurando seu Perfil",
-                    content: "Acesse seu perfil para personalizar suas informações e preferências.",
-                    details: [
-                        "Clique no avatar no canto superior direito",
-                        "Selecione 'Perfil' no menu dropdown",
-                        "Atualize suas informações pessoais",
-                        "Defina suas preferências de notificação"
-                    ]
-                }
-            ]
+                "Acesse Admin > Portaria",
+                "Clique em 'Cadastrar Visitante'",
+                "Preencha os dados do visitante",
+                "Selecione o apartamento de destino",
+                "Defina data e horário do acesso",
+                "QR Code é gerado automaticamente"
+            ],
+            video: "/videos/cadastrar-visitante.mp4",
+            duration: "2:30"
         },
         {
-            title: "Gestão de Moradores",
-            description: "Cadastro e gerenciamento completo",
-            duration: "10 min",
-            level: "Intermediário",
+            title: "Como cadastrar um novo morador",
             icon: Users,
-            topics: ["Cadastrar moradores", "Associar usuários", "Histórico de locação"],
             steps: [
-                {
-                    title: "1. Cadastrando Moradores",
-                    content: "Acesse 'Moradores' no menu lateral e clique em 'Adicionar Morador'.",
-                    details: [
-                        "Preencha nome, CPF e apartamento (obrigatórios)",
-                        "Adicione email e telefone para contato",
-                        "Defina se é Proprietário ou Inquilino",
-                        "Informe data de locação se aplicável"
-                    ]
-                },
-                {
-                    title: "2. Associando Usuários",
-                    content: "Vincule moradores a usuários do sistema para acesso personalizado.",
-                    details: [
-                        "Edite um morador existente",
-                        "No campo 'Usuário Associado', selecione um usuário",
-                        "O usuário poderá ver apenas dados do seu apartamento",
-                        "Útil para que moradores vejam seus próprios boletos"
-                    ]
-                },
-                {
-                    title: "3. Histórico e Controle",
-                    content: "Acompanhe mudanças e histórico de locação.",
-                    details: [
-                        "Use filtros para buscar moradores específicos",
-                        "Visualize histórico de locação",
-                        "Controle datas de entrada e saída",
-                        "Exporte relatórios quando necessário"
-                    ]
-                }
-            ]
+                "Acesse Admin > Moradores",
+                "Clique em 'Cadastrar Morador'",
+                "Preencha os dados pessoais",
+                "Selecione o apartamento",
+                "Defina tipo (Proprietário/Inquilino)",
+                "Clique em 'Salvar'"
+            ],
+            video: "/videos/cadastrar-morador.mp4",
+            duration: "3:45"
         },
         {
-            title: "Portaria Digital",
-            description: "Controle de acesso com QR Code",
-            duration: "8 min",
-            level: "Intermediário",
+            title: "Configurar Portaria Digital",
             icon: Shield,
-            topics: ["Criar acesso para visitantes", "Gerar QR Code", "Verificar códigos na portaria"],
             steps: [
-                {
-                    title: "1. Criando Acesso para Visitantes",
-                    content: "Acesse 'Portaria Digital' e clique na aba 'Novo Acesso'.",
-                    details: [
-                        "Selecione o tipo: Visitante, Prestador de Serviço, Delivery, etc.",
-                        "Preencha nome, CPF e telefone do visitante",
-                        "Informe o apartamento de destino",
-                        "Defina data e horário de visita"
-                    ]
-                },
-                {
-                    title: "2. Gerando QR Code",
-                    content: "O sistema gera automaticamente um QR Code único para cada acesso.",
-                    details: [
-                        "Clique em 'Gerar Acesso' após preencher os dados",
-                        "O QR Code aparecerá em um modal automaticamente",
-                        "Código é válido por 24 horas por padrão",
-                        "Cada código é único e não pode ser reutilizado"
-                    ]
-                },
-                {
-                    title: "3. Usando na Portaria",
-                    content: "O porteiro pode verificar o código usando o sistema ou app mobile.",
-                    details: [
-                        "Acesse a aba 'Verificar QR' na portaria",
-                        "Escaneie o QR Code ou digite o código manualmente",
-                        "Sistema mostrará dados do visitante e validade",
-                        "Registre a entrada quando autorizada"
-                    ]
-                }
-            ]
+                "Acesse Admin > Portaria",
+                "Clique em 'Cadastrar Visitante'",
+                "Preencha dados do visitante",
+                "Defina horário de acesso",
+                "Sistema gera QR Code automaticamente",
+                "Visitante apresenta código na portaria"
+            ],
+            video: "/videos/portaria-digital.mp4",
+            duration: "4:20"
         },
         {
-            title: "Espaços Comuns",
-            description: "Reserva de áreas comuns",
-            duration: "12 min",
-            level: "Intermediário",
+            title: "Gerenciar reservas de espaços",
             icon: MapPin,
-            topics: ["Visualizar espaços disponíveis", "Fazer reservas", "Acompanhar aprovações"],
             steps: [
-                {
-                    title: "1. Conhecendo os Espaços",
-                    content: "Acesse 'Espaços Comuns' para ver os espaços disponíveis.",
-                    details: [
-                        "Churrasco Gourmet: R$ 200/dia (20 pessoas)",
-                        "Salão de Festas: R$ 150/dia (50 pessoas)",
-                        "Veja equipamentos inclusos em cada espaço",
-                        "Leia as regras e restrições de uso"
-                    ]
-                },
-                {
-                    title: "2. Fazendo uma Reserva",
-                    content: "Clique na aba 'Reservar' para fazer sua reserva.",
-                    details: [
-                        "Selecione o espaço desejado",
-                        "Escolha data e horário (mínimo 4h, máximo 12h)",
-                        "Informe número de convidados",
-                        "Adicione observações sobre o evento",
-                        "Valor é fixo por dia, não por hora"
-                    ]
-                },
-                {
-                    title: "3. Acompanhando Aprovações",
-                    content: "Use a aba 'Minhas Reservas' para acompanhar o status.",
-                    details: [
-                        "Status: Pendente, Aprovada, Rejeitada, Cancelada",
-                        "Reservas precisam ser aprovadas pelo administrador",
-                        "Você receberá notificações sobre mudanças de status",
-                        "Pode cancelar reservas pendentes se necessário"
-                    ]
-                }
-            ]
+                "Acesse Admin > Espaços Comuns",
+                "Visualize calendário de reservas",
+                "Clique em 'Nova Reserva'",
+                "Escolha espaço e horário",
+                "Confirme reserva",
+                "Gere comprovante se necessário"
+            ],
+            video: "/videos/espacos-comuns.mp4",
+            duration: "5:10"
         },
         {
-            title: "Controle Financeiro",
-            description: "Boletos e gestão de gastos",
-            duration: "15 min",
-            level: "Intermediário",
+            title: "Sistema de boletos",
             icon: CreditCard,
-            topics: ["Gerar boletos", "Controlar pagamentos", "Relatórios financeiros"],
             steps: [
-                {
-                    title: "1. Gerando Boletos",
-                    content: "Acesse 'Boletos' e clique em 'Novo Boleto'.",
-                    details: [
-                        "Preencha número do boleto e código de barras",
-                        "Defina valor e data de vencimento",
-                        "Associe a um apartamento específico",
-                        "Opcionalmente, vincule a um morador"
-                    ]
-                },
-                {
-                    title: "2. Controlando Pagamentos",
-                    content: "Acompanhe quais boletos foram pagos e quais estão pendentes.",
-                    details: [
-                        "Use filtros para ver boletos por status",
-                        "Marque como 'Pago' quando receber o pagamento",
-                        "Informe a data de pagamento",
-                        "Adicione observações se necessário"
-                    ]
-                },
-                {
-                    title: "3. Relatórios Financeiros",
-                    content: "Gere relatórios para análise financeira.",
-                    details: [
-                        "Acesse 'Relatórios' no menu principal",
-                        "Selecione período e tipo de relatório",
-                        "Exporte em PDF para análise externa",
-                        "Acompanhe tendências de pagamento"
-                    ]
-                }
-            ]
+                "Acesse Admin > Boletos",
+                "Clique em 'Gerar Boleto'",
+                "Selecione apartamento",
+                "Defina valor e vencimento",
+                "Adicione descrição",
+                "Boleto é automaticamente disponibilizado"
+            ],
+            video: "/videos/sistema-boletos.mp4",
+            duration: "3:30"
         },
         {
-            title: "Administração Avançada",
-            description: "Funcionalidades para administradores",
-            duration: "20 min",
-            level: "Avançado",
+            title: "Configurações do sistema",
             icon: Settings,
-            topics: ["Gestão de usuários", "Permissões", "Configurações do sistema"],
             steps: [
-                {
-                    title: "1. Gestão de Usuários",
-                    content: "Apenas ADMINs podem criar e gerenciar usuários.",
-                    details: [
-                        "Acesse 'Usuários' no menu (só para ADMINs)",
-                        "Crie usuários com email e senha",
-                        "Defina o tipo: ADMIN, FUNCIONARIO, MORADOR",
-                        "Ative/desative contas conforme necessário"
-                    ]
-                },
-                {
-                    title: "2. Configurando Permissões",
-                    content: "Cada tipo de usuário tem acesso a diferentes funcionalidades.",
-                    details: [
-                        "ADMIN: acesso total a todas as funcionalidades",
-                        "FUNCIONARIO: acesso limitado a operações básicas",
-                        "MORADOR: acesso apenas a dados do próprio apartamento",
-                        "Permissões são automáticas baseadas no tipo"
-                    ]
-                },
-                {
-                    title: "3. Configurações do Sistema",
-                    content: "Ajuste configurações gerais do sistema.",
-                    details: [
-                        "Configure notificações automáticas",
-                        "Defina regras de negócio específicas",
-                        "Configure integrações (Telegram, etc.)",
-                        "Monitore logs e atividades do sistema"
-                    ]
-                }
-            ]
+                "Acesse Configurações no menu",
+                "Ajuste preferências do sistema",
+                "Configure notificações",
+                "Defina permissões de usuário",
+                "Salve as alterações",
+                "Teste as novas configurações"
+            ],
+            video: "/videos/configuracoes.mp4",
+            duration: "4:00"
+        }
+    ];
+
+    const quickActions = [
+        {
+            title: "Cadastrar Morador",
+            description: "Adicionar novo morador ao sistema",
+            icon: Users,
+            href: "/admin/moradores",
+            color: "bg-blue-50 border-blue-200 dark:bg-blue-950 dark:border-blue-800"
+        },
+        {
+            title: "Registrar Visitante",
+            description: "Gerar QR Code para acesso",
+            icon: QrCode,
+            href: "/admin/portaria",
+            color: "bg-green-50 border-green-200 dark:bg-green-950 dark:border-green-800"
+        },
+        {
+            title: "Nova Reserva",
+            description: "Reservar espaço comum",
+            icon: Calendar,
+            href: "/admin/espacos",
+            color: "bg-purple-50 border-purple-200 dark:bg-purple-950 dark:border-purple-800"
+        },
+        {
+            title: "Gerar Boleto",
+            description: "Criar cobrança para apartamento",
+            icon: CreditCard,
+            href: "/admin/boletos",
+            color: "bg-orange-50 border-orange-200 dark:bg-orange-950 dark:border-orange-800"
+        },
+        {
+            title: "Ver Relatórios",
+            description: "Acessar dashboard e dados",
+            icon: FileText,
+            href: "/admin/relatorios",
+            color: "bg-indigo-50 border-indigo-200 dark:bg-indigo-950 dark:border-indigo-800"
+        },
+        {
+            title: "Configurações",
+            description: "Ajustar preferências do sistema",
+            icon: Settings,
+            href: "/admin/settings",
+            color: "bg-gray-50 border-gray-200 dark:bg-gray-950 dark:border-gray-800"
         }
     ];
 
     return (
-        <div className="container mx-auto px-4 py-8 max-w-6xl">
-            {/* Header */}
-            <div className="flex items-center space-x-4 mb-8">
-                <div className="p-3 bg-primary/10 rounded-full">
-                    <HelpCircle className="w-6 h-6 text-primary" />
-                </div>
-                <div>
-                    <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+        <div className="relative">
+            <div className="space-y-8">
+                {/* Cabeçalho */}
+                <div className="text-center">
+                    <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
                         Central de Suporte
                     </h1>
-                    <p className="text-gray-600 dark:text-gray-400">
-                        Encontre ajuda e suporte para o sistema Admin SD
+                    <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+                        Encontre respostas para suas dúvidas, tutoriais detalhados e canais de atendimento
                     </p>
                 </div>
-            </div>
 
-            {/* Quick Actions */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-                <Card className="p-4 hover:shadow-md transition-shadow cursor-pointer">
-                    <div className="flex items-center space-x-3">
-                        <FileText className="w-8 h-8 text-blue-600" />
-                        <div>
-                            <h3 className="font-semibold">Documentação</h3>
-                            <p className="text-sm text-gray-600 dark:text-gray-400">Guia completo</p>
+                {/* Ações Rápidas */}
+                <Card>
+                    <CardHeader>
+                        <CardTitle className="flex items-center gap-2">
+                            <Zap className="h-5 w-5" />
+                            Ações Rápidas
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            {quickActions.map((action, index) => (
+                                <Card key={index} className={`transition-all hover:shadow-md cursor-pointer ${action.color}`}>
+                                    <CardContent className="p-4">
+                                        <div className="flex items-start gap-3">
+                                            <action.icon className="h-6 w-6 text-primary mt-1" />
+                                            <div>
+                                                <h3 className="font-semibold text-gray-900 dark:text-white">
+                                                    {action.title}
+                                                </h3>
+                                                <p className="text-sm text-gray-600 dark:text-gray-400">
+                                                    {action.description}
+                                                </p>
+                                            </div>
+                                            <ExternalLink className="h-4 w-4 text-gray-400 ml-auto" />
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                            ))}
                         </div>
-                    </div>
+                    </CardContent>
                 </Card>
-                
-                <Card className="p-4 hover:shadow-md transition-shadow cursor-pointer">
-                    <div className="flex items-center space-x-3">
-                        <MessageCircle className="w-8 h-8 text-green-600" />
-                        <div>
-                            <h3 className="font-semibold">Chat Suporte</h3>
-                            <p className="text-sm text-gray-600 dark:text-gray-400">Ajuda online</p>
-                        </div>
-                    </div>
-                </Card>
-                
-                <Card className="p-4 hover:shadow-md transition-shadow cursor-pointer">
-                    <div className="flex items-center space-x-3">
-                        <Github className="w-8 h-8 text-gray-600" />
-                        <div>
-                            <h3 className="font-semibold">Código Fonte</h3>
-                            <p className="text-sm text-gray-600 dark:text-gray-400">GitHub</p>
-                        </div>
-                    </div>
-                </Card>
-                
-                <Card className="p-4 hover:shadow-md transition-shadow cursor-pointer">
-                    <div className="flex items-center space-x-3">
-                        <Zap className="w-8 h-8 text-yellow-600" />
-                        <div>
-                            <h3 className="font-semibold">Status</h3>
-                            <p className="text-sm text-gray-600 dark:text-gray-400">Sistema</p>
-                        </div>
-                    </div>
-                </Card>
-            </div>
 
-            {/* System Status */}
-            <Card className="mb-8">
-                <CardHeader>
-                    <CardTitle className="flex items-center space-x-2">
-                        <Zap className="w-5 h-5" />
-                        <span>Status do Sistema</span>
-                    </CardTitle>
-                </CardHeader>
-                <CardContent>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                        {systemStatus.map((service) => {
-                            const Icon = service.icon;
-                            return (
-                                <div key={service.service} className="p-4 border rounded-lg">
-                                    <div className="flex items-center space-x-2 mb-2">
-                                        <Icon className={`w-5 h-5 ${service.color}`} />
-                                        <span className="font-medium">{service.service}</span>
+                {/* Status do Sistema */}
+                <Card>
+                    <CardHeader>
+                        <CardTitle className="flex items-center gap-2">
+                            <CheckCircle className="h-5 w-5 text-green-600" />
+                            Status do Sistema
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                            {systemStatus.map((service, index) => (
+                                <div key={index} className="flex items-center gap-3 p-3 border rounded-lg">
+                                    <service.icon className={`h-5 w-5 ${service.color}`} />
+                                    <div className="flex-1">
+                                        <div className="font-medium text-sm">{service.service}</div>
+                                        <div className="text-xs text-gray-500">{service.status}</div>
                                     </div>
-                                    <div className="text-sm text-gray-600 dark:text-gray-400">
-                                        Status: <span className={service.color}>{service.status}</span>
-                                    </div>
-                                    <div className="text-xs text-gray-500 mt-1">
-                                        Uptime: {service.uptime}
+                                    <Badge variant="outline" className="text-xs">
+                                        {service.uptime}
+                                    </Badge>
+                                </div>
+                            ))}
+                        </div>
+                    </CardContent>
+                </Card>
+
+                {/* FAQ */}
+                <Card>
+                    <CardHeader>
+                        <CardTitle className="flex items-center gap-2">
+                            <HelpCircle className="h-5 w-5" />
+                            Perguntas Frequentes
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="space-y-4">
+                            {faq.map((item, index) => (
+                                <div key={index} className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                                    <div className="flex items-start justify-between gap-4">
+                                        <div className="flex-1">
+                                            <div className="flex items-center gap-2 mb-2">
+                                                <h3 className="font-medium text-gray-900 dark:text-white">
+                                                    {item.question}
+                                                </h3>
+                                                <Badge variant="outline" className="text-xs">
+                                                    {item.category}
+                                                </Badge>
+                                            </div>
+                                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                                                {item.answer}
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
-                            );
-                        })}
-                    </div>
-                </CardContent>
-            </Card>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                {/* Support Channels */}
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Canais de Suporte</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <div className="space-y-4">
-                            {supportChannels.map((channel) => {
-                                const Icon = channel.icon;
-                                return (
-                                    <div key={channel.title} className="p-4 border rounded-lg">
-                                        <div className="flex items-center space-x-3 mb-3">
-                                            <Icon className="w-6 h-6" />
-                                            <h3 className="font-semibold">{channel.title}</h3>
-                                            <Badge className={channel.color}>
-                                                {channel.responseTime}
-                                            </Badge>
-                                        </div>
-                                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
-                                            {channel.description}
-                                        </p>
-                                        <div className="flex items-center justify-between">
-                                            <span className="font-mono text-sm">{channel.contact}</span>
-                                            <Button size="sm" variant="outline">
-                                                <ExternalLink className="w-4 h-4 mr-2" />
-                                                Contatar
-                                            </Button>
-                                        </div>
-                                    </div>
-                                );
-                            })}
+                            ))}
                         </div>
                     </CardContent>
                 </Card>
 
-                {/* Issue Types */}
+                {/* Tutoriais */}
                 <Card>
                     <CardHeader>
-                        <CardTitle>Tipos de Solicitação</CardTitle>
+                        <CardTitle className="flex items-center gap-2">
+                            <PlayCircle className="h-5 w-5" />
+                            Tutoriais em Vídeo
+                        </CardTitle>
                     </CardHeader>
                     <CardContent>
                         <div className="space-y-4">
-                            {issueTypes.map((issue) => {
-                                const Icon = issue.icon;
-                                return (
-                                    <div key={issue.type} className="p-4 border rounded-lg">
-                                        <div className="flex items-center space-x-3 mb-2">
-                                            <Icon className={`w-5 h-5 ${issue.color}`} />
-                                            <h3 className="font-semibold">{issue.type}</h3>
-                                            <Badge variant="outline">
-                                                Prioridade: {issue.priority}
-                                            </Badge>
-                                        </div>
-                                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
-                                            {issue.description}
-                                        </p>
-                                        <div className="text-xs text-gray-500">
-                                            <strong>Exemplos:</strong> {issue.examples.join(", ")}
-                                        </div>
-                                    </div>
-                                );
-                            })}
-                        </div>
-                    </CardContent>
-                </Card>
-            </div>
-
-            {/* Tutorials */}
-            <Card className="mt-8">
-                <CardHeader>
-                    <CardTitle className="flex items-center space-x-2">
-                        <PlayCircle className="w-5 h-5" />
-                        <span>Tutoriais Interativos</span>
-                    </CardTitle>
-                </CardHeader>
-                <CardContent>
-                    <div className="space-y-4">
-                        {tutorials.map((tutorial) => {
-                            const Icon = tutorial.icon;
-                            const isExpanded = expandedTutorial === tutorial.title;
-                            
-                            return (
-                                <div key={tutorial.title} className="border rounded-lg">
+                            {tutorials.map((tutorial, index) => (
+                                <div key={index} className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
                                     <div 
                                         className="p-4 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
                                         onClick={() => toggleTutorial(tutorial.title)}
                                     >
                                         <div className="flex items-center justify-between">
-                                            <div className="flex items-center space-x-3">
-                                                <Icon className="w-5 h-5 text-primary" />
+                                            <div className="flex items-center gap-3">
+                                                <tutorial.icon className="h-5 w-5 text-primary" />
                                                 <div>
-                                                    <h3 className="font-semibold">{tutorial.title}</h3>
-                                                    <p className="text-sm text-gray-600 dark:text-gray-400">
-                                                        {tutorial.description}
-                                                    </p>
+                                                    <h3 className="font-medium text-gray-900 dark:text-white">
+                                                        {tutorial.title}
+                                                    </h3>
+                                                    <div className="flex items-center gap-2 mt-1">
+                                                        <Clock className="h-3 w-3 text-gray-500" />
+                                                        <span className="text-xs text-gray-500">{tutorial.duration}</span>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div className="flex items-center space-x-2">
-                                                <Badge variant="outline">{tutorial.duration}</Badge>
-                                                <Badge className={
-                                                    tutorial.level === 'Iniciante' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300' :
-                                                    tutorial.level === 'Intermediário' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300' :
-                                                    'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300'
-                                                }>
-                                                    {tutorial.level}
-                                                </Badge>
-                                                {isExpanded ? (
-                                                    <ChevronDown className="w-4 h-4" />
-                                                ) : (
-                                                    <ChevronRight className="w-4 h-4" />
-                                                )}
-                                            </div>
-                                        </div>
-                                        
-                                        <div className="mt-2 text-xs text-gray-500">
-                                            <strong>Tópicos:</strong> {tutorial.topics.join(" • ")}
+                                            {expandedTutorial === tutorial.title ? 
+                                                <ChevronDown className="h-4 w-4 text-gray-500" /> : 
+                                                <ChevronRight className="h-4 w-4 text-gray-500" />
+                                            }
                                         </div>
                                     </div>
                                     
-                                    {isExpanded && (
-                                        <div className="border-t bg-gray-50 dark:bg-gray-800">
-                                            <div className="p-4 space-y-6">
-                                                {tutorial.steps.map((step, stepIndex) => (
-                                                    <div key={stepIndex} className="space-y-3">
-                                                        <h4 className="font-medium text-primary flex items-center space-x-2">
-                                                            <span className="w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center text-xs font-bold">
-                                                                {stepIndex + 1}
-                                                            </span>
-                                                            <span>{step.title}</span>
-                                                        </h4>
-                                                        <p className="text-sm text-gray-600 dark:text-gray-400 ml-8">
-                                                            {step.content}
-                                                        </p>
-                                                        <ul className="ml-8 space-y-1">
-                                                            {step.details.map((detail, detailIndex) => (
-                                                                <li key={detailIndex} className="text-sm text-gray-500 flex items-start space-x-2">
-                                                                    <span className="w-1.5 h-1.5 bg-gray-400 rounded-full mt-2 flex-shrink-0"></span>
-                                                                    <span>{detail}</span>
-                                                                </li>
-                                                            ))}
-                                                        </ul>
-                                                    </div>
-                                                ))}
-                                                
-                                                <div className="mt-6 pt-4 border-t">
-                                                    <div className="flex items-center justify-between">
-                                                        <span className="text-sm text-gray-500">
-                                                            Tutorial completo em {tutorial.duration}
-                                                        </span>
-                                                        <Button size="sm" variant="outline" onClick={() => toggleTutorial(tutorial.title)}>
-                                                            Fechar Tutorial
-                                                        </Button>
-                                                    </div>
-                                                </div>
+                                    {expandedTutorial === tutorial.title && (
+                                        <div className="border-t border-gray-200 dark:border-gray-700 p-4 bg-gray-50 dark:bg-gray-800">
+                                            <div className="mb-4">
+                                                <h4 className="font-medium text-sm text-gray-900 dark:text-white mb-2">
+                                                    Passos:
+                                                </h4>
+                                                <ol className="list-decimal list-inside space-y-1">
+                                                    {tutorial.steps.map((step, stepIndex) => (
+                                                        <li key={stepIndex} className="text-sm text-gray-600 dark:text-gray-400">
+                                                            {step}
+                                                        </li>
+                                                    ))}
+                                                </ol>
                                             </div>
+                                            <Button variant="outline" size="sm">
+                                                <PlayCircle className="h-4 w-4 mr-2" />
+                                                Assistir Tutorial
+                                            </Button>
                                         </div>
                                     )}
                                 </div>
-                            );
-                        })}
-                    </div>
-                </CardContent>
-            </Card>
-
-            {/* FAQ */}
-            <Card className="mt-8">
-                <CardHeader>
-                    <CardTitle>Perguntas Frequentes</CardTitle>
-                </CardHeader>
-                <CardContent>
-                    <div className="space-y-4">
-                        {faq.map((item, index) => (
-                            <details key={index} className="group border rounded-lg p-4">
-                                <summary className="flex items-center justify-between cursor-pointer">
-                                    <h3 className="font-medium">{item.question}</h3>
-                                    <div className="flex items-center space-x-2">
-                                        <Badge variant="outline">{item.category}</Badge>
-                                        <HelpCircle className="w-4 h-4 group-open:rotate-180 transition-transform" />
-                                    </div>
-                                </summary>
-                                <div className="mt-4 pt-4 border-t text-sm text-gray-600 dark:text-gray-400">
-                                    {item.answer}
-                                </div>
-                            </details>
-                        ))}
-                    </div>
-                </CardContent>
-            </Card>
-
-            {/* Contact Form Placeholder */}
-            <Card className="mt-8">
-                <CardHeader>
-                    <CardTitle>Não encontrou o que procura?</CardTitle>
-                </CardHeader>
-                <CardContent>
-                    <div className="text-center p-8">
-                        <MessageCircle className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                        <h3 className="text-lg font-medium mb-2">Entre em contato conosco</h3>
-                        <p className="text-gray-600 dark:text-gray-400 mb-4">
-                            Nossa equipe está pronta para ajudá-lo com qualquer dúvida ou problema.
-                        </p>
-                        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                            <Button>
-                                <Mail className="w-4 h-4 mr-2" />
-                                Enviar Email
-                            </Button>
-                            <Button variant="outline">
-                                <MessageCircle className="w-4 h-4 mr-2" />
-                                Chat Online
-                            </Button>
+                            ))}
                         </div>
-                    </div>
-                </CardContent>
-            </Card>
+                    </CardContent>
+                </Card>
+
+                {/* Tipos de Solicitação */}
+                <Card>
+                    <CardHeader>
+                        <CardTitle className="flex items-center gap-2">
+                            <AlertTriangle className="h-5 w-5" />
+                            Tipos de Solicitação
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            {issueTypes.map((issue, index) => (
+                                <div key={index} className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+                                    <div className="flex items-start gap-3 mb-3">
+                                        <issue.icon className={`h-5 w-5 ${issue.color} mt-1`} />
+                                        <div className="flex-1">
+                                            <div className="flex items-center justify-between mb-2">
+                                                <h3 className="font-medium text-gray-900 dark:text-white">
+                                                    {issue.type}
+                                                </h3>
+                                                <Badge variant={issue.priority === 'Alta' ? 'destructive' : issue.priority === 'Média' ? 'default' : 'secondary'}>
+                                                    {issue.priority}
+                                                </Badge>
+                                            </div>
+                                            <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                                                {issue.description}
+                                            </p>
+                                            <div>
+                                                <h4 className="text-xs font-medium text-gray-900 dark:text-white mb-1">
+                                                    Exemplos:
+                                                </h4>
+                                                <ul className="text-xs text-gray-500 dark:text-gray-400 space-y-1">
+                                                    {issue.examples.map((example, exampleIndex) => (
+                                                        <li key={exampleIndex}>• {example}</li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </CardContent>
+                </Card>
+
+                {/* Canais de Suporte */}
+                <Card>
+                    <CardHeader>
+                        <CardTitle className="flex items-center gap-2">
+                            <MessageCircle className="h-5 w-5" />
+                            Canais de Atendimento
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            {supportChannels.map((channel, index) => (
+                                <div key={index} className="text-center">
+                                    <div className={`inline-flex p-3 rounded-full ${channel.color} mb-4`}>
+                                        <channel.icon className="h-6 w-6" />
+                                    </div>
+                                    <h3 className="font-semibold text-gray-900 dark:text-white mb-2">
+                                        {channel.title}
+                                    </h3>
+                                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                                        {channel.description}
+                                    </p>
+                                    <div className="space-y-2">
+                                        <div className="font-medium text-lg text-gray-900 dark:text-white">
+                                            {channel.contact}
+                                        </div>
+                                        <div className="flex items-center justify-center gap-1">
+                                            <Clock className="h-3 w-3 text-gray-500" />
+                                            <span className="text-xs text-gray-500">
+                                                Resposta em {channel.responseTime}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </CardContent>
+                </Card>
+
+                {/* Recursos Adicionais */}
+                <Card>
+                    <CardHeader>
+                        <CardTitle className="flex items-center gap-2">
+                            <ExternalLink className="h-5 w-5" />
+                            Recursos Adicionais
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="space-y-4">
+                                <h3 className="font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+                                    <FileText className="h-4 w-4" />
+                                    Documentação
+                                </h3>
+                                <ul className="space-y-2">
+                                    <li>
+                                        <a href="#" className="text-sm text-blue-600 hover:text-blue-800 flex items-center gap-2">
+                                            <ExternalLink className="h-3 w-3" />
+                                            Manual do Usuário Completo
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" className="text-sm text-blue-600 hover:text-blue-800 flex items-center gap-2">
+                                            <ExternalLink className="h-3 w-3" />
+                                            Guia de Melhores Práticas
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" className="text-sm text-blue-600 hover:text-blue-800 flex items-center gap-2">
+                                            <ExternalLink className="h-3 w-3" />
+                                            API Documentation
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <div className="space-y-4">
+                                <h3 className="font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+                                    <Github className="h-4 w-4" />
+                                    Comunidade
+                                </h3>
+                                <ul className="space-y-2">
+                                    <li>
+                                        <a href="#" className="text-sm text-blue-600 hover:text-blue-800 flex items-center gap-2">
+                                            <ExternalLink className="h-3 w-3" />
+                                            Fórum da Comunidade
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" className="text-sm text-blue-600 hover:text-blue-800 flex items-center gap-2">
+                                            <ExternalLink className="h-3 w-3" />
+                                            Atualizações do Sistema
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" className="text-sm text-blue-600 hover:text-blue-800 flex items-center gap-2">
+                                            <ExternalLink className="h-3 w-3" />
+                                            Feedback e Sugestões
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </CardContent>
+                </Card>
+
+                {/* CTA Final */}
+                <Card className="border-2 border-dashed border-gray-300 dark:border-gray-600 bg-gray-50/50 dark:bg-gray-800/50">
+                    <CardContent className="p-8 text-center">
+                        <div className="max-w-2xl mx-auto">
+                            <div className="inline-flex p-4 rounded-full bg-blue-100 dark:bg-blue-900/50 mb-6">
+                                <Home className="h-8 w-8 text-blue-600 dark:text-blue-400" />
+                            </div>
+                            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+                                Ainda precisa de ajuda?
+                            </h2>
+                            <p className="text-gray-600 dark:text-gray-400 mb-6">
+                                Nossa equipe está pronta para ajudá-lo com qualquer dúvida ou problema.
+                            </p>
+                            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                                <Button className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600">
+                                    <Mail className="w-4 h-4 mr-2" />
+                                    Enviar Email
+                                </Button>
+                                <Button variant="outline" className="border-blue-200 text-blue-700 hover:bg-blue-50 dark:border-blue-600 dark:text-blue-400 dark:hover:bg-blue-900/20">
+                                    <MessageCircle className="w-4 h-4 mr-2" />
+                                    Chat Online
+                                </Button>
+                            </div>
+                        </div>
+                    </CardContent>
+                </Card>
+            </div>
+
+            {/* Chatbot Flutuante - Apenas para ADMINs */}
+            <AdminChatbot userRole="admin" />
         </div>
     );
 }
