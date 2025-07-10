@@ -9,7 +9,6 @@ export function Providers({ children }: { children: React.ReactNode }) {
       {children}
       <Toaster 
         position="top-right"
-        richColors
         closeButton
         duration={3000}
         expand={false}
