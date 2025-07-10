@@ -3,11 +3,12 @@ import { prisma } from '@/db/prisma';
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const acessoResult = await prisma.$queryRaw`
-      SELECT * FROM "acesso_portaria" WHERE id = ${params.id}
+      SELECT * FROM "acesso_portaria" WHERE id = ${id}
     `;
     
     const acesso = (acessoResult as any)[0];
@@ -47,7 +48,7 @@ export async function POST(
     await prisma.$executeRaw`
       UPDATE "acesso_portaria" 
       SET "entradaEfetuada" = true, "horaEntrada" = ${agora}, status = 'UTILIZADO', "updatedAt" = ${agora}
-      WHERE id = ${params.id}
+      WHERE id = ${id}
     `;
     
     // Buscar dados atualizados
@@ -61,7 +62,7 @@ export async function POST(
         ) as morador
       FROM "acesso_portaria" a
       LEFT JOIN "moradores" m ON a."moradorId" = m.id
-      WHERE a.id = ${params.id}
+      WHERE a.id = ${id}
     `;
     
     return NextResponse.json((acessoAtualizado as any)[0]);

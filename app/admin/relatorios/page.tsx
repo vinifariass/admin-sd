@@ -19,46 +19,52 @@ export default function RelatoriosPage() {
     if (gerando) return; // Previne cliques múltiplos
     
     setGerando(true);
-    let toastId: string | number | undefined;
     
-    try {
-      toastId = toast.loading('Gerando relatório PDF...');
+    // Use toast.promise para melhor controle
+    const promise = new Promise(async (resolve, reject) => {
+      try {
+        const response = await fetch('/api/relatorios', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            tipo: tipoRelatorio,
+            ano: parseInt(ano),
+            mes: mes && mes !== 'all' ? parseInt(mes) : undefined,
+          }),
+        });
 
-      const response = await fetch('/api/relatorios', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          tipo: tipoRelatorio,
-          ano: parseInt(ano),
-          mes: mes && mes !== 'all' ? parseInt(mes) : undefined,
-        }),
-      });
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({ error: 'Erro desconhecido' }));
+          throw new Error(errorData.error || `Erro HTTP: ${response.status}`);
+        }
 
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({ error: 'Erro desconhecido' }));
-        throw new Error(errorData.error || `Erro HTTP: ${response.status}`);
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = url;
+        a.download = `relatorio-${tipoRelatorio}-${ano}${mes && mes !== 'all' ? `-${mes.padStart(2, '0')}` : ''}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+
+        resolve('Relatório gerado com sucesso!');
+      } catch (error) {
+        console.error('Erro ao gerar relatório:', error);
+        reject(error);
+      } finally {
+        setGerando(false);
       }
+    });
 
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.style.display = 'none';
-      a.href = url;
-      a.download = `relatorio-${tipoRelatorio}-${ano}${mes && mes !== 'all' ? `-${mes.padStart(2, '0')}` : ''}.pdf`;
-      document.body.appendChild(a);
-      a.click();
-      window.URL.revokeObjectURL(url);
-      document.body.removeChild(a);
-
-      toast.success('Relatório gerado com sucesso!');
-    } catch (error) {
-      console.error('Erro ao gerar relatório:', error);
-      toast.error('Erro ao gerar relatório');
-    } finally {
-      setGerando(false);
-    }
+    toast.promise(promise, {
+      loading: 'Gerando relatório PDF...',
+      success: 'Relatório gerado com sucesso!',
+      error: 'Erro ao gerar relatório'
+    });
   };
 
   const tiposRelatorio = [

@@ -4,9 +4,10 @@ import { Prisma } from '@prisma/client';
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const body = await request.json();
     const { status, aprovadoPor, motivoCancelamento } = body;
     
@@ -39,7 +40,7 @@ export async function PATCH(
     updateValues.push(new Date());
     
     // Adicionar o ID no final
-    updateValues.push(params.id);
+    updateValues.push(id);
     
     const reserva = await prisma.$queryRaw`
       UPDATE "reservas_espacos" 
@@ -65,7 +66,7 @@ export async function PATCH(
       FROM "reservas_espacos" r
       LEFT JOIN "espacos_comuns" e ON r."espacoId" = e.id
       LEFT JOIN "moradores" m ON r."moradorId" = m.id
-      WHERE r.id = ${params.id}
+      WHERE r.id = ${id}
     `;
     
     return NextResponse.json((reservaCompleta as any)[0]);

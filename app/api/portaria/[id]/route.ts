@@ -3,9 +3,10 @@ import { prisma } from '@/db/prisma';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const acesso = await prisma.$queryRaw`
       SELECT 
         a.*,
@@ -16,7 +17,7 @@ export async function GET(
         ) as morador
       FROM "acesso_portaria" a
       LEFT JOIN "moradores" m ON a."moradorId" = m.id
-      WHERE a.id = ${params.id}
+      WHERE a.id = ${id}
     `;
     
     const acessoResult = (acesso as any)[0];
@@ -40,9 +41,10 @@ export async function GET(
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const body = await request.json();
     const { status, observacoes, liberadoPor } = body;
     
@@ -74,7 +76,7 @@ export async function PATCH(
     updateValues.push(new Date());
     
     // Adicionar o ID no final
-    updateValues.push(params.id);
+    updateValues.push(id);
     
     if (updateFields.length === 1) { // Apenas updatedAt
       return NextResponse.json(
@@ -86,7 +88,7 @@ export async function PATCH(
     await prisma.$executeRaw`
       UPDATE "acesso_portaria" 
       SET ${updateFields.map((field, i) => `${field.replace(`$${i + 1}`, `'${updateValues[i]}'`)}`).join(', ')}
-      WHERE id = '${params.id}'
+      WHERE id = '${id}'
     `;
     
     // Buscar dados atualizados
@@ -100,7 +102,7 @@ export async function PATCH(
         ) as morador
       FROM "acesso_portaria" a
       LEFT JOIN "moradores" m ON a."moradorId" = m.id
-      WHERE a.id = ${params.id}
+      WHERE a.id = ${id}
     `;
     
     return NextResponse.json((acessoAtualizado as any)[0]);
@@ -115,11 +117,12 @@ export async function PATCH(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     await prisma.$executeRaw`
-      DELETE FROM "acesso_portaria" WHERE id = ${params.id}
+      DELETE FROM "acesso_portaria" WHERE id = ${id}
     `;
     
     return NextResponse.json({ message: 'Acesso removido com sucesso' });

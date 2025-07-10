@@ -11,6 +11,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
         position="top-right"
         richColors
         closeButton
+        duration={3000}
+        expand={false}
+        visibleToasts={3}
       />
     </ThemeProvider>
   );
