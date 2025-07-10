@@ -58,6 +58,14 @@ Sistema completo de gestão para condomínios desenvolvido em Next.js 15 com Typ
 - Código de barras e data de vencimento
 - Filtros por status de pagamento
 
+#### **Pagamentos Mensais**
+- `/admin/pagamentos` - Painel administrativo de pagamentos
+- Visualização de todos os pagamentos por apartamento
+- Estatísticas e relatórios financeiros
+- Filtros por morador, tipo, status e período
+- Dashboard com métricas de pagamentos
+- Controle de aluguel, condomínio, gás, luz, água, internet
+
 #### **Agendamentos**
 - `/admin/agendamentos` - Gestão de agendamentos
 - `/admin/agendamentos/create` - Novos agendamentos
@@ -98,6 +106,14 @@ Sistema completo de gestão para condomínios desenvolvido em Next.js 15 com Typ
 - `/boletos` - Consulta de boletos pessoais
 - Sistema de marcação de pagamento
 - Filtros por período e status
+
+#### **Pagamentos Pessoais**
+- `/user/pagamentos` - Gestão de pagamentos mensais
+- Criação de pagamentos de aluguel, condomínio, gás, luz, água, internet
+- Controle de vencimentos e status de pagamento
+- Histórico organizado por mês e ano
+- Estatísticas pessoais de pagamentos
+- Interface intuitiva para marcar como pago/não pago
 
 ### 🔧 **Funcionalidades Técnicas**
 
@@ -156,12 +172,14 @@ admin-sd/
 │   │   ├── visitantes/    # Controle de visitantes
 │   │   ├── encomendas/    # Gestão de encomendas
 │   │   ├── boletos/       # Gestão de boletos
+│   │   ├── pagamentos/    # Sistema de pagamentos
 │   │   ├── agendamentos/  # Agendamentos
 │   │   ├── gastos/        # Controle financeiro
 │   │   ├── servicos/      # Gestão de serviços
 │   │   └── users/         # Gestão de usuários
 │   ├── user/              # Área do usuário/morador
 │   │   ├── profile/       # Perfil pessoal
+│   │   ├── pagamentos/    # Pagamentos pessoais
 │   │   ├── settings/      # Configurações
 │   │   └── notifications/ # Notificações
 │   ├── boletos/           # Consulta de boletos (morador)
@@ -238,6 +256,7 @@ npx prisma migrate   # Executar migrações
 ### **MORADOR**
 - Acesso à área do usuário
 - Consulta de boletos pessoais
+- Gestão de pagamentos mensais pessoais
 - Visualização do próprio perfil
 - Central de notificações
 
@@ -251,6 +270,7 @@ npx prisma migrate   # Executar migrações
 - **Visitantes**: Agendamento + autorização + controle de acesso
 - **Encomendas**: Registro + entrega + assinatura
 - **Boletos**: Geração + pagamento + código de barras
+- **Pagamentos**: Dashboard completo + estatísticas + filtros avançados + relatórios por morador
 - **Agendamentos**: Horários + tipos + confirmação
 - **Gastos**: Despesas + categorização + relatórios
 - **Serviços**: Vencimentos + notificações Telegram
@@ -258,6 +278,7 @@ npx prisma migrate   # Executar migrações
 
 ### Área do Usuário
 - **Perfil**: Dados pessoais + apartamentos associados
+- **Pagamentos**: Criação + gestão + histórico + estatísticas pessoais
 - **Configurações**: Tema + idioma + preferências
 - **Notificações**: Central de avisos + leitura
 - **Boletos**: Consulta pessoal + marcação de pagamento
@@ -267,12 +288,29 @@ npx prisma migrate   # Executar migrações
 - ✅ **Sistema Completo**: Todas as necessidades de um condomínio
 - ✅ **Interface Moderna**: Design responsivo e intuitivo
 - ✅ **Controle Granular**: Permissões detalhadas por tipo de usuário
+- ✅ **Sistema de Pagamentos**: Gestão completa de pagamentos mensais
 - ✅ **Integração Telegram**: Notificações automáticas
 - ✅ **Validações Robustas**: CPF, datas, formulários
 - ✅ **Tema Claro/Escuro**: Experiência personalizada
 - ✅ **Mobile First**: Funciona perfeitamente em dispositivos móveis
 - ✅ **TypeScript**: Código tipado e seguro
 - ✅ **Performance**: Next.js 15 com otimizações
+
+## 🚀 **Funcionalidades Recentes**
+
+### Sistema de Pagamentos Mensais
+- **Para Moradores**: Interface completa para criação e gestão de pagamentos pessoais
+- **Para Administradores**: Dashboard com estatísticas, filtros e controle total
+- **Tipos de Pagamento**: Aluguel, Condomínio, Gás, Luz, Água, Internet e Outros
+- **Funcionalidades**: Criação, edição, marcação como pago/não pago, filtros por período
+- **Relatórios**: Estatísticas automáticas, valores pendentes, taxa de pagamento
+- **Interface Intuitiva**: Cards organizados por mês, cores por tipo, status visual
+
+### Melhorias de UX/UI
+- **Espaçamento Otimizado**: Formulários com espaçamento consistente entre labels e inputs
+- **Componentes Reutilizáveis**: Arquitetura client/server otimizada
+- **Navegação Aprimorada**: Menus atualizados com novos módulos
+- **Responsividade**: Design adaptativo para todos os dispositivos
 
 ## 📄 **Licença**
 

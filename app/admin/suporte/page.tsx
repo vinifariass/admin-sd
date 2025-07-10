@@ -88,6 +88,16 @@ export default function SuportePage() {
             category: "Boletos"
         },
         {
+            question: "Como funciona o sistema de pagamentos mensais?",
+            answer: "Moradores podem acessar 'Meus Pagamentos' para criar e gerenciar pagamentos de aluguel, condomínio, gás, luz, água e internet. Eles podem marcar como pago quando efetuar o pagamento. Administradores visualizam todos os pagamentos e estatísticas no painel admin.",
+            category: "Pagamentos"
+        },
+        {
+            question: "Posso editar um pagamento depois de criado?",
+            answer: "Sim, pagamentos podem ser editados pelos moradores e administradores. Você pode alterar valores, datas, descrições e marcar como pago ou não pago conforme necessário.",
+            category: "Pagamentos"
+        },
+        {
             question: "Como gerar relatórios?",
             answer: "Atualmente, os relatórios são gerados automaticamente no dashboard. Funcionalidades de exportação estão em desenvolvimento.",
             category: "Relatórios"
@@ -274,6 +284,21 @@ export default function SuportePage() {
             duration: "3:30"
         },
         {
+            title: "Sistema de Pagamentos Mensais",
+            icon: CreditCard,
+            steps: [
+                "Moradores acessam 'Meus Pagamentos' no menu",
+                "Clique em 'Adicionar Pagamento' para criar novo",
+                "Selecione tipo: Aluguel, Condomínio, Gás, Luz, Água, Internet",
+                "Preencha valor, descrição e data de vencimento",
+                "Defina mês/ano de referência",
+                "Marque como pago quando efetuar o pagamento",
+                "Admins visualizam relatórios em Admin > Pagamentos"
+            ],
+            video: "/videos/sistema-pagamentos.mp4",
+            duration: "4:15"
+        },
+        {
             title: "Configurações do sistema",
             icon: Settings,
             steps: [
@@ -317,6 +342,13 @@ export default function SuportePage() {
             icon: CreditCard,
             href: "/admin/boletos",
             color: "bg-orange-50 border-orange-200 dark:bg-orange-950 dark:border-orange-800"
+        },
+        {
+            title: "Gerenciar Pagamentos",
+            description: "Acompanhar pagamentos mensais",
+            icon: CreditCard,
+            href: "/admin/pagamentos",
+            color: "bg-emerald-50 border-emerald-200 dark:bg-emerald-950 dark:border-emerald-800"
         },
         {
             title: "Ver Relatórios",

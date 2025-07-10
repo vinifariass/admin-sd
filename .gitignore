@@ -39,3 +39,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# temporary development files
+clear-payments.ts
+clear-payments-direct.ts
+test-payment-system.ts
+test-prisma.ts
+
+# sample data files
+db/sample-data.ts
