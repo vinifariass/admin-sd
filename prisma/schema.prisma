@@ -75,6 +75,7 @@ model Morador {
   boletos       Boleto[]
   acessos       AcessoPortaria[]
   reservas      ReservaEspaco[]
+  pagamentos    Payment[]
 }
 
 model Encomenda {
@@ -298,4 +299,34 @@ enum StatusReserva {
   REJEITADA
   CANCELADA
   REALIZADA
+}
+
+model Payment {
+  id          String             @id @default(uuid())
+  moradorId   String
+  morador     Morador           @relation(fields: [moradorId], references: [id], onDelete: Cascade)
+  tipo        TipoPagamento
+  descricao   String            // Ex: "Aluguel Apartamento 301", "Conta de Luz", etc.
+  valor       Float
+  mesReferencia Int             // 1-12 (Janeiro a Dezembro)
+  anoReferencia Int
+  dataVencimento DateTime
+  pago        Boolean           @default(false)
+  dataPagamento DateTime?
+  comprovante String?           // URL do comprovante se houver
+  observacoes String?
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  @@unique([moradorId, tipo, mesReferencia, anoReferencia])
+}
+
+enum TipoPagamento {
+  ALUGUEL
+  GAS
+  LUZ
+  AGUA
+  INTERNET
+  CONDOMINIO
+  OUTROS
 }

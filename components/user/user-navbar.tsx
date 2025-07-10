@@ -12,7 +12,8 @@ import {
     Settings, 
     LogOut, 
     Menu,
-    X
+    X,
+    Receipt
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -39,7 +40,8 @@ const UserNavbar = ({ user }: UserNavbarProps) => {
     const navigation = [
         { name: 'Início', href: '/', icon: Home },
         { name: 'Meu Perfil', href: '/user/profile', icon: User },
-        { name: 'Meus Boletos', href: '/boletos', icon: CreditCard },
+        { name: 'Meus Boletos', href: '/boletos', icon: Receipt },
+        { name: 'Meus Pagamentos', href: '/user/pagamentos', icon: CreditCard },
         { name: 'Notificações', href: '/user/notifications', icon: Bell },
     ];
 

@@ -209,3 +209,27 @@ export const marcarPagoBoletoSchema = z.object({
     pago: z.boolean(),
     dataPagamento: z.date().or(z.string().datetime()).optional(),
 });
+
+// Schemas para Pagamentos Mensais
+export const insertPagamentoMensalSchema = z.object({
+    moradorId: z.string().uuid({ message: "Morador inválido" }),
+    tipo: z.enum(["ALUGUEL", "GAS", "LUZ", "AGUA", "INTERNET", "CONDOMINIO", "OUTROS"]),
+    descricao: z.string().min(1, { message: "Descrição é obrigatória" }),
+    valor: z.number().min(0.01, { message: "Valor deve ser maior que zero" }),
+    mesReferencia: z.number().min(1).max(12, { message: "Mês deve estar entre 1 e 12" }),
+    anoReferencia: z.number().min(2020).max(2030, { message: "Ano deve estar entre 2020 e 2030" }),
+    dataVencimento: z.date().or(z.string().datetime()),
+    observacoes: z.string().optional(),
+});
+
+export const updatePagamentoMensalSchema = insertPagamentoMensalSchema.extend({
+    id: z.string().uuid({ message: "Pagamento inválido" }),
+});
+
+export const marcarPagoPagamentoSchema = z.object({
+    id: z.string().uuid({ message: "Pagamento inválido" }),
+    pago: z.boolean(),
+    dataPagamento: z.date().or(z.string().datetime()).optional(),
+    comprovante: z.string().optional(),
+    observacoes: z.string().optional(),
+});
