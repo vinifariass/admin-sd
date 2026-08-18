@@ -1,5 +1,5 @@
 'use client';
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import * as XLSX from "xlsx";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
 import { salvarRecibos } from "@/lib/actions/recibo.action";
+import { getCondominios } from "@/lib/actions/condominio.action";
 import { 
   Upload, 
   FileText, 
@@ -40,6 +41,11 @@ interface ExcelRow {
   errors: string[];
 }
 
+interface CondominioOption {
+  id: string;
+  nome: string;
+}
+
 interface ColumnMapping {
   serviceColumn: string;
   dateColumn: string;
@@ -59,6 +65,15 @@ export default function ExcelImporter() {
   const [isProcessing, setIsProcessing] = useState(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [isSaving, setIsSaving] = useState(false);
+  const [condominios, setCondominios] = useState<CondominioOption[]>([]);
+  const [condominioId, setCondominioId] = useState("");
+
+  useEffect(() => {
+    getCondominios().then((items) => {
+      setCondominios(items);
+      if (items.length === 1) setCondominioId(items[0].id);
+    });
+  }, []);
 
   const itemsPerPage = 10;
   const totalPages = Math.ceil(data.length / itemsPerPage);
@@ -298,6 +313,10 @@ export default function ExcelImporter() {
 
   // Função para enviar os dados para o banco de dados
   const handleSave = async () => {
+    if (!condominioId) {
+      toast.error("Selecione o condomínio antes de salvar");
+      return;
+    }
     const validData = data.filter((row) => row.dataVencimento !== "Data Inválida");
     if (validData.length === 0) {
       alert("Nenhum dado válido para salvar.");
@@ -307,7 +326,7 @@ export default function ExcelImporter() {
     setIsSaving(true);
     
     try {
-      const res = await salvarRecibos(validData);
+      const res = await salvarRecibos(validData.map((row) => ({ ...row, condominioId })));
       toast(res.message);
       resetForm();
     } catch (error) {
@@ -620,6 +639,23 @@ export default function ExcelImporter() {
                       </div>
                     </div>
                   )}
+
+                  <div className="mt-6 rounded-lg border border-blue-200 bg-blue-50 p-4 dark:border-blue-900 dark:bg-blue-950/30">
+                    <label htmlFor="condominio" className="mb-2 block font-medium">Condomínio dos serviços</label>
+                    <Select value={condominioId} onValueChange={setCondominioId}>
+                      <SelectTrigger id="condominio">
+                        <SelectValue placeholder="Selecione o condomínio" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {condominios.map((condominio) => (
+                          <SelectItem key={condominio.id} value={condominio.id}>{condominio.nome}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    {condominios.length === 0 && (
+                      <p className="mt-2 text-sm text-red-600">Cadastre um condomínio antes de importar serviços.</p>
+                    )}
+                  </div>
 
                   {/* Action Buttons */}
                   <div className="flex items-center justify-between mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">

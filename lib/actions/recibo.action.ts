@@ -6,13 +6,14 @@ import { convertToPlainObject, formatErrors } from "../utils";
 import { updateServicoSchema } from "../validator";
 import { z } from "zod";
 
-export async function salvarRecibos(recibos: { nomeServico: string; dataVencimento: string }[]) {
+export async function salvarRecibos(recibos: { nomeServico: string; dataVencimento: string; condominioId: string }[]) {
     try {
         //Verificar data e nome do serviço, se for igual não salva
         const recibosExistentes = await prisma.recibo.findMany({
             where: {
                 OR: recibos.map((recibo) => ({
                     nomeServico: recibo.nomeServico,
+                    condominioId: recibo.condominioId,
                     dataVencimento: new Date(`${recibo.dataVencimento}T00:00:00.000Z`),
                 })),
             },
@@ -26,6 +27,7 @@ export async function salvarRecibos(recibos: { nomeServico: string; dataVencimen
 
         const recibosFormatados = recibos.map((r) => ({
             nomeServico: r.nomeServico,
+            condominioId: r.condominioId,
             dataVencimento: new Date(`${r.dataVencimento}T00:00:00.000Z`),
         }));
 

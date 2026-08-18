@@ -59,6 +59,7 @@ const links = [
             { title: 'Funcionários', href: '/admin/funcionarios' },
             { title: 'Vagas de Estacionamento', href: '/admin/parkings' },
             { title: 'Serviços', href: '/admin/servicos' },
+            { title: 'Condomínios', href: '/admin/condominios' },
         ],
     },
     /* {

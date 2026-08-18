@@ -124,6 +124,30 @@ model Recibo {
   nomeServico    String
   dataVencimento DateTime
   createdAt      DateTime @default(now())
+  condominioId   String
+  condominio     Condominio @relation(fields: [condominioId], references: [id], onDelete: Restrict)
+
+  @@index([condominioId, dataVencimento])
+}
+
+model Condominio {
+  id             String   @id @default(uuid())
+  nome           String   @unique
+  telegramChatId String
+  ativo          Boolean  @default(true)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  recibos        Recibo[]
+}
+
+model TelegramSession {
+  id           String   @id @default(uuid())
+  chatId       String   @unique
+  state        String   @default("IDLE")
+  data         Json     @default("{}")
+  lastUpdateId Int?
+  updatedAt    DateTime @updatedAt
+  createdAt    DateTime @default(now())
 }
 
 model Agendamento {

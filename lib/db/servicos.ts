@@ -1,7 +1,5 @@
 import { prisma } from "@/db/prisma";
-import { ca } from "date-fns/locale";
-
-export async function getServicosDoDia(data: string) {
+export async function getServicosDoDia(data: string, condominioId?: string) {
     try {
         const start = new Date(data);
         const end = new Date(start);
@@ -9,6 +7,7 @@ export async function getServicosDoDia(data: string) {
 
         return await prisma.recibo.findMany({
             where: {
+                ...(condominioId ? { condominioId } : {}),
                 dataVencimento: {
                     gte: start,
                     lt: end,
