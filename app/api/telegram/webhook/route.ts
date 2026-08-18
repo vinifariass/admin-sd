@@ -14,7 +14,7 @@ export async function GET() {
 
 const help = `🤖 *Tutorial do bot*
 
-/novo_condominio - cadastrar condomínio e Chat ID
+/novo_condominio - cadastrar condomínio nesta conversa
 /novo_servico - cadastrar serviço e data de vencimento
 /listar - listar serviços cadastrados
 /importar - instruções para importar planilha
@@ -137,18 +137,12 @@ export async function POST(request: NextRequest) {
     }
 
     if (state === "NEW_CONDO_NAME") {
-      await setSession(chatId, "NEW_CONDO_CHAT_ID", { condominioId: text }, update.update_id);
-      await reply(chatId, "Agora digite o Chat ID do Telegram desse condomínio (ex.: -1001234567890):");
-      return NextResponse.json({ success: true });
-    }
-
-    if (state === "NEW_CONDO_CHAT_ID") {
-      const name = data.condominioId;
-      if (!name) { await reply(chatId, "Dados incompletos. Use /novo_condominio novamente."); return NextResponse.json({ success: true }); }
+      const name = text.trim();
+      if (!name) { await reply(chatId, "Digite um nome válido ou use /cancelar."); return NextResponse.json({ success: true }); }
       const total = await prisma.condominio.count();
       if (total >= 10) { await reply(chatId, "O limite de 10 condomínios foi atingido."); await setSession(chatId, "IDLE", {}, update.update_id); return NextResponse.json({ success: true }); }
-      const condo = await prisma.condominio.create({ data: { nome: name, telegramChatId: text } });
-      await reply(chatId, `✅ Condomínio *${condo.nome}* cadastrado.\nUse /novo_servico para adicionar um serviço.`);
+      const condo = await prisma.condominio.create({ data: { nome: name, telegramChatId: chatId } });
+      await reply(chatId, `✅ Condomínio *${condo.nome}* cadastrado nesta conversa.\nUse /novo_servico para adicionar um serviço.`);
       await setSession(chatId, "IDLE", {}, update.update_id);
       return NextResponse.json({ success: true });
     }
