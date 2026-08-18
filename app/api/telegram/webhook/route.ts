@@ -15,7 +15,7 @@ export async function GET() {
 const help = `🤖 *Tutorial do bot*
 
 /novo_condominio - cadastrar condomínio nesta conversa
-/novo_servico - cadastrar serviço e data de vencimento
+/novo_servico ou /novoservico - cadastrar serviço e data de vencimento
 /listar - listar serviços cadastrados
 /importar - instruções para importar planilha
 /cancelar - cancelar o cadastro atual
@@ -76,7 +76,10 @@ export async function POST(request: NextRequest) {
     const authorized = admin || Boolean(linkedCondo);
     const state = current?.state || "IDLE";
     const data = (current?.data || {}) as SessionData;
-    const command = text.toLowerCase().split(" ")[0];
+    const commandToken = text.toLowerCase().split(/\s+/)[0];
+    const command = commandToken === "/novoservico" ? "/novo_servico"
+      : commandToken === "/novocondominio" ? "/novo_condominio"
+      : commandToken;
 
     if (command === "/start" || command === "/ajuda" || command === "/help") {
       await reply(chatId, help);
@@ -108,8 +111,23 @@ export async function POST(request: NextRequest) {
         ? await prisma.condominio.findMany({ where: { ativo: true }, orderBy: { nome: "asc" } })
         : linkedCondo ? [linkedCondo] : [];
       if (condos.length === 0) { await reply(chatId, "Nenhum condomínio disponível. Use /novo_condominio primeiro."); return NextResponse.json({ success: true }); }
+      const inline = text.slice(commandToken.length).trim();
+      const inlineMatch = inline.match(/^(.+?)\s+(\d{1,2}[\/-]\d{1,2}[\/-]\d{4}|\d{4}-\d{1,2}-\d{1,2})$/);
+      if (inlineMatch && condos.length === 1) {
+        const serviceName = inlineMatch[1].trim();
+        const date = parseDate(inlineMatch[2]);
+        if (!date) { await reply(chatId, "Data inválida. Use DD/MM/AAAA, por exemplo 25/12/2026."); return NextResponse.json({ success: true }); }
+        const existing = await prisma.recibo.findFirst({ where: { condominioId: condos[0].id, nomeServico: serviceName, dataVencimento: date } });
+        if (existing) await reply(chatId, "Esse serviço já está cadastrado para essa data.");
+        else {
+          await prisma.recibo.create({ data: { condominioId: condos[0].id, nomeServico: serviceName, dataVencimento: date } });
+          await reply(chatId, `✅ Serviço *${serviceName}* cadastrado para ${date.toLocaleDateString("pt-BR")}.`);
+        }
+        await setSession(chatId, "IDLE", {}, update.update_id);
+        return NextResponse.json({ success: true });
+      }
       if (condos.length === 1) {
-        await reply(chatId, `Condomínio: *${condos[0].nome}*\nDigite o nome do serviço:`);
+        await reply(chatId, `Condomínio: *${condos[0].nome}*\nDigite o nome do serviço e depois a data.\nExemplo: Limpeza da piscina\nDepois: 25/12/2026`);
         await setSession(chatId, "SERVICE_NAME", { condominioId: condos[0].id }, update.update_id);
       } else {
         await reply(chatId, `Escolha o condomínio digitando o número:\n${condos.map((c, i) => `${i + 1}. ${c.nome}`).join("\n")}`);
