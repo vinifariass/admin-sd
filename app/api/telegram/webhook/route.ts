@@ -4,6 +4,14 @@ import { sendTelegramMessage } from "@/lib/telegram/telegram-message";
 
 type SessionData = { condominioId?: string; condominioIds?: string[]; serviceName?: string };
 
+export async function GET() {
+  return NextResponse.json({
+    ok: true,
+    service: "telegram-webhook",
+    message: "Webhook online. O Telegram envia atualizações via POST.",
+  });
+}
+
 const help = `🤖 *Tutorial do bot*
 
 /novo_condominio - cadastrar condomínio e Chat ID
